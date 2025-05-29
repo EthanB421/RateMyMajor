@@ -1,4 +1,12 @@
-import { Container, Box, Typography, Paper } from '@mui/material';
+import {
+  Container,
+  Box,
+  Typography,
+  Paper,
+  Grid,
+  Button,
+  Divider,
+} from '@mui/material';
 
 export default function LandingPage() {
   return (
@@ -7,21 +15,203 @@ export default function LandingPage() {
       <Box
         component='img'
         src='https://plus.unsplash.com/premium_vector-1748210658699-d2d8f43da6b3?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
-        sx={{ height: 'auto', width: '100vw', display: 'block' }}
+        sx={{ height: 'auto', width: '100%', display: 'block' }}
       />
 
       {/* Container section */}
-      <Container sx={{ p: '1em' }}>
-        <Paper elevation={3} sx={{ p: '2em' }}>
-          <Typography variant='h4' align='center'>
-            RateMyMajor
-          </Typography>
-        </Paper>
+      <Container disableGutters maxWidth='xl' sx={{ p: '1em' }}>
+        <Box sx={{ width: '100%', flexGrow: 1 }}>
+          <Grid
+            container
+            justifyContent={'center'}
+            spacing={{ xs: '3em', md: '10em' }}
+            sx={{
+              flexDirection: { xs: 'column', md: 'row' },
+              p: '1em',
+            }}
+          >
+            <Grid xs={12} md={4}>
+              <Paper
+                elevation={3}
+                sx={{
+                  border: '1px solid black',
+                  height: { xs: '30vh', md: '80vh' },
+                  width: { xs: '100%', md: '20vw' },
+                  p: { xs: '1em', md: '3em' },
+                  display: 'flex',
+                  flexDirection: 'column',
+                  overflow: 'hidden',
+                }}
+              >
+                <Typography variant='h4' align='center'>
+                  Reason #1
+                </Typography>
+                <Typography variant='body1' align='center'>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Inventore dolor similique praesentium enim expedita blanditiis
+                  molestiae consequatur laborum, amet dolores iste ipsum,
+                  facilis voluptatem assumenda harum, dolorem iure adipisci
+                  quis?
+                </Typography>
+              </Paper>
+            </Grid>
+            <Grid xs={12} md={4}>
+              <Paper
+                elevation={3}
+                sx={{
+                  border: '1px solid black',
+                  height: { xs: '30vh', md: '80vh' },
+                  width: { xs: '100%', md: '20vw' },
+                  p: { xs: '1em', md: '3em' },
+                  display: 'flex',
+                  flexDirection: 'column',
+                  overflow: 'hidden',
+                }}
+              >
+                <Typography variant='h4' align='center'>
+                  Reason #2
+                </Typography>
+                <Typography variant='body1' align='center'>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Inventore dolor similique praesentium enim expedita blanditiis
+                  molestiae consequatur laborum, amet dolores iste ipsum,
+                  facilis voluptatem assumenda harum, dolorem iure adipisci
+                  quis?
+                </Typography>
+              </Paper>
+            </Grid>
+            <Grid xs={12} md={4}>
+              <Paper
+                elevation={3}
+                sx={{
+                  border: '1px solid black',
+                  height: { xs: '30vh', md: '80vh' },
+                  width: { xs: '100%', md: '20vw' },
+                  p: { xs: '1em', md: '3em' },
+                  display: 'flex',
+                  flexDirection: 'column',
+                  overflow: 'hidden',
+                }}
+              >
+                <Typography variant='h4' align='center'>
+                  Reason #3
+                </Typography>
+                <Typography variant='body1' align='center'>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Inventore dolor similique praesentium enim expedita blanditiis
+                  molestiae consequatur laborum, amet dolores iste ipsum,
+                  facilis voluptatem assumenda harum, dolorem iure adipisci
+                  quis?
+                </Typography>
+              </Paper>
+            </Grid>
+          </Grid>
+        </Box>
       </Container>
 
-      {/* Another full screen width section */}
-      <Box sx={{ width: '100vw' }}>
-        <Paper elevation={3}></Paper>
+      <Divider />
+
+      {/* Another full width section */}
+      <Box sx={{ width: '100%' }}>
+        {/* Misc Buttons */}
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '1em',
+            padding: '1em',
+          }}
+        >
+          {/* First Box */}
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: { xs: 'column', md: 'row' },
+              justifyContent: 'space-evenly',
+              alignItems: 'center',
+              padding: '1em',
+              flexWrap: 'wrap',
+              pb: '0',
+            }}
+          >
+            <Box
+              component='img'
+              src='src/pages/testImage.jpg'
+              alt='Test Image'
+              sx={{
+                height: 'auto',
+                width: { xs: '100%', sm: '80%', md: '500px' },
+                maxWidth: '100%',
+                order: { xs: 1, sm: 1, md: 1 }, // Always first on mobile, stays first on desktop
+              }}
+            />
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '1em',
+                textAlign: 'center',
+                alignItems: 'center',
+                width: { xs: '100%', sm: '80%', md: '40%' },
+                mt: { xs: 2, md: 0 },
+                order: { xs: 2, sm: 2, md: 2 }, // Always second on mobile, stays second on desktop
+              }}
+            >
+              <Typography variant='h3'>Something here</Typography>
+              <Typography>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              </Typography>
+              <Button variant='outlined' sx={{ width: '100px' }}>
+                Button
+              </Button>
+            </Box>
+          </Box>
+
+          {/* Second Box */}
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: { xs: 'column', md: 'row' },
+              justifyContent: 'space-evenly',
+              alignItems: 'center',
+              padding: '1em',
+              flexWrap: 'wrap',
+            }}
+          >
+            <Box
+              component='img'
+              src='src/pages/testImage.jpg'
+              alt='Test Image'
+              sx={{
+                height: 'auto',
+                width: { xs: '100%', sm: '80%', md: '500px' },
+                maxWidth: '100%',
+                order: { xs: 1, sm: 1, md: 1, lg: 2 },
+              }}
+            />
+
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '1em',
+                textAlign: 'center',
+                alignItems: 'center',
+                width: { xs: '100%', sm: '80%', md: '40%' },
+                mt: { xs: 2, md: 0 },
+                order: { xs: 2, sm: 2, md: 2, lg: 1 },
+              }}
+            >
+              <Typography variant='h3'>Something here</Typography>
+              <Typography>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              </Typography>
+              <Button variant='outlined' sx={{ width: '100px' }}>
+                Button
+              </Button>
+            </Box>
+          </Box>
+        </Box>
       </Box>
     </Box>
   );
