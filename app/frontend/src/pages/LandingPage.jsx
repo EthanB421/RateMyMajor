@@ -7,8 +7,25 @@ import {
   Button,
   Divider,
 } from '@mui/material';
+import React, { useState, useEffect } from 'react';
+
 
 export default function LandingPage() {
+  const [majors, setMajors] = useState([]);
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    fetch('http://localhost:5123/api/major/getmajors')
+      .then(res => res.json())
+      .then(data => {
+        setMajors(data);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error('Error fetching majors:', err);
+        setLoading(false);
+      });
+  }, []);
+
   return (
     <Box>
       {/* Hero Image */}
@@ -31,29 +48,38 @@ export default function LandingPage() {
             }}
           >
             <Grid xs={12} md={4}>
-              <Paper
-                elevation={3}
-                sx={{
-                  border: '1px solid black',
-                  height: { xs: '30vh', md: '80vh' },
-                  width: { xs: '100%', md: '20vw' },
-                  p: { xs: '1em', md: '3em' },
-                  display: 'flex',
-                  flexDirection: 'column',
-                  overflow: 'hidden',
-                }}
-              >
-                <Typography variant='h4' align='center'>
-                  Reason #1
-                </Typography>
-                <Typography variant='body1' align='center'>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Inventore dolor similique praesentium enim expedita blanditiis
-                  molestiae consequatur laborum, amet dolores iste ipsum,
-                  facilis voluptatem assumenda harum, dolorem iure adipisci
-                  quis?
-                </Typography>
-              </Paper>
+          <Paper
+            elevation={3}
+            sx={{
+              border: '1px solid black',
+              height: { xs: '30vh', md: '80vh' },
+              width: { xs: '100%', md: '20vw' },
+              p: { xs: '1em', md: '3em' },
+              display: 'flex',
+              flexDirection: 'column',
+              overflow: 'hidden',
+            }}
+          >
+            <Typography variant='h4' align='center'>
+              Reason #1
+            </Typography>
+            <Box sx={{ overflowY: 'auto', maxHeight: '100%' }}>
+              {loading ? (
+                <Typography align="center">Loading majors...</Typography>
+              ) : majors.length === 0 ? (
+                <Typography align="center">No majors found.</Typography>
+              ) : (
+                <ul>
+                  {majors.map((major) => (
+                    <li key={major.id} style={{ textAlign: 'center' }}>
+                      {major.name}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </Box>
+          </Paper>
+
             </Grid>
             <Grid xs={12} md={4}>
               <Paper

@@ -24,5 +24,6 @@ namespace RateMyMajor.Data
         }
 
         public DbSet<User> Users {get;set;}
+        public DbSet<Major> Major {get; set;}
     }
-}
+} 
