@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using RateMyMajor.Data;
 using RateMyMajor.Models;
+using RateMyMajor.Repository.IRepository;
 
 namespace RateMyMajor.Controllers;
 
@@ -8,17 +9,20 @@ namespace RateMyMajor.Controllers;
 [ApiController]
 public class MajorController : ControllerBase
 {
-    private readonly ApplicationDbContext _context;
+    private readonly IUnitOfWork _unitOfWork;
+    private readonly IWebHostEnvironment _webHostEnvironment;
 
-    public MajorController(ApplicationDbContext context)
+
+    public MajorController(IUnitOfWork db, IWebHostEnvironment webHostEnvironment)
     {
-        _context = context;
+        _unitOfWork = db;
+        _webHostEnvironment = webHostEnvironment;
     }
 
     [HttpGet("GetMajors")]
     public IActionResult GetMajors()
     {
-        var majors = _context.Major.ToList();
+        var majors = _unitOfWork.Major.GetAll();
         return Ok(majors);
     }
 }
