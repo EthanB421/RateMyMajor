@@ -7,6 +7,7 @@ import {
   Button,
   Divider,
 } from '@mui/material';
+import Searchbar from '../components/Searchbar';
 import React, { useState, useEffect } from 'react';
 
 
@@ -28,12 +29,8 @@ export default function LandingPage() {
 
   return (
     <Box>
-      {/* Hero Image */}
-      <Box
-        component='img'
-        src='https://plus.unsplash.com/premium_vector-1748210658699-d2d8f43da6b3?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
-        sx={{ height: 'auto', width: '100%', display: 'block' }}
-      />
+      {/* Searchbar component with Hero Image */}
+      <Searchbar />
 
       {/* Container section */}
       <Container disableGutters maxWidth='xl' sx={{ p: '1em' }}>
@@ -48,37 +45,37 @@ export default function LandingPage() {
             }}
           >
             <Grid xs={12} md={4}>
-          <Paper
-            elevation={3}
-            sx={{
-              border: '1px solid black',
-              height: { xs: '30vh', md: '80vh' },
-              width: { xs: '100%', md: '20vw' },
-              p: { xs: '1em', md: '3em' },
-              display: 'flex',
-              flexDirection: 'column',
-              overflow: 'hidden',
-            }}
-          >
-            <Typography variant='h4' align='center'>
-              Reason #1
-            </Typography>
-            <Box sx={{ overflowY: 'auto', maxHeight: '100%' }}>
-              {loading ? (
-                <Typography align="center">Loading majors...</Typography>
-              ) : majors.length === 0 ? (
-                <Typography align="center">No majors found.</Typography>
-              ) : (
-                <ul>
-                  {majors.map((major) => (
-                    <li key={major.id} style={{ textAlign: 'center' }}>
-                      {major.name}
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </Box>
-          </Paper>
+              <Paper
+                elevation={3}
+                sx={{
+                  border: '1px solid black',
+                  height: { xs: '30vh', md: '80vh' },
+                  width: { xs: '100%', md: '20vw' },
+                  p: { xs: '1em', md: '3em' },
+                  display: 'flex',
+                  flexDirection: 'column',
+                  overflow: 'hidden',
+                }}
+              >
+                <Typography variant='h4' align='center'>
+                  Reason #1
+                </Typography>
+                <Box sx={{ overflowY: 'auto', maxHeight: '100%' }}>
+                  {loading ? (
+                    <Typography align="center">Loading majors...</Typography>
+                  ) : majors.length === 0 ? (
+                    <Typography align="center">No majors found.</Typography>
+                  ) : (
+                    <ul>
+                      {majors.map((major) => (
+                        <li key={major.id} style={{ textAlign: 'center' }}>
+                          {major.name}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </Box>
+              </Paper>
 
             </Grid>
             <Grid xs={12} md={4}>
