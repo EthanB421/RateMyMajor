@@ -9,7 +9,8 @@ import { useNavigate } from 'react-router-dom';
         - Implement functionality for:
             1) Moving to different pages - DONE
             2) A dropdown for existing majors
-            3) NEW - figure out functionality when major has white space (eg. 'computer science')
+            3) NEW - figure out functionality when major has white space (eg. 'computer science') 
+                *** Maybe not? Need to figure out as more of the project is fleshed out ***
         - Fix responsiveness when screen size is between md-lg - DONE
     
     Notes:
@@ -27,7 +28,7 @@ export default function Searchbar() {
   // TODO: Eventually add verification that the route exists, if not send them to a 404 page
   const handleNavigation = () => {
     if (inputValue.trim()) {
-      navigate(`/${inputValue}`);
+      navigate(`/major/${inputValue}`);
     }
   };
 

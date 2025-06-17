@@ -33,8 +33,8 @@ export default function LandingPage() {
                 sx={{
                   border: '1px solid black',
                   height: { xs: '30vh', md: '80vh' },
-                  width: { xs: '100%', md: '20vw' },
-                  p: { xs: '1em', md: '3em' },
+                  width: { xs: '100%', md: '100%' },
+                  p: { xs: '1em', md: '2em' },
                   display: 'flex',
                   flexDirection: 'column',
                   overflow: 'hidden',
@@ -58,7 +58,7 @@ export default function LandingPage() {
                 sx={{
                   border: '1px solid black',
                   height: { xs: '30vh', md: '80vh' },
-                  width: { xs: '100%', md: '20vw' },
+                  width: { xs: '100%', md: '100%' },
                   p: { xs: '1em', md: '3em' },
                   display: 'flex',
                   flexDirection: 'column',
@@ -83,7 +83,7 @@ export default function LandingPage() {
                 sx={{
                   border: '1px solid black',
                   height: { xs: '30vh', md: '80vh' },
-                  width: { xs: '100%', md: '20vw' },
+                  width: { xs: '100%', md: '100%' },
                   p: { xs: '1em', md: '3em' },
                   display: 'flex',
                   flexDirection: 'column',
