@@ -10,18 +10,17 @@ import {
 import Searchbar from '../components/Searchbar';
 import React, { useState, useEffect } from 'react';
 
-
 export default function LandingPage() {
   const [majors, setMajors] = useState([]);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     fetch('http://localhost:5123/api/major/getmajors')
-      .then(res => res.json())
-      .then(data => {
+      .then((res) => res.json())
+      .then((data) => {
         setMajors(data);
         setLoading(false);
       })
-      .catch(err => {
+      .catch((err) => {
         console.error('Error fetching majors:', err);
         setLoading(false);
       });
@@ -44,7 +43,7 @@ export default function LandingPage() {
               p: '1em',
             }}
           >
-            <Grid xs={12} md={4}>
+            <Grid size={{ xs: 12, md: 4 }}>
               <Paper
                 elevation={3}
                 sx={{
@@ -62,9 +61,9 @@ export default function LandingPage() {
                 </Typography>
                 <Box sx={{ overflowY: 'auto', maxHeight: '100%' }}>
                   {loading ? (
-                    <Typography align="center">Loading majors...</Typography>
+                    <Typography align='center'>Loading majors...</Typography>
                   ) : majors.length === 0 ? (
-                    <Typography align="center">No majors found.</Typography>
+                    <Typography align='center'>No majors found.</Typography>
                   ) : (
                     <ul>
                       {majors.map((major) => (
@@ -76,9 +75,8 @@ export default function LandingPage() {
                   )}
                 </Box>
               </Paper>
-
             </Grid>
-            <Grid xs={12} md={4}>
+            <Grid size={{ xs: 12, md: 4 }}>
               <Paper
                 elevation={3}
                 sx={{
@@ -103,7 +101,7 @@ export default function LandingPage() {
                 </Typography>
               </Paper>
             </Grid>
-            <Grid xs={12} md={4}>
+            <Grid size={{ xs: 12, md: 4 }}>
               <Paper
                 elevation={3}
                 sx={{
@@ -159,7 +157,7 @@ export default function LandingPage() {
           >
             <Box
               component='img'
-              src='src/pages/testImage.jpg'
+              src='src/images/heroSearchbar.avif'
               alt='Test Image'
               sx={{
                 height: 'auto',
@@ -203,7 +201,7 @@ export default function LandingPage() {
           >
             <Box
               component='img'
-              src='src/pages/testImage.jpg'
+              src='src/images/heroSearchbar.avif'
               alt='Test Image'
               sx={{
                 height: 'auto',

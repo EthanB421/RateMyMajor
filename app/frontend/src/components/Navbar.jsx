@@ -102,7 +102,7 @@ export default function Navbar() {
             variant='h4'
             underline='none'
             sx={{
-              fontSize: { xs: '1.5rem', sm: '2rem', md: '2.5rem' },
+              fontSize: { xs: '2rem', sm: '2rem', md: '3rem' },
               color: 'white',
               flexGrow: 1,
             }}
