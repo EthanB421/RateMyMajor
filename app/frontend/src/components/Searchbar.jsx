@@ -44,9 +44,9 @@ export default function Searchbar() {
         alignItems: 'center',
       }}
     >
-      {/* <Typography variant='h6' align='center'>
+      <Typography variant='h2' align='center' color='#000080' fontWeight='bold'>
         Find your next career here!
-      </Typography> */}
+      </Typography>
       <TextField
         // slotprops.input.sx is necessary here to directly edit the input (TextField in this case)
         slotProps={{
@@ -75,8 +75,9 @@ export default function Searchbar() {
           },
         }}
         sx={{
-          padding: '3em',
+          padding: '1em',
           width: { xs: '100%', sm: '70%', md: '50%' },
+          mb: { xs: '20em', sm: '10em', md: '5em', lg: '5em' },
         }}
         placeholder='Search for a major here...'
         value={inputValue}

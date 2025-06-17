@@ -8,24 +8,8 @@ import {
   Divider,
 } from '@mui/material';
 import Searchbar from '../components/Searchbar';
-import React, { useState, useEffect } from 'react';
 
 export default function LandingPage() {
-  const [majors, setMajors] = useState([]);
-  const [loading, setLoading] = useState(true);
-  useEffect(() => {
-    fetch('http://localhost:5123/api/major/getmajors')
-      .then((res) => res.json())
-      .then((data) => {
-        setMajors(data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error('Error fetching majors:', err);
-        setLoading(false);
-      });
-  }, []);
-
   return (
     <Box>
       {/* Searchbar component with Hero Image */}
@@ -59,21 +43,13 @@ export default function LandingPage() {
                 <Typography variant='h4' align='center'>
                   Reason #1
                 </Typography>
-                <Box sx={{ overflowY: 'auto', maxHeight: '100%' }}>
-                  {loading ? (
-                    <Typography align='center'>Loading majors...</Typography>
-                  ) : majors.length === 0 ? (
-                    <Typography align='center'>No majors found.</Typography>
-                  ) : (
-                    <ul>
-                      {majors.map((major) => (
-                        <li key={major.id} style={{ textAlign: 'center' }}>
-                          {major.name}
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </Box>
+                <Typography variant='body1' align='center'>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Inventore dolor similique praesentium enim expedita blanditiis
+                  molestiae consequatur laborum, amet dolores iste ipsum,
+                  facilis voluptatem assumenda harum, dolorem iure adipisci
+                  quis?
+                </Typography>
               </Paper>
             </Grid>
             <Grid size={{ xs: 12, md: 4 }}>
