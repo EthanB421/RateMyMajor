@@ -24,83 +24,96 @@ export default function LandingPage() {
             spacing={{ xs: '3em', md: '10em' }}
             sx={{
               flexDirection: { xs: 'column', md: 'row' },
-              p: '1em',
             }}
           >
             <Grid size={{ xs: 12, md: 4 }}>
-              <Paper
+              <Box
                 elevation={3}
                 sx={{
-                  border: '1px solid black',
-                  height: { xs: '30vh', md: '80vh' },
-                  width: { xs: '100%', md: '100%' },
-                  p: { xs: '1em', md: '2em' },
-                  display: 'flex',
-                  flexDirection: 'column',
-                  overflow: 'hidden',
-                }}
-              >
-                <Typography variant='h4' align='center'>
-                  Reason #1
-                </Typography>
-                <Typography variant='body1' align='center'>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Inventore dolor similique praesentium enim expedita blanditiis
-                  molestiae consequatur laborum, amet dolores iste ipsum,
-                  facilis voluptatem assumenda harum, dolorem iure adipisci
-                  quis?
-                </Typography>
-              </Paper>
-            </Grid>
-            <Grid size={{ xs: 12, md: 4 }}>
-              <Paper
-                elevation={3}
-                sx={{
-                  border: '1px solid black',
-                  height: { xs: '30vh', md: '80vh' },
+                  height: '100%',
                   width: { xs: '100%', md: '100%' },
                   p: { xs: '1em', md: '3em' },
                   display: 'flex',
                   flexDirection: 'column',
-                  overflow: 'hidden',
+                  gap: '1em',
+                  justifyContent: 'center',
+                  alignItems: 'center',
                 }}
               >
-                <Typography variant='h4' align='center'>
-                  Reason #2
+                <Typography variant='h4' fontWeight='bold' align='center'>
+                  Anonymous reviews
                 </Typography>
-                <Typography variant='body1' align='center'>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Inventore dolor similique praesentium enim expedita blanditiis
-                  molestiae consequatur laborum, amet dolores iste ipsum,
-                  facilis voluptatem assumenda harum, dolorem iure adipisci
-                  quis?
-                </Typography>
-              </Paper>
+                <Box
+                  component='img'
+                  src='src/images/anonymous.png'
+                  alt='Test Image'
+                  sx={{
+                    height: 'auto',
+                    width: { xs: '60%', sm: '70%', md: '100%' },
+                    maxWidth: '100%',
+                    order: { xs: 1, md: 2 },
+                  }}
+                />
+              </Box>
             </Grid>
             <Grid size={{ xs: 12, md: 4 }}>
-              <Paper
+              <Box
                 elevation={3}
                 sx={{
-                  border: '1px solid black',
-                  height: { xs: '30vh', md: '80vh' },
+                  height: '100%',
                   width: { xs: '100%', md: '100%' },
                   p: { xs: '1em', md: '3em' },
                   display: 'flex',
                   flexDirection: 'column',
-                  overflow: 'hidden',
+                  gap: '1em',
+                  justifyContent: 'center',
+                  alignItems: 'center',
                 }}
               >
-                <Typography variant='h4' align='center'>
-                  Reason #3
+                <Typography variant='h4' fontWeight='bold' align='center'>
+                  Discover career paths
                 </Typography>
-                <Typography variant='body1' align='center'>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Inventore dolor similique praesentium enim expedita blanditiis
-                  molestiae consequatur laborum, amet dolores iste ipsum,
-                  facilis voluptatem assumenda harum, dolorem iure adipisci
-                  quis?
+                <Box
+                  component='img'
+                  src='src/images/careerPath.png'
+                  alt='Test Image'
+                  sx={{
+                    height: 'auto',
+                    width: { xs: '60%', sm: '70%', md: '100%' },
+                    maxWidth: '100%',
+                    order: { xs: 1, md: 2 },
+                  }}
+                />
+              </Box>
+            </Grid>
+            <Grid size={{ xs: 12, md: 4 }}>
+              <Box
+                sx={{
+                  height: '100%',
+                  width: { xs: '100%', md: '100%' },
+                  p: { xs: '1em', md: '3em' },
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '1em',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+              >
+                <Typography variant='h4' fontWeight='bold' align='center'>
+                  Agree to disagree
                 </Typography>
-              </Paper>
+                <Box
+                  component='img'
+                  src='src/images/agreeDisagree.png'
+                  alt='Test Image'
+                  sx={{
+                    height: 'auto',
+                    width: { xs: '60%', sm: '70%', md: '100%' },
+                    maxWidth: '100%',
+                    order: { xs: 1, md: 2 },
+                  }}
+                />
+              </Box>
             </Grid>
           </Grid>
         </Box>
