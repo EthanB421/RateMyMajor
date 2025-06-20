@@ -45,7 +45,7 @@ export default function Searchbar() {
         alignItems: 'center',
       }}
     >
-      <Typography variant='h2' align='center' color='#000080' fontWeight='bold'>
+      <Typography variant='h2' align='center' color='#002884' fontWeight='bold'>
         Find your next career here!
       </Typography>
       <TextField
