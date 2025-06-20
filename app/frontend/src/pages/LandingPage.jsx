@@ -9,6 +9,7 @@ import {
 } from '@mui/material';
 import Searchbar from '../components/Searchbar';
 
+
 export default function LandingPage() {
   return (
     <Box>

@@ -9,20 +9,26 @@ namespace RateMyMajor.Controllers;
 [ApiController]
 public class MajorController : ControllerBase
 {
-    private readonly IUnitOfWork _unitOfWork;
-    private readonly IWebHostEnvironment _webHostEnvironment;
+    private readonly IMajorService _majorService;
 
-
-    public MajorController(IUnitOfWork db, IWebHostEnvironment webHostEnvironment)
+    public MajorController(IMajorService majorService)
     {
-        _unitOfWork = db;
-        _webHostEnvironment = webHostEnvironment;
+        _majorService = majorService;
     }
 
-    [HttpGet("GetMajors")]
-    public IActionResult GetMajors()
+    // [HttpGet("GetMajors")]
+    // public IActionResult GetMajors()
+    // {
+    //     var majors = _majorService.Major.GetAll();
+    //     return Ok(majors);
+    // }
+
+    [HttpGet("search")]
+    public async Task<IActionResult> SearchMajor([FromQuery] string keyword)
     {
-        var majors = _unitOfWork.Major.GetAll();
-        return Ok(majors);
+        var searchedMajor = await _majorService.GetMajorByKeywordAsync(keyword);
+        return searchedMajor == null
+                ? NotFound("Major not found.")
+                : Ok(searchedMajor);
     }
 }

@@ -19,7 +19,9 @@ namespace RateMyMajor.Data
             );
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Major>().HasData(
-                new Major{Id=1, Name="Computer Science",Description="Its cooked", Rating=1}
+                new Major{Id=1, Name="Computer Science",Description="Its cooked", Rating=1},
+                new Major{Id=2, Name="Neuroscience",Description="You must be smart", Rating=1},
+                new Major{Id=3, Name="Nursing",Description="Job market is always good", Rating=1}
             );
         }
 

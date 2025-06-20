@@ -53,6 +53,21 @@ namespace RateMyMajor.Repository
             dbSet.Remove(entity);
         }
 
+        public async Task<T?> GetAsync(Expression<Func<T, bool>> filter, string? includeProperties = null)
+        {
+            IQueryable<T> query = dbSet.Where(filter);
+
+            if (!string.IsNullOrWhiteSpace(includeProperties))
+            {
+                foreach (var includeProp in includeProperties.Split(',', StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(includeProp);
+                }
+            }
+
+            return await query.FirstOrDefaultAsync();
+        }
+
         public void RemoveRange(IEnumerable<T> entity)
         {
             dbSet.RemoveRange(entity);
