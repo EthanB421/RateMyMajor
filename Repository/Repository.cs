@@ -4,6 +4,7 @@ using System.Linq.Expressions;
 using RateMyMajor.Repository.IRepository;
 using RateMyMajor.Data;
 using Microsoft.EntityFrameworkCore;
+using RateMyMajor.Models;
 
 namespace RateMyMajor.Repository
 {
@@ -15,7 +16,9 @@ namespace RateMyMajor.Repository
         {
             _db = db;
             this.dbSet = _db.Set<T>();
+            _db.Review.Include(u => u.Major);
         }
+        
         public void Add(T entity)
         {
             dbSet.Add(entity);

@@ -13,12 +13,14 @@ public class MajorService : IMajorService
     public async Task<Major?> GetMajorByKeywordAsync(string keyword)
     {
         if (string.IsNullOrWhiteSpace(keyword))
+        
             return null;
 
         keyword = keyword.Trim().ToLower();
 
         return await _unitOfWork.Major.GetAsync(
-            m => m.Name.ToLower().Contains(keyword)
+            m => m.Name.ToLower().Contains(keyword),
+                    includeProperties: "Reviews"
         );
     }
 
