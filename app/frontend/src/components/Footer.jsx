@@ -2,13 +2,14 @@ import { AppBar, Typography, Box, Link } from '@mui/material';
 
 export default function Footer() {
   return (
-    <AppBar position='static' sx={{ p: '3em' }}>
+    <AppBar position='static'>
       {/* Footer Container */}
       <Box
         sx={{
           display: 'flex',
           flexDirection: { xs: 'column', sm: 'column', md: 'row', lg: 'row' },
-          gap: { sm: '1em', md: '25em' },
+          p: { xs: '2em', sm: '2.5em', md: '3em' },
+          gap: { xs: '2em', sm: '2em', md: '4em', lg: '6em' },
           justifyContent: 'space-evenly',
           alignItems: 'center',
         }}
@@ -62,14 +63,14 @@ export default function Footer() {
             - There is a lot of repeated code for the links, but I don't think I need to make a component since we aren't using them anywhere else
         */}
         <Box
-          sx={{ display: 'flex', flexDirection: 'row', p: '1em', gap: '1em' }}
+          sx={{ display: 'flex', flexDirection: 'row', gap: '1em', }}
         >
           <Link
             href='/'
             variant='subtitle1'
             underline='none'
             sx={{
-              fontSize: { xs: '1rem', sm: '1.5rem', md: '1.5rem' },
+              fontSize: { xs: '1rem', sm: '1rem', md: '1.3rem' },
               color: 'white',
               flexGrow: 1,
             }}
@@ -81,7 +82,7 @@ export default function Footer() {
             variant='subtitle1'
             underline='none'
             sx={{
-              fontSize: { xs: '1rem', sm: '1.5rem', md: '1.5rem' },
+              fontSize: { xs: '1rem', sm: '1rem', md: '1.3rem' },
               color: 'white',
               flexGrow: 1,
             }}
@@ -93,7 +94,7 @@ export default function Footer() {
             variant='subtitle1'
             underline='none'
             sx={{
-              fontSize: { xs: '1rem', sm: '1.5rem', md: '1.5rem' },
+              fontSize: { xs: '1rem', sm: '1rem', md: '1.3rem' },
               color: 'white',
               flexGrow: 1,
             }}
@@ -105,7 +106,7 @@ export default function Footer() {
             variant='subtitle1'
             underline='none'
             sx={{
-              fontSize: { xs: '1rem', sm: '1.5rem', md: '1.5rem' },
+              fontSize: { xs: '1rem', sm: '1rem', md: '1.3rem' },
               color: 'white',
               flexGrow: 1,
             }}

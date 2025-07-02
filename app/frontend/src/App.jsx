@@ -5,6 +5,7 @@ import Footer from './components/Footer';
 import LandingPage from './pages/LandingPage';
 import MajorPage from './pages/MajorPage';
 import SpecificMajorPage from './pages/SpecificMajorPage';
+import AddReviewPage from './pages/AddReviewPage';
 import './styles/index.css';
 import { createTheme, ThemeProvider } from '@mui/material';
 
@@ -39,6 +40,7 @@ function App() {
               path='/major/:specificMajor'
               element={<SpecificMajorPage />}
             />
+            <Route path='/review' element={<AddReviewPage />} />
           </Routes>
         </div>
         <Footer />
