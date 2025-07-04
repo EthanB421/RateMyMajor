@@ -40,7 +40,7 @@ function App() {
               path='/major/:specificMajor'
               element={<SpecificMajorPage />}
             />
-            <Route path='/review' element={<AddReviewPage />} />
+            <Route path='major/add-review' element={<AddReviewPage />} />
           </Routes>
         </div>
         <Footer />

@@ -1,17 +1,35 @@
-import { Box, Typography, Paper, Container, TextField, Grid, Button } from "@mui/material";
+import { useState } from 'react';
+import { Box, Typography, Paper, Container, TextField, Grid, Button, createTheme } from "@mui/material";
+import { useNavigate } from 'react-router-dom';
 
 export default function AddReviewPage() {
+    const navigate = useNavigate();
+    const [clickIndex, setClickIndex] = useState(null);
+    const [major, setMajor] = useState('[major here]')
+    const ratings = [1, 2, 3, 4, 5];
+
+    // todo
+    const fetchMajorName = async () => {
+
+    }
+
+    const handleSubmit = () => {
+        console.log("submitted");
+        navigate('/');
+    }
+
     return (
         <Container disableGutters maxWidth='xl'>
-            <Box
+            <Paper
                 sx={{
                     display: 'flex',
                     flexDirection: 'column',
                     p: '1em',
                     gap: '.5em',
+                    margin: '1em',
                 }}
             >
-                <Typography variant='h4'>Add Review for [major here]</Typography>
+                <Typography variant='h4'>{major}</Typography>
                 {/* 
                     Form Structure and Styling:
                         - 3 separate box parts aligned in a column
@@ -20,14 +38,15 @@ export default function AddReviewPage() {
                             - Submit button 
                 */}
                 <Box
+                    component='form'
+                    onSubmit={handleSubmit}
                     sx={{
                         display: 'flex',
                         flexDirection: 'column',
-                        border: '1px solid black',
                         p: { xs: '.5em', sm: '1em', md: '2em', },
                         justifyContent: 'center',
                         alignItems: 'center',
-                        gap: '1em',
+                        gap: '2em',
                     }}
                 >
                     {/* Rating container */}
@@ -36,28 +55,30 @@ export default function AddReviewPage() {
                             display: 'flex',
                             flexDirection: 'column',
                             width: '100%',
-                            gap: '.5em'
+                            gap: '.5em',
                         }}
                     >
                         <Typography variant='h5'>Rating</Typography>
-                        {/* Ratings 1-5, todo: add hover effect */}
                         <Box>
-                            <Grid container spacing={0}>
-                                <Grid size='grow' sx={{ border: '1px solid black', p: { xs: '.5em', sm: '1em', md: '1.5em' } }} >
-                                    <Typography textAlign={'center'}>1</Typography>
-                                </Grid>
-                                <Grid size='grow' sx={{ border: '1px solid black', p: { xs: '.5em', sm: '1em', md: '1.5em' } }} >
-                                    <Typography textAlign={'center'}>2</Typography>
-                                </Grid>
-                                <Grid size='grow' sx={{ border: '1px solid black', p: { xs: '.5em', sm: '1em', md: '1.5em' } }} >
-                                    <Typography textAlign={'center'}>3</Typography>
-                                </Grid>
-                                <Grid size='grow' sx={{ border: '1px solid black', p: { xs: '.5em', sm: '1em', md: '1.5em' } }} >
-                                    <Typography textAlign={'center'}>4</Typography>
-                                </Grid>
-                                <Grid size='grow' sx={{ border: '1px solid black', p: { xs: '.5em', sm: '1em', md: '1.5em' } }} >
-                                    <Typography textAlign={'center'}>5</Typography>
-                                </Grid>
+                            <Grid sx={{ border: '1px solid black' }} container spacing={0}>
+                                {ratings.map((rating, index) => (
+                                    <Grid
+                                        key={index}
+                                        size='grow'
+                                        onClick={() => setClickIndex(clickIndex === index ? null : index)}
+                                        sx={{
+                                            p: { xs: '.5em', sm: '1em', md: '1.5em' },
+                                            backgroundColor:
+                                                clickIndex !== null && index <= clickIndex
+                                                    ? '#757ce8' // highlighted color
+                                                    : '#ffffff', // default color
+                                            transition: 'background-color 0.3s ease',
+                                            borderRight: index < ratings.length - 1 ? '1px solid black' : 'none', // only between items
+                                        }}
+                                    >
+                                        <Typography textAlign="center">{rating}</Typography>
+                                    </Grid>
+                                ))}
                             </Grid>
                         </Box>
                     </Box>
@@ -76,17 +97,31 @@ export default function AddReviewPage() {
                             multiline
                             rows={7}
                             placeholder="What did you enjoy/dislike about your major?"
+                            sx={{
+                                '& .MuiOutlinedInput-root': {
+                                    '& fieldset': {
+                                        borderColor: '#ccc',
+                                    },
+                                    '&:hover fieldset': {
+                                        borderColor: '#ccc',
+                                    },
+                                    '&.Mui-focused fieldset': {
+                                        borderColor: '#ccc',
+                                    },
+                                },
+                            }}
                         />
                     </Box>
 
                     {/* Submit button */}
                     <Button
+                        type='submit'
                         variant='contained'
                     >
                         Submit
                     </Button>
                 </Box>
-            </Box>
+            </Paper>
         </Container >
     )
 }
