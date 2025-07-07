@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RateMyMajor.Data;
 
@@ -11,9 +12,11 @@ using RateMyMajor.Data;
 namespace RateMyMajor.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250705003414_InitIdentity")]
+    partial class InitIdentity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -42,9 +45,11 @@ namespace RateMyMajor.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("FirstName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("LockoutEnabled")
@@ -97,7 +102,7 @@ namespace RateMyMajor.Migrations
                         {
                             Id = "1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "ed2a5da4-6726-410c-b9fa-d215dfb20c4c",
+                            ConcurrencyStamp = "f4c4c97c-0ccd-4cd7-a3bb-273804e68c4a",
                             Email = "fugazy@gmail.com",
                             EmailConfirmed = true,
                             FirstName = "Ethan",
@@ -107,7 +112,7 @@ namespace RateMyMajor.Migrations
                             NormalizedUserName = "ETHANBAUTISTA",
                             PasswordHash = "hashed-password-here",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "3522f5fe-dc80-4c67-8d85-52a2fdd9f6af",
+                            SecurityStamp = "d2b659ad-b9dc-453b-a393-853be2417d56",
                             TwoFactorEnabled = false,
                             UserName = "ethanbautista"
                         });
