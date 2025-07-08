@@ -20,9 +20,9 @@ export default function SpecificMajorPage() {
     const fetchMajor = async () => {
       try {
         const response = await fetch(
-          `http://localhost:5123/api/major/search?keyword=${encodeURIComponent((
+          `http://localhost:5123/api/major/search?keyword=${encodeURIComponent(
             specificMajor.trim()
-          ))}`
+          )}`
         );
 
         if (!response.ok) {
@@ -42,29 +42,150 @@ export default function SpecificMajorPage() {
   }, [specificMajor]);
 
   if (loading) return <Typography>Loading...</Typography>;
-  if (error) return <Typography color="error">{error}</Typography>;
+  if (error) return <Typography color='error'>{error}</Typography>;
   if (!major) return <Typography>No major found.</Typography>;
 
   return (
-    <Box>
-      <Typography variant="h3">{major.name}</Typography>
-      <Typography variant="body1">{major.description}</Typography>
-      {/* Display other major info as needed */}
+    <Container disableGutters maxWidth='xl'>
+      <Paper
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          p: '2em',
+          gap: '.5em',
+          margin: '1em',
+        }}
+      >
+        <Typography variant='h3' textAlign='center'>
+          {major.name}
+        </Typography>
+
+        {/* Display other major info as needed */}
         <Divider sx={{ my: 3 }} />
 
-      <Typography variant="h5" gutterBottom>Reviews</Typography>
-      {major.reviews.length === 0 ? (
-        <Typography>No reviews yet.</Typography>
-      ) : (
-        major.reviews.map((review) => (
-          <Paper key={review.id} sx={{ mb: 2, p: 2 }}>
-            <Typography variant="subtitle1" fontWeight="bold">
-              Rating: {review.rating} / 5
+        {/* Review and description container */}
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: {
+              xs: 'column',
+              md: 'row',
+            },
+            gap: { sm: '1em', md: '4em' },
+          }}
+        >
+          {/* Description container */}
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              width: '100%',
+              gap: '2em',
+            }}
+          >
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '.5em',
+              }}
+            >
+              <Typography
+                sx={{
+                  textAlign: {
+                    xs: 'center',
+                    md: 'left',
+                  },
+                }}
+                variant='h5'
+              >
+                Description
+              </Typography>
+              {/* <Typography variant='body1'>{major.description}</Typography> */}
+              <Typography
+                sx={{
+                  textAlign: {
+                    xs: 'center',
+                    md: 'left',
+                  },
+                }}
+              >
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic
+                unde aliquam enim nesciunt sunt commodi eos omnis ratione iste,
+                tenetur quos rem aut. Et vel dicta maiores ad obcaecati nihil.
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quas
+                ducimus ex omnis nemo aut velit, recusandae nostrum earum hic
+                nam. Asperiores sapiente numquam inventore repudiandae doloribus
+                corrupti ea adipisci magni!
+              </Typography>
+            </Box>
+
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '.5em',
+              }}
+            >
+              <Typography
+                sx={{
+                  textAlign: {
+                    xs: 'center',
+                    md: 'left',
+                  },
+                }}
+                variant='h5'
+              >
+                Career Projections
+              </Typography>
+              {/* <Typography variant='body1'>{major.description}</Typography> */}
+              <Typography
+                sx={{
+                  textAlign: {
+                    xs: 'center',
+                    md: 'left',
+                  },
+                }}
+              >
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic
+                unde aliquam enim nesciunt sunt commodi eos omnis ratione iste,
+                tenetur quos rem aut. Et vel dicta maiores ad obcaecati nihil.
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quas
+                ducimus ex omnis nemo aut velit, recusandae nostrum earum hic
+                nam. Asperiores sapiente numquam inventore repudiandae doloribus
+                corrupti ea adipisci magni!
+              </Typography>
+            </Box>
+          </Box>
+
+          <Divider sx={{ my: 3 }} />
+
+          {/* Review container */}
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              width: '100%',
+            }}
+          >
+            <Typography variant='h5' gutterBottom>
+              Reviews
             </Typography>
-            <Typography variant="body2">{review.content}</Typography>
-          </Paper>
-        ))
-      )}
-    </Box>
+            {major.reviews.length === 0 ? (
+              <Typography>No reviews yet.</Typography>
+            ) : (
+              major.reviews.map((review) => (
+                <Paper key={review.id} sx={{ mb: 2, p: 2 }}>
+                  <Typography variant='subtitle1' fontWeight='bold'>
+                    Rating: {review.rating} / 5
+                  </Typography>
+                  <Typography variant='body2'>{review.content}</Typography>
+                </Paper>
+              ))
+            )}
+          </Box>
+        </Box>
+      </Paper>
+    </Container>
   );
 }
