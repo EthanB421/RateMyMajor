@@ -88,6 +88,9 @@ export default function SpecificMajorPage() {
                 display: 'flex',
                 flexDirection: 'column',
                 gap: '.5em',
+                backgroundColor: '#ebebeb',
+                p: '1em',
+                borderRadius: '15px',
               }}
             >
               <Typography
@@ -125,6 +128,9 @@ export default function SpecificMajorPage() {
                 display: 'flex',
                 flexDirection: 'column',
                 gap: '.5em',
+                backgroundColor: '#ebebeb',
+                p: '1em',
+                borderRadius: '15px',
               }}
             >
               <Typography
@@ -166,6 +172,9 @@ export default function SpecificMajorPage() {
               display: 'flex',
               flexDirection: 'column',
               width: '100%',
+              backgroundColor: '#ebebeb',
+              p: '1em',
+              borderRadius: '15px',
             }}
           >
             <Typography variant='h5' gutterBottom>
@@ -175,11 +184,24 @@ export default function SpecificMajorPage() {
               <Typography>No reviews yet.</Typography>
             ) : (
               major.reviews.map((review) => (
-                <Paper key={review.id} sx={{ mb: 2, p: 2 }}>
+                <Paper
+                  key={review.id}
+                  sx={{ mb: 2, p: 2, borderRadius: '15px' }}
+                >
                   <Typography variant='subtitle1' fontWeight='bold'>
                     Rating: {review.rating} / 5
                   </Typography>
-                  <Typography variant='body2'>{review.content}</Typography>
+                  {/* <Typography variant='body2'>{review.content}</Typography> */}
+                  <Typography variant='body2'>
+                    Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                    Voluptatem illo pariatur, sunt architecto velit iste
+                    voluptates doloribus obcaecati a, iure similique cupiditate
+                    provident tenetur nostrum. Magnam, alias delectus! Unde, ea?
+                    Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                    Hic eos dolor, officiis eum ducimus autem veniam accusantium
+                    aut perferendis delectus rem aliquam vero? Pariatur illum
+                    facilis earum atque! Corrupti, id?
+                  </Typography>
                 </Paper>
               ))
             )}
