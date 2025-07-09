@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RateMyMajor.Data;
 
@@ -11,9 +12,11 @@ using RateMyMajor.Data;
 namespace RateMyMajor.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250707224032_AddVoteTable")]
+    partial class AddVoteTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -97,7 +100,7 @@ namespace RateMyMajor.Migrations
                         {
                             Id = "1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "ec088988-3fae-4fc9-b10f-ef75e6ae3619",
+                            ConcurrencyStamp = "bf0495f7-a086-4ac9-a531-0554a71eefa5",
                             Email = "fugazy@gmail.com",
                             EmailConfirmed = true,
                             FirstName = "Ethan",
@@ -107,7 +110,7 @@ namespace RateMyMajor.Migrations
                             NormalizedUserName = "ETHANBAUTISTA",
                             PasswordHash = "hashed-password-here",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "d9644f45-b0c9-4ca8-a917-0b951e77921c",
+                            SecurityStamp = "a5b5c5c9-cac9-432d-8a7f-bc1095d39009",
                             TwoFactorEnabled = false,
                             UserName = "ethanbautista"
                         });
@@ -388,6 +391,7 @@ namespace RateMyMajor.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("UserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("Value")
@@ -474,7 +478,9 @@ namespace RateMyMajor.Migrations
 
                     b.HasOne("ApplicationUser", "User")
                         .WithMany()
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Review");
 
