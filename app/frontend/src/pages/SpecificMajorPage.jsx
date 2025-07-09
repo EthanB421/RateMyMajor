@@ -1,5 +1,9 @@
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import ThumbDownIcon from '@mui/icons-material/ThumbDown';
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import {
   Container,
   Box,
@@ -10,6 +14,7 @@ import {
   Divider,
   Pagination,
 } from '@mui/material';
+
 
 export default function SpecificMajorPage() {
   const { specificMajor } = useParams();
@@ -252,16 +257,7 @@ const handleVote = async (reviewId, value) => {
                   Rating: {review.rating} / 5
                 </Typography>
                 {/* <Typography variant='body2' sx={{ mb: 1 }}>{review.content}</Typography> */}
-                    <Typography variant='body2'>
-                      Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                      Voluptatem illo pariatur, sunt architecto velit iste
-                      voluptates doloribus obcaecati a, iure similique
-                      cupiditate provident tenetur nostrum. Magnam, alias
-                      delectus! Unde, ea? Lorem ipsum dolor sit, amet
-                      consectetur adipisicing elit. Hic eos dolor, officiis eum
-                      ducimus autem veniam accusantium aut perferendis delectus
-                      rem aliquam vero? Pariatur illum facilis earum atque!
-                      Corrupti, id?
+                    <Typography variant='body2'>{review.content}
                     </Typography>
         
         <Box display="flex" alignItems="center" gap={2}>
