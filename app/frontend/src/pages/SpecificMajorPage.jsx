@@ -8,6 +8,7 @@ import {
   Grid,
   Button,
   Divider,
+  Pagination,
 } from '@mui/material';
 
 export default function SpecificMajorPage() {
@@ -15,6 +16,9 @@ export default function SpecificMajorPage() {
   const [major, setMajor] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+
+  const itemsPerPage = 3;
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     const fetchMajor = async () => {
@@ -44,6 +48,13 @@ export default function SpecificMajorPage() {
   if (loading) return <Typography>Loading...</Typography>;
   if (error) return <Typography color='error'>{error}</Typography>;
   if (!major) return <Typography>No major found.</Typography>;
+
+  const paginatedItems = major.reviews.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
+  console.log(paginatedItems);
 
   return (
     <Container disableGutters maxWidth='xl'>
@@ -175,36 +186,51 @@ export default function SpecificMajorPage() {
               backgroundColor: '#ebebeb',
               p: '1em',
               borderRadius: '15px',
+              justifyContent: 'space-between',
             }}
           >
-            <Typography variant='h5' gutterBottom>
-              Reviews
-            </Typography>
-            {major.reviews.length === 0 ? (
-              <Typography>No reviews yet.</Typography>
-            ) : (
-              major.reviews.map((review) => (
-                <Paper
-                  key={review.id}
-                  sx={{ mb: 2, p: 2, borderRadius: '15px' }}
-                >
-                  <Typography variant='subtitle1' fontWeight='bold'>
-                    Rating: {review.rating} / 5
-                  </Typography>
-                  {/* <Typography variant='body2'>{review.content}</Typography> */}
-                  <Typography variant='body2'>
-                    Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                    Voluptatem illo pariatur, sunt architecto velit iste
-                    voluptates doloribus obcaecati a, iure similique cupiditate
-                    provident tenetur nostrum. Magnam, alias delectus! Unde, ea?
-                    Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                    Hic eos dolor, officiis eum ducimus autem veniam accusantium
-                    aut perferendis delectus rem aliquam vero? Pariatur illum
-                    facilis earum atque! Corrupti, id?
-                  </Typography>
-                </Paper>
-              ))
-            )}
+            <Box>
+              <Typography variant='h5' gutterBottom>
+                Reviews
+              </Typography>
+              {major.reviews.length === 0 ? (
+                <Typography>No reviews yet.</Typography>
+              ) : (
+                paginatedItems.map((review) => (
+                  <Paper
+                    key={review.id}
+                    sx={{ mb: 2, p: 2, borderRadius: '15px' }}
+                  >
+                    <Typography variant='subtitle1' fontWeight='bold'>
+                      Rating: {review.rating} / 5
+                    </Typography>
+                    {/* <Typography variant='body2'>{review.content}</Typography> */}
+                    <Typography variant='body2'>
+                      Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                      Voluptatem illo pariatur, sunt architecto velit iste
+                      voluptates doloribus obcaecati a, iure similique
+                      cupiditate provident tenetur nostrum. Magnam, alias
+                      delectus! Unde, ea? Lorem ipsum dolor sit, amet
+                      consectetur adipisicing elit. Hic eos dolor, officiis eum
+                      ducimus autem veniam accusantium aut perferendis delectus
+                      rem aliquam vero? Pariatur illum facilis earum atque!
+                      Corrupti, id?
+                    </Typography>
+                  </Paper>
+                ))
+              )}
+            </Box>
+
+            <Pagination
+              sx={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+              count={Math.ceil(major.reviews.length / itemsPerPage)}
+              page={currentPage}
+              onChange={(e, value) => setCurrentPage(value)}
+            ></Pagination>
           </Box>
         </Box>
       </Paper>
