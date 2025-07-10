@@ -97,7 +97,7 @@ namespace RateMyMajor.Migrations
                         {
                             Id = "1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "ec088988-3fae-4fc9-b10f-ef75e6ae3619",
+                            ConcurrencyStamp = "ed2a5da4-6726-410c-b9fa-d215dfb20c4c",
                             Email = "fugazy@gmail.com",
                             EmailConfirmed = true,
                             FirstName = "Ethan",
@@ -107,7 +107,7 @@ namespace RateMyMajor.Migrations
                             NormalizedUserName = "ETHANBAUTISTA",
                             PasswordHash = "hashed-password-here",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "d9644f45-b0c9-4ca8-a917-0b951e77921c",
+                            SecurityStamp = "3522f5fe-dc80-4c67-8d85-52a2fdd9f6af",
                             TwoFactorEnabled = false,
                             UserName = "ethanbautista"
                         });
@@ -376,32 +376,6 @@ namespace RateMyMajor.Migrations
                         });
                 });
 
-            modelBuilder.Entity("RateMyMajor.Models.Vote", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("ReviewId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("Value")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ReviewId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Votes");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -462,23 +436,6 @@ namespace RateMyMajor.Migrations
                         .IsRequired();
 
                     b.Navigation("Major");
-                });
-
-            modelBuilder.Entity("RateMyMajor.Models.Vote", b =>
-                {
-                    b.HasOne("RateMyMajor.Models.Review", "Review")
-                        .WithMany()
-                        .HasForeignKey("ReviewId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ApplicationUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
-
-                    b.Navigation("Review");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("RateMyMajor.Models.Major", b =>

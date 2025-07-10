@@ -23,11 +23,12 @@ public class MajorController : ControllerBase
     //     return Ok(majors);
     // }
 
-[HttpGet("search")]
-public async Task<IActionResult> SearchMajor([FromQuery] string keyword)
-{
-    var major = await _majorService.GetMajorByKeywordAsync(keyword);
-    return major == null? NotFound("Major not found.") : Ok(major);
-}
-
+    [HttpGet("search")]
+    public async Task<IActionResult> SearchMajor([FromQuery] string keyword)
+    {
+        var searchedMajor = await _majorService.GetMajorByKeywordAsync(keyword);
+        return searchedMajor == null
+                ? NotFound("Major not found.")
+                : Ok(searchedMajor);
+    }
 }

@@ -16,8 +16,8 @@ namespace RateMyMajor.Data
             base.OnModelCreating(modelBuilder); // VERY important!
 
             modelBuilder.Entity<ApplicationUser>().HasData(
-                new ApplicationUser
-                {
+                new ApplicationUser 
+                { 
                     Id = "1", // Use string IDs for Identity by default (GUID or string)
                     UserName = "ethanbautista",
                     NormalizedUserName = "ETHANBAUTISTA",
@@ -50,8 +50,6 @@ namespace RateMyMajor.Data
 
         public DbSet<Major> Major { get; set; }
         public DbSet<Review> Review { get; set; }
-        public DbSet<Vote> Votes { get; set; }
-
 
         // Note: You don't need to explicitly define Users DbSet,
         // it's included in IdentityDbContext<ApplicationUser>

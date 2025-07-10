@@ -88,8 +88,6 @@ app.UseCors("AllowReactApp");
 
 app.UseAuthentication();
 app.UseAuthorization();
-app.MapControllers();
-
 
 app.MapControllerRoute(
     name: "default",

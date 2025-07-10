@@ -25,7 +25,5 @@ namespace RateMyMajor.Models
         [ValidateNever]
         [JsonIgnore]
         public Major Major { get; set; }
-        [NotMapped]
-        public int VoteScore { get; set; }
     }
 }
