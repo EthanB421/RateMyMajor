@@ -6,6 +6,7 @@ import LandingPage from './pages/LandingPage';
 import MajorPage from './pages/MajorPage';
 import SpecificMajorPage from './pages/SpecificMajorPage';
 import AddReviewPage from './pages/AddReviewPage';
+import LoginPage from './pages/LoginPage';
 import './styles/index.css';
 import { createTheme, ThemeProvider } from '@mui/material';
 
@@ -35,6 +36,7 @@ function App() {
         <div className='main-content'>
           <Routes>
             <Route path='/' element={<LandingPage />} />
+            <Route path='/login' element={<LoginPage />} />
             <Route path='/major' element={<MajorPage />} />
             <Route
               path='/major/:specificMajor'
