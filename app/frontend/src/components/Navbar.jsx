@@ -105,16 +105,19 @@ export default function Navbar() {
       }}>
         <Toolbar>
           <Link
-            href='/'
-            variant='h4'
-            underline='none'
-            sx={{
-              fontSize: { xs: '2rem', sm: '2rem', md: '3rem' },
-              color: 'white',
-              flexGrow: 1,
-            }}
+          href='/'
+          variant='h4'
+          underline='none'
+          sx={{
+            fontSize: { xs: '2rem', sm: '2rem', md: '3rem' },
+            color: 'white',
+            flexGrow: 1,
+            fontFamily: 'Bebas Neue, sans-serif',
+            fontWeight: 200,
+            fontStyle: 'italic',
+          }}
           >
-            RateMyMajor
+            RateMyCareer
           </Link>
 
           {/* Drawer code for when screen size is small */}
