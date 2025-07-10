@@ -46,7 +46,7 @@ export default function Searchbar() {
       }}
     >
       <Typography variant='h2' align='center' color='#002884' fontWeight='bold'>
-        Find your next career here!
+        Discover your career path here!
       </Typography>
       <TextField
         // slotprops.input.sx is necessary here to directly edit the input (TextField in this case)

@@ -4,6 +4,8 @@ import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+import LinearProgress from '@mui/material/LinearProgress';
+
 import {
   Container,
   Box,
@@ -119,9 +121,25 @@ const handleVote = async (reviewId, value) => {
           margin: '1em',
         }}
       >
-        <Typography variant='h3' textAlign='center'>
-          {major.name}
+        <Typography variant='h3' textAlign='center'  
+         sx={{
+            fontFamily: 'Bebas Neue, sans-serif',
+            fontWeight: 600,
+            fontSize: '4.25rem'
+          }}>
+          {major.name} 
         </Typography>
+        <Box sx={{ my: 2 }}>
+          <Typography variant='h5' textAlign='center' gutterBottom>Would Recommend</Typography>
+          <LinearProgress
+            variant="determinate"
+            value={major.wouldRecommend}
+            sx={{ height: 10, borderRadius: 5, mb: 1 }}
+          />
+          <Typography variant="body2" textAlign='center'>
+            {major.wouldRecommend}% of reviewers rated this major 3 or higher.
+          </Typography>
+        </Box>
 
         {/* Display other major info as needed */}
         <Divider sx={{ my: 3 }} />

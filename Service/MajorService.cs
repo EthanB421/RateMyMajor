@@ -35,6 +35,13 @@ public class MajorService : IMajorService
             review.VoteScore = voteSum?.VoteSum ?? 0;
         }
 
+            int totalReviews = major.Reviews.Count;
+            int recommendedCount = major.Reviews.Count(r => r.Rating >= 3);
+
+            major.WouldRecommend = totalReviews > 0
+                ? (int)Math.Round((double)recommendedCount / totalReviews * 100)
+                : 0;
+
         return major;
     }
 

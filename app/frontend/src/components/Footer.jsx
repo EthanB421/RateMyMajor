@@ -16,8 +16,16 @@ export default function Footer() {
       >
         {/* 1st Box - RateMyMajor, Privacy Policy, TOS, Copyright */}
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1em' }}>
-          <Typography variant='h2' fontWeight='500' align='center'>
-            RateMyMajor
+          <Typography align='center'
+                    sx={{
+            fontSize: { xs: '2rem', sm: '2rem', md: '3rem' },
+            color: 'white',
+            flexGrow: 1,
+            fontFamily: 'Bebas Neue, sans-serif',
+            fontWeight: 200,
+            fontStyle: 'italic',
+          }}>
+            RateMyCareer
           </Typography>
           <Box
             sx={{
@@ -53,7 +61,7 @@ export default function Footer() {
             </Link>
           </Box>
           <Typography variant='subtitle1' align='center'>
-            © Copyright 2025 RateMyMajor
+            © Copyright 2025 RateMyCareer
           </Typography>
         </Box>
 
