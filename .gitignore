@@ -9,6 +9,11 @@
 # global.json
 global.json
 
+# appsettings.json
+appsettings.json
+
+Migrations/
+
 # User-specific files
 *.rsuser
 *.suo
