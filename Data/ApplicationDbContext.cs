@@ -44,7 +44,13 @@ namespace RateMyMajor.Data
                 new Review { Id = 5, Content = "Brain power!", Rating = 5, MajorId = 2 },
                 new Review { Id = 6, Content = "A lot of butt wiping", Rating = 5, MajorId = 3 },
                 new Review { Id = 7, Content = "THis is really hard", Rating = 2, MajorId = 3 },
-                new Review { Id = 8, Content = "I love nursing", Rating = 5, MajorId = 3 }
+                new Review { Id = 8, Content = "I love nursing", Rating = 5, MajorId = 3 },
+                new Review { Id = 9, Content = "I hate nursing", Rating = 1, MajorId = 3 },
+                new Review { Id = 10, Content = "It's okay!", Rating = 3, MajorId = 3 },
+                new Review { Id = 11, Content = "I wish I never did this", Rating = 0, MajorId = 3 },
+                new Review { Id = 12, Content = "This is the best job!", Rating = 5, MajorId = 3 },
+                new Review { Id = 13, Content = "It pays the bills well!", Rating = 4, MajorId = 3 },       
+                new Review { Id = 14, Content = "I want to do computer science", Rating = 2, MajorId = 3 }                                        
             );
         }
 

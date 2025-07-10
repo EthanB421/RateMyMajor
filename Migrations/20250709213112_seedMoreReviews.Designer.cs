@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RateMyMajor.Data;
 
@@ -11,9 +12,11 @@ using RateMyMajor.Data;
 namespace RateMyMajor.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250709213112_seedMoreReviews")]
+    partial class seedMoreReviews
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -97,11 +100,7 @@ namespace RateMyMajor.Migrations
                         {
                             Id = "1",
                             AccessFailedCount = 0,
-<<<<<<< HEAD
-                            ConcurrencyStamp = "ec088988-3fae-4fc9-b10f-ef75e6ae3619",
-=======
                             ConcurrencyStamp = "cf501cc8-2699-4370-a511-9679eb63098e",
->>>>>>> specificMajorPage
                             Email = "fugazy@gmail.com",
                             EmailConfirmed = true,
                             FirstName = "Ethan",
@@ -111,11 +110,7 @@ namespace RateMyMajor.Migrations
                             NormalizedUserName = "ETHANBAUTISTA",
                             PasswordHash = "hashed-password-here",
                             PhoneNumberConfirmed = false,
-<<<<<<< HEAD
-                            SecurityStamp = "d9644f45-b0c9-4ca8-a917-0b951e77921c",
-=======
                             SecurityStamp = "0eef4fd3-3f23-4f40-b0e6-c4cd67454391",
->>>>>>> specificMajorPage
                             TwoFactorEnabled = false,
                             UserName = "ethanbautista"
                         });
@@ -426,32 +421,6 @@ namespace RateMyMajor.Migrations
                         });
                 });
 
-            modelBuilder.Entity("RateMyMajor.Models.Vote", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("ReviewId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("Value")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ReviewId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Votes");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -512,23 +481,6 @@ namespace RateMyMajor.Migrations
                         .IsRequired();
 
                     b.Navigation("Major");
-                });
-
-            modelBuilder.Entity("RateMyMajor.Models.Vote", b =>
-                {
-                    b.HasOne("RateMyMajor.Models.Review", "Review")
-                        .WithMany()
-                        .HasForeignKey("ReviewId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ApplicationUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
-
-                    b.Navigation("Review");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("RateMyMajor.Models.Major", b =>
