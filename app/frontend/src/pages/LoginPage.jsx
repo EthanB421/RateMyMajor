@@ -32,13 +32,12 @@ export default function LoginPage() {
 
     // In case you want an idea of what handleSubmit should look like after
 
-    /*
         const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (validateForm()) {
+        if (validateLogin()) {
             try {
-                const response = await fetch('http://localhost:3000/api/login', {
+                const response = await fetch('http://localhost:5123/api/auth/login', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -66,18 +65,6 @@ export default function LoginPage() {
         }
     };
 
-    */
-
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-
-        // comment out this if block if you don't want to deal with login validation
-        if (validateLogin() == false) {
-            return;
-        }
-        navigate('/');
-    }
 
     // Simple validation for login
     const validateLogin = () => {

@@ -57,9 +57,15 @@ public class AuthController : ControllerBase
             signingCredentials: creds
         );
 
-        var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
+        var tokenString = GenerateJwtToken(user);
 
-        return Ok(new { token = tokenString });
+        return Ok(new {
+                    token = tokenString,
+                    user = new {
+                    id = user.Id,
+                    email = user.Email
+                    }
+                });
     }
 
     private string GenerateJwtToken(ApplicationUser user)
