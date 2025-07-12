@@ -156,7 +156,7 @@ export default function SpecificMajorPage() {
               </Typography>
               <Box sx={{ my: 2 }}>
                 <Typography variant='h5' textAlign='center' gutterBottom>
-                  Would Recommend
+                  4.3/5 - Would Recommend
                 </Typography>
                 <LinearProgress
                   variant='determinate'
@@ -225,7 +225,7 @@ export default function SpecificMajorPage() {
             </Box>
             <Button
               fullWidth
-              color='secondary'
+              // color='secondary'
               variant='contained'
               sx={{
                 borderRadius: '15px',
