@@ -17,7 +17,6 @@ import {
   Pagination,
 } from '@mui/material';
 
-
 export default function SpecificMajorPage() {
   const { specificMajor } = useParams();
   const [major, setMajor] = useState(null);
@@ -27,52 +26,51 @@ export default function SpecificMajorPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [userVotes, setUserVotes] = useState({});
 
-const handleVote = async (reviewId, value) => {
-  try {
-    const currentVote = userVotes[reviewId] || 0;
-    let newVoteScore = 0;
+  const handleVote = async (reviewId, value) => {
+    try {
+      const currentVote = userVotes[reviewId] || 0;
+      let newVoteScore = 0;
 
-    if (currentVote === value) {
-      // User clicked same vote, remove vote
-      await fetch(`http://localhost:5123/api/votes/${reviewId}`, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+      if (currentVote === value) {
+        // User clicked same vote, remove vote
+        await fetch(`http://localhost:5123/api/votes/${reviewId}`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
 
-      setUserVotes(prev => ({ ...prev, [reviewId]: 0 }));
+        setUserVotes((prev) => ({ ...prev, [reviewId]: 0 }));
 
-      newVoteScore = -value; // Subtract vote
-    } else {
-      // Add or update vote
-      await fetch('http://localhost:5123/api/votes', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ reviewId, value }),
-      });
+        newVoteScore = -value; // Subtract vote
+      } else {
+        // Add or update vote
+        await fetch('http://localhost:5123/api/votes', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ reviewId, value }),
+        });
 
-      setUserVotes(prev => ({ ...prev, [reviewId]: value }));
+        setUserVotes((prev) => ({ ...prev, [reviewId]: value }));
 
-      newVoteScore = value - currentVote; // Adjust by delta
+        newVoteScore = value - currentVote; // Adjust by delta
+      }
+
+      // Update the major's voteScore locally
+      setMajor((prev) => ({
+        ...prev,
+        reviews: prev.reviews.map((r) =>
+          r.id === reviewId
+            ? { ...r, voteScore: (r.voteScore ?? 0) + newVoteScore }
+            : r
+        ),
+      }));
+    } catch (err) {
+      console.error('Vote API error:', err);
     }
-
-    // Update the major's voteScore locally
-    setMajor(prev => ({
-      ...prev,
-      reviews: prev.reviews.map(r =>
-        r.id === reviewId
-          ? { ...r, voteScore: (r.voteScore ?? 0) + newVoteScore }
-          : r
-      ),
-    }));
-  } catch (err) {
-    console.error('Vote API error:', err);
-  }
-};
-
+  };
 
   useEffect(() => {
     const fetchMajor = async () => {
@@ -121,30 +119,7 @@ const handleVote = async (reviewId, value) => {
           margin: '1em',
         }}
       >
-        <Typography variant='h3' textAlign='center'  
-         sx={{
-            fontFamily: 'Bebas Neue, sans-serif',
-            fontWeight: 600,
-            fontSize: '4.25rem'
-          }}>
-          {major.name} 
-        </Typography>
-        <Box sx={{ my: 2 }}>
-          <Typography variant='h5' textAlign='center' gutterBottom>Would Recommend</Typography>
-          <LinearProgress
-            variant="determinate"
-            value={major.wouldRecommend}
-            sx={{ height: 10, borderRadius: 5, mb: 1 }}
-          />
-          <Typography variant="body2" textAlign='center'>
-            {major.wouldRecommend}% of reviewers rated this major 3 or higher.
-          </Typography>
-        </Box>
-
-        {/* Display other major info as needed */}
-        <Divider sx={{ my: 3 }} />
-
-        {/* Review and description container */}
+        {/* Main box container */}
         <Box
           sx={{
             display: 'flex',
@@ -155,94 +130,111 @@ const handleVote = async (reviewId, value) => {
             gap: { sm: '1em', md: '4em' },
           }}
         >
-          {/* Description container */}
+          {/* Major & Description container */}
           <Box
             sx={{
               display: 'flex',
               flexDirection: 'column',
               width: '100%',
-              gap: '2em',
+              gap: '1em',
+              justifyContent: 'center',
+              alignItems: 'center',
             }}
           >
+            {/* Major/general information block */}
+            <Box sx={{ width: '100%' }}>
+              <Typography
+                variant='h3'
+                textAlign='center'
+                sx={{
+                  fontFamily: 'Bebas Neue, sans-serif',
+                  fontWeight: 600,
+                  fontSize: '4.25rem',
+                }}
+              >
+                {major.name}
+              </Typography>
+              <Box sx={{ my: 2 }}>
+                <Typography variant='h5' textAlign='center' gutterBottom>
+                  4.3/5 - Would Recommend
+                </Typography>
+                <LinearProgress
+                  variant='determinate'
+                  value={major.wouldRecommend}
+                  sx={{
+                    height: '1em',
+                    borderRadius: '15px',
+                    mb: '1em',
+                    p: '1em',
+                  }}
+                />
+                <Typography variant='body2' textAlign='center'>
+                  {major.wouldRecommend}% of reviewers rated this major 3 or
+                  higher.
+                </Typography>
+              </Box>
+            </Box>
+            {/* Description block */}
             <Box
               sx={{
                 display: 'flex',
                 flexDirection: 'column',
-                gap: '.5em',
-                backgroundColor: '#ebebeb',
-                p: '1em',
-                borderRadius: '15px',
+                width: '100%',
+                gap: '2em',
               }}
             >
-              <Typography
+              <Box
                 sx={{
-                  textAlign: {
-                    xs: 'center',
-                    md: 'left',
-                  },
-                }}
-                variant='h5'
-              >
-                Description
-              </Typography>
-              {/* <Typography variant='body1'>{major.description}</Typography> */}
-              <Typography
-                sx={{
-                  textAlign: {
-                    xs: 'center',
-                    md: 'left',
-                  },
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '.5em',
+                  backgroundColor: '#ebebeb',
+                  p: '1em',
+                  borderRadius: '15px',
                 }}
               >
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic
-                unde aliquam enim nesciunt sunt commodi eos omnis ratione iste,
-                tenetur quos rem aut. Et vel dicta maiores ad obcaecati nihil.
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quas
-                ducimus ex omnis nemo aut velit, recusandae nostrum earum hic
-                nam. Asperiores sapiente numquam inventore repudiandae doloribus
-                corrupti ea adipisci magni!
-              </Typography>
+                <Typography
+                  sx={{
+                    textAlign: {
+                      xs: 'center',
+                      md: 'left',
+                    },
+                  }}
+                  variant='h5'
+                >
+                  Description
+                </Typography>
+                {/* <Typography variant='body1'>{major.description}</Typography> */}
+                <Typography
+                  sx={{
+                    textAlign: {
+                      xs: 'center',
+                      md: 'left',
+                    },
+                  }}
+                >
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic
+                  unde aliquam enim nesciunt sunt commodi eos omnis ratione
+                  iste, tenetur quos rem aut. Et vel dicta maiores ad obcaecati
+                  nihil. Lorem ipsum dolor sit, amet consectetur adipisicing
+                  elit. Quas ducimus ex omnis nemo aut velit, recusandae nostrum
+                  earum hic nam. Asperiores sapiente numquam inventore
+                  repudiandae doloribus corrupti ea adipisci magni!
+                </Typography>
+              </Box>
             </Box>
-
-            <Box
+            <Button
+              fullWidth
+              // color='secondary'
+              variant='contained'
               sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '.5em',
-                backgroundColor: '#ebebeb',
-                p: '1em',
                 borderRadius: '15px',
+                p: '.5em',
+                // width: '50%',
               }}
             >
-              <Typography
-                sx={{
-                  textAlign: {
-                    xs: 'center',
-                    md: 'left',
-                  },
-                }}
-                variant='h5'
-              >
-                Career Projections
-              </Typography>
-              {/* <Typography variant='body1'>{major.description}</Typography> */}
-              <Typography
-                sx={{
-                  textAlign: {
-                    xs: 'center',
-                    md: 'left',
-                  },
-                }}
-              >
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic
-                unde aliquam enim nesciunt sunt commodi eos omnis ratione iste,
-                tenetur quos rem aut. Et vel dicta maiores ad obcaecati nihil.
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quas
-                ducimus ex omnis nemo aut velit, recusandae nostrum earum hic
-                nam. Asperiores sapiente numquam inventore repudiandae doloribus
-                corrupti ea adipisci magni!
-              </Typography>
-            </Box>
+              Add a review
+            </Button>
           </Box>
 
           <Divider sx={{ my: 3 }} />
@@ -267,44 +259,41 @@ const handleVote = async (reviewId, value) => {
                 <Typography>No reviews yet.</Typography>
               ) : (
                 paginatedItems.map((review) => (
-              <Paper
+                  <Paper
                     key={review.id}
                     sx={{ mb: 2, p: 2, borderRadius: '15px' }}
                   >
-                <Typography variant='subtitle1' fontWeight='bold'>
-                  Rating: {review.rating} / 5
-                </Typography>
-                {/* <Typography variant='body2' sx={{ mb: 1 }}>{review.content}</Typography> */}
-                    <Typography variant='body2'>{review.content}
+                    <Typography variant='subtitle1' fontWeight='bold'>
+                      Rating: {review.rating} / 5
                     </Typography>
-        
-        <Box display="flex" alignItems="center" gap={2}>
-          <Button
-            color="success"
-            onClick={() => handleVote(review.id, 1)}
-          >
-            <ThumbUpIcon />
-            {/* <ArrowUpwardIcon /> */}
-          </Button>
+                    {/* <Typography variant='body2' sx={{ mb: 1 }}>{review.content}</Typography> */}
+                    <Typography variant='body2'>{review.content}</Typography>
 
-          <Typography variant="body2" color="textSecondary">
-          {review.voteScore ?? 0}
-          </Typography>
+                    <Box display='flex' alignItems='center' gap={2}>
+                      <Button
+                        color='success'
+                        onClick={() => handleVote(review.id, 1)}
+                      >
+                        <ThumbUpIcon />
+                        {/* <ArrowUpwardIcon /> */}
+                      </Button>
 
-          <Button
-            color="error"
-            onClick={() => handleVote(review.id, -1)}
-          >
-            <ThumbDownIcon />
-            {/* <ArrowDownwardIcon /> */}
-          </Button>
+                      <Typography variant='body2' color='textSecondary'>
+                        {review.voteScore ?? 0}
+                      </Typography>
 
-          {/* Optional placeholder for showing current vote score */}
+                      <Button
+                        color='error'
+                        onClick={() => handleVote(review.id, -1)}
+                      >
+                        <ThumbDownIcon />
+                        {/* <ArrowDownwardIcon /> */}
+                      </Button>
 
-        </Box>
-      </Paper>
-        
-        ))
+                      {/* Optional placeholder for showing current vote score */}
+                    </Box>
+                  </Paper>
+                ))
               )}
             </Box>
 
