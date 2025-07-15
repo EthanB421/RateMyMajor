@@ -1,3 +1,6 @@
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RateMyMajor.Data;
@@ -16,32 +19,67 @@ public class VotesController : ControllerBase
 
     // POST: api/votes
     // Body: { "reviewId": 1, "value": 1 }
-    [HttpPost]
+[Authorize]
+[HttpPost]
 public async Task<IActionResult> Vote([FromBody] VoteDto voteDto)
 {
-    if (voteDto.Value != 1 && voteDto.Value != -1)
-    {
-        return BadRequest("Value must be 1 (upvote) or -1 (downvote).");
-    }
+    var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+    if (string.IsNullOrEmpty(userId))
+        return Unauthorized();
 
     var reviewExists = await _context.Review.FindAsync(voteDto.ReviewId);
     if (reviewExists == null)
-    {
         return NotFound("Review not found.");
+
+    var existingVote = await _context.Votes
+        .FirstOrDefaultAsync(v => v.ReviewId == voteDto.ReviewId && v.UserId == userId);
+
+    if (existingVote != null)
+    {
+        if (existingVote.Value == voteDto.Value)
+        {
+            // User clicked same vote → remove it
+            _context.Votes.Remove(existingVote);
+        }
+        else
+        {
+            // User changed vote → update it
+            existingVote.Value = voteDto.Value;
+            _context.Votes.Update(existingVote);
+        }
+    }
+    else
+    {
+        // No vote yet → create one
+        _context.Votes.Add(new Vote
+        {
+            ReviewId = voteDto.ReviewId,
+            Value = voteDto.Value,
+            UserId = userId
+        });
     }
 
-    var vote = new Vote
-    {
-        ReviewId = voteDto.ReviewId,
-        Value = voteDto.Value
-        // Optionally set UserId if you want to track who voted
-    };
-
-    _context.Votes.Add(vote);
     await _context.SaveChangesAsync();
 
-    return Ok(new { message = "Vote registered." });
+    var newVoteScore = await _context.Votes
+        .Where(v => v.ReviewId == voteDto.ReviewId)
+        .SumAsync(v => v.Value);
+
+    var userVote = await _context.Votes
+        .Where(v => v.ReviewId == voteDto.ReviewId && v.UserId == userId)
+        .Select(v => v.Value)
+        .FirstOrDefaultAsync(); // 0 if removed
+
+    return Ok(new
+    {
+        reviewId = voteDto.ReviewId,
+        newVoteScore,
+        userVote
+    });
 }
+
+
 
 
     // GET total votes for a review: api/votes/review/1

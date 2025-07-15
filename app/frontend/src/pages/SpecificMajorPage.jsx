@@ -24,53 +24,36 @@ export default function SpecificMajorPage() {
   const [error, setError] = useState('');
   const itemsPerPage = 3;
   const [currentPage, setCurrentPage] = useState(1);
-  const [userVotes, setUserVotes] = useState({});
+  const [setUserVotes] = useState({});
 
-  const handleVote = async (reviewId, value) => {
-    try {
-      const currentVote = userVotes[reviewId] || 0;
-      let newVoteScore = 0;
+const handleVote = async (reviewId, value) => {
+  try {
+    const response = await fetch(`http://localhost:5123/api/votes`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+      },
+      body: JSON.stringify({ reviewId, value }),
+    });
 
-      if (currentVote === value) {
-        // User clicked same vote, remove vote
-        await fetch(`http://localhost:5123/api/votes/${reviewId}`, {
-          method: 'DELETE',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
+    const result = await response.json();
 
-        setUserVotes((prev) => ({ ...prev, [reviewId]: 0 }));
+    // ✅ Trust the backend – use result directly
+    setUserVotes(prev => ({ ...prev, [reviewId]: result.userVote }));
+    setMajor(prev => ({
+      ...prev,
+      reviews: prev.reviews.map(r =>
+        r.id === reviewId ? { ...r, voteScore: result.newVoteScore } : r
+      ),
+    }));
+  } catch (err) {
+    console.error('Vote API error:', err);
+  }
+};
 
-        newVoteScore = -value; // Subtract vote
-      } else {
-        // Add or update vote
-        await fetch('http://localhost:5123/api/votes', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ reviewId, value }),
-        });
 
-        setUserVotes((prev) => ({ ...prev, [reviewId]: value }));
 
-        newVoteScore = value - currentVote; // Adjust by delta
-      }
-
-      // Update the major's voteScore locally
-      setMajor((prev) => ({
-        ...prev,
-        reviews: prev.reviews.map((r) =>
-          r.id === reviewId
-            ? { ...r, voteScore: (r.voteScore ?? 0) + newVoteScore }
-            : r
-        ),
-      }));
-    } catch (err) {
-      console.error('Vote API error:', err);
-    }
-  };
 
   useEffect(() => {
     const fetchMajor = async () => {

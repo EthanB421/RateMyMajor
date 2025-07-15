@@ -72,8 +72,10 @@ public class AuthController : ControllerBase
     {
         var claims = new[]
         {
-            new Claim(JwtRegisteredClaimNames.Sub, user.Email),
-            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+    new Claim(JwtRegisteredClaimNames.Sub, user.Id),
+    new Claim(ClaimTypes.NameIdentifier, user.Id), // <-- THIS is what User.FindFirstValue() looks for
+    new Claim(JwtRegisteredClaimNames.Email, user.Email),
+    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
         };
 
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));

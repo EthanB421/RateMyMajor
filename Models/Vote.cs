@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations.Schema;
 using RateMyMajor.Models;
 
 namespace RateMyMajor.Models;
@@ -6,6 +7,7 @@ public class Vote
     public int Id { get; set; }
 
     public string? UserId { get; set; }
+    [ForeignKey("UserId")]
     public ApplicationUser User { get; set; }
 
     public int ReviewId { get; set; }  // FK to Review
