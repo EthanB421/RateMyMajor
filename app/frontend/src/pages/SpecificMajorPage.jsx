@@ -24,7 +24,7 @@ export default function SpecificMajorPage() {
   const [error, setError] = useState('');
   const itemsPerPage = 3;
   const [currentPage, setCurrentPage] = useState(1);
-  const [setUserVotes] = useState({});
+  const [userVotes, setUserVotes] = useState({});
 
 const handleVote = async (reviewId, value) => {
   try {
@@ -253,24 +253,24 @@ const handleVote = async (reviewId, value) => {
                     <Typography variant='body2'>{review.content}</Typography>
 
                     <Box display='flex' alignItems='center' gap={2}>
-                      <Button
-                        color='success'
-                        onClick={() => handleVote(review.id, 1)}
-                      >
-                        <ThumbUpIcon />
-                        {/* <ArrowUpwardIcon /> */}
-                      </Button>
+                    <Button
+                      variant={userVotes[review.id] === 1 ? 'contained' : 'outlined'}
+                      color="success"
+                      onClick={() => handleVote(review.id, 1)}
+                    >
+                      <ThumbUpIcon />
+                    </Button>
 
                       <Typography variant='body2' color='textSecondary'>
                         {review.voteScore ?? 0}
                       </Typography>
 
                       <Button
-                        color='error'
+                        variant={userVotes[review.id] === -1 ? 'contained' : 'outlined'}
+                        color="error"
                         onClick={() => handleVote(review.id, -1)}
                       >
                         <ThumbDownIcon />
-                        {/* <ArrowDownwardIcon /> */}
                       </Button>
 
                       {/* Optional placeholder for showing current vote score */}
