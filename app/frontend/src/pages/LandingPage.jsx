@@ -9,7 +9,6 @@ import {
 } from '@mui/material';
 import Searchbar from '../components/Searchbar';
 
-
 export default function LandingPage() {
   return (
     <Box>
@@ -21,8 +20,8 @@ export default function LandingPage() {
         <Box sx={{ width: '100%', flexGrow: 1 }}>
           <Grid
             container
-            justifyContent={'center'}
-            spacing={{ xs: '3em', md: '10em' }}
+            justifyContent='center'
+            spacing='1em'
             sx={{
               flexDirection: { xs: 'column', md: 'row' },
             }}
@@ -32,7 +31,7 @@ export default function LandingPage() {
                 elevation={3}
                 sx={{
                   height: '100%',
-                  width: { xs: '100%', md: '100%' },
+                  width: '100%',
                   p: { xs: '1em', md: '3em' },
                   display: 'flex',
                   flexDirection: 'column',
@@ -50,7 +49,7 @@ export default function LandingPage() {
                   alt='Test Image'
                   sx={{
                     height: 'auto',
-                    width: { xs: '60%', sm: '70%', md: '100%' },
+                    width: { xs: '50%', sm: '40%', md: '75%' },
                     maxWidth: '100%',
                     order: { xs: 1, md: 2 },
                   }}
@@ -62,7 +61,7 @@ export default function LandingPage() {
                 elevation={3}
                 sx={{
                   height: '100%',
-                  width: { xs: '100%', md: '100%' },
+                  width: '100%',
                   p: { xs: '1em', md: '3em' },
                   display: 'flex',
                   flexDirection: 'column',
@@ -72,7 +71,7 @@ export default function LandingPage() {
                 }}
               >
                 <Typography variant='h4' fontWeight='bold' align='center'>
-                  Discover career paths
+                  Find career paths
                 </Typography>
                 <Box
                   component='img'
@@ -80,7 +79,7 @@ export default function LandingPage() {
                   alt='Test Image'
                   sx={{
                     height: 'auto',
-                    width: { xs: '60%', sm: '70%', md: '100%' },
+                    width: { xs: '50%', sm: '40%', md: '75%' },
                     maxWidth: '100%',
                     order: { xs: 1, md: 2 },
                   }}
@@ -91,7 +90,7 @@ export default function LandingPage() {
               <Box
                 sx={{
                   height: '100%',
-                  width: { xs: '100%', md: '100%' },
+                  width: '100%',
                   p: { xs: '1em', md: '3em' },
                   display: 'flex',
                   flexDirection: 'column',
@@ -109,7 +108,7 @@ export default function LandingPage() {
                   alt='Test Image'
                   sx={{
                     height: 'auto',
-                    width: { xs: '60%', sm: '70%', md: '100%' },
+                    width: { xs: '50%', sm: '40%', md: '75%' },
                     maxWidth: '100%',
                     order: { xs: 1, md: 2 },
                   }}
@@ -123,107 +122,79 @@ export default function LandingPage() {
       <Divider />
 
       {/* Another full width section */}
-      <Box sx={{ width: '100%' }}>
-        {/* Misc Buttons */}
+      <Container maxWidth='xl' sx={{ padding: '2em' }}>
         <Box
           sx={{
             display: 'flex',
-            flexDirection: 'column',
-            gap: '1em',
-            padding: '1em',
+            flexDirection: { xs: 'column', md: 'row' },
+            p: { xs: '1em', sm: '3em', md: '4em' },
+            backgroundColor: ' #D2E1E3 ',
+            borderRadius: '15px',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            gap: { xs: '2em', md: '0' },
           }}
         >
-          {/* First Box */}
           <Box
             sx={{
               display: 'flex',
-              flexDirection: { xs: 'column', md: 'row' },
-              justifyContent: 'space-evenly',
-              alignItems: 'center',
-              padding: '1em',
-              flexWrap: 'wrap',
-              pb: '0',
+              flexDirection: 'column',
+              gap: '1em',
+              width: { xs: '100%', md: '50%' },
+              textAlign: { xs: 'center', md: 'left' },
+              alignItems: { xs: 'center', md: 'start' },
             }}
           >
-            <Box
-              component='img'
-              src='src/images/heroSearchbar.avif'
-              alt='Test Image'
+            <Typography variant='caption' sx={{ opacity: '60%' }}>
+              TRY IT NOW
+            </Typography>
+            <Typography
+              variant='h2'
               sx={{
-                height: 'auto',
-                width: { xs: '100%', sm: '80%', md: '500px' },
-                maxWidth: '100%',
-                order: { xs: 1, sm: 1, md: 1 }, // Always first on mobile, stays first on desktop
-              }}
-            />
-            <Box
-              sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '1em',
-                textAlign: 'center',
-                alignItems: 'center',
-                width: { xs: '100%', sm: '80%', md: '40%' },
-                mt: { xs: 2, md: 0 },
-                order: { xs: 2, sm: 2, md: 2 }, // Always second on mobile, stays second on desktop
+                fontSize: { xs: '2rem', sm: '3rem' },
               }}
             >
-              <Typography variant='h3'>Something here</Typography>
-              <Typography>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              </Typography>
-              <Button variant='outlined' sx={{ width: '100px' }}>
-                Button
-              </Button>
-            </Box>
+              Ready to level up your future?
+            </Typography>
+            <Typography
+              variant='body1'
+              sx={{
+                fontSize: { xs: '.80rem', sm: '1rem', md: '1rem' },
+                width: '90%',
+              }}
+            >
+              Get recommendations from people in fields you are interested in,
+              as well as information on career prospects and progression.
+            </Typography>
           </Box>
-
-          {/* Second Box */}
           <Box
             sx={{
               display: 'flex',
-              flexDirection: { xs: 'column', md: 'row' },
-              justifyContent: 'space-evenly',
-              alignItems: 'center',
-              padding: '1em',
-              flexWrap: 'wrap',
+              flexDirection: { xs: 'column', sm: 'row' },
+              gap: '1em',
             }}
           >
-            <Box
-              component='img'
-              src='src/images/heroSearchbar.avif'
-              alt='Test Image'
+            <Button
+              variant='contained'
               sx={{
-                height: 'auto',
-                width: { xs: '100%', sm: '80%', md: '500px' },
-                maxWidth: '100%',
-                order: { xs: 1, sm: 1, md: 1, lg: 2 },
-              }}
-            />
-
-            <Box
-              sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '1em',
-                textAlign: 'center',
-                alignItems: 'center',
-                width: { xs: '100%', sm: '80%', md: '40%' },
-                mt: { xs: 2, md: 0 },
-                order: { xs: 2, sm: 2, md: 2, lg: 1 },
+                p: { xs: '1em', md: '1.75em' },
+                borderRadius: '20px',
               }}
             >
-              <Typography variant='h3'>Something here</Typography>
-              <Typography>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              </Typography>
-              <Button variant='outlined' sx={{ width: '100px' }}>
-                Button
-              </Button>
-            </Box>
+              Get Started
+            </Button>
+            <Button
+              variant='outlined'
+              sx={{
+                p: { xs: '1em', md: '1.75em' },
+                borderRadius: '20px',
+              }}
+            >
+              Explore Careers
+            </Button>
           </Box>
         </Box>
-      </Box>
+      </Container>
     </Box>
   );
 }
