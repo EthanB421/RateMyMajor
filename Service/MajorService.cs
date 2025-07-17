@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 using RateMyMajor.Models;
 using RateMyMajor.Repository.IRepository;
 
@@ -8,6 +10,20 @@ public class MajorService : IMajorService
     public MajorService(IUnitOfWork unitOfWork)
     {
         _unitOfWork = unitOfWork;
+    }
+
+
+    public async Task<List<MajorDto>> GetAllMajorsAsync()
+    {
+        var majors = await _unitOfWork.Major.GetAllMajorsAsync();
+        
+        return majors.Select(m => new MajorDto
+        {
+            Id = m.Id,
+            Name = m.Name,
+            Description = m.Description,
+            MajorRating = m.Rating
+        }).ToList();
     }
 
     public async Task<Major?> GetMajorByKeywordAsync(string keyword)
@@ -35,12 +51,12 @@ public class MajorService : IMajorService
             review.VoteScore = voteSum?.VoteSum ?? 0;
         }
 
-            int totalReviews = major.Reviews.Count;
-            int recommendedCount = major.Reviews.Count(r => r.Rating >= 3);
+        int totalReviews = major.Reviews.Count;
+        int recommendedCount = major.Reviews.Count(r => r.Rating >= 3);
 
-            major.WouldRecommend = totalReviews > 0
-                ? (int)Math.Round((double)recommendedCount / totalReviews * 100)
-                : 0;
+        major.WouldRecommend = totalReviews > 0
+            ? (int)Math.Round((double)recommendedCount / totalReviews * 100)
+            : 0;
 
         return major;
     }
