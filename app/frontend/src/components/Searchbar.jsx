@@ -37,6 +37,7 @@ export default function Searchbar() {
       sx={{
         backgroundImage: `url(src/images/heroSearchbar.avif)`,
         backgroundSize: 'cover',
+        opacity: '90%',
         height: '100vh',
         width: '100%',
         display: 'flex',
@@ -45,7 +46,15 @@ export default function Searchbar() {
         alignItems: 'center',
       }}
     >
-      <Typography variant='h2' align='center' color='#002884' fontWeight='bold'>
+      <Typography
+        variant='h2'
+        align='center'
+        color='#002884'
+        fontWeight='bold'
+        sx={{
+          fontSize: { xs: '2rem', sm: '2.5rem', md: '4rem' },
+        }}
+      >
         Discover your career path here!
       </Typography>
       <TextField
