@@ -5,12 +5,16 @@ import { useState } from 'react';
 export default function RegisterPage() {
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
+        firstName: '',
+        lastName: '',
         email: '',
         password: '',
         confirmPassword: ''
     });
 
     const [errors, setErrors] = useState({
+        firstName: '',
+        lastName: '',
         email: '',
         password: '',
         confirmPassword: ''
@@ -31,16 +35,43 @@ export default function RegisterPage() {
             });
         }
     };
-
-    const handleSubmit = (e) => {
+        const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // comment out this if block if you don't want to deal with login validation
+        if (validateLogin()) {
+            try {
+                const response = await fetch('http://localhost:5123/api/auth/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email: formData.email,
+                        password: formData.password,
+                        firstName: formData.firstName,
+                        lastName: formData.lastName
+                    })
+                });
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.message || 'Account Creation Failed');
+                }
+
+
+                navigate('/login');
+                window.location.reload();
+            } catch (error) {
+                console.error('Account creation error:', error);
+                alert(`Account Creation Failed: ${error.message}`);
+            }
         if (validateLogin() == false) {
             return;
         }
-        navigate('/login');
-    }
+        }
+    };
+
+
 
     // Simple validation for login
     const validateLogin = () => {
@@ -105,6 +136,35 @@ export default function RegisterPage() {
                             gap: '1em',
                         }}
                     >
+                        <Box sx={{ display: 'flex', gap: '1em' }}>
+                            <FormControl fullWidth>
+                                <FormLabel htmlFor='firstName'>First Name</FormLabel>
+                                <TextField
+                                    name='firstName'
+                                    id='firstName'
+                                    required
+                                    placeholder='John'
+                                    value={formData.firstName}
+                                    onChange={handleChange}
+                                    error={!!errors.firstName}
+                                    helperText={errors.firstName}
+                                />
+                            </FormControl>
+
+                            <FormControl fullWidth>
+                                <FormLabel htmlFor='lastName'>Last Name</FormLabel>
+                                <TextField
+                                    name='lastName'
+                                    id='lastName'
+                                    required
+                                    placeholder='Doe'
+                                    value={formData.lastName}
+                                    onChange={handleChange}
+                                    error={!!errors.lastName}
+                                    helperText={errors.lastName}
+                                />
+                            </FormControl>
+                        </Box>
                         {/* Email field */}
                         <FormControl>
                             <FormLabel htmlFor='email'>Email</FormLabel>

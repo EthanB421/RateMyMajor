@@ -56,7 +56,7 @@ export default function LoginPage() {
                 localStorage.setItem('token', data.token);
                 localStorage.setItem('user', JSON.stringify(data.user));
 
-                navigate('/home');
+                navigate('/'); // Redirect to home page after successful login
                 window.location.reload();
             } catch (error) {
                 console.error('Login error:', error);
@@ -111,7 +111,7 @@ export default function LoginPage() {
                         gap: '1em'
                     }}
                 >
-                    <Typography variant='h4' sx={{ textAlign: { xs: 'center', md: 'left' } }}>Welcome back.</Typography>
+                    <Typography variant='h4' sx={{ textAlign: { xs: 'center', md: 'left' } }}>Sign in to your account</Typography>
                     {/* Textfield container */}
                     <Box
                         sx={{

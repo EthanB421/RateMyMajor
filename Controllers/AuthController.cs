@@ -22,11 +22,11 @@ public class AuthController : ControllerBase
     [HttpPost("register")]
     public async Task<IActionResult> Register([FromBody] RegisterDto model)
     {
-        var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+        var user = new ApplicationUser { UserName = model.Email, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName };
         var result = await _userManager.CreateAsync(user, model.Password);
 
         if (result.Succeeded)
-            return Ok();
+            return Ok(new { message = "Registration successful" });
 
         return BadRequest(result.Errors);
     }
@@ -53,7 +53,7 @@ public class AuthController : ControllerBase
             issuer: _config["Jwt:Issuer"],
             audience: _config["Jwt:Audience"],
             claims: claims,
-            expires: DateTime.UtcNow.AddHours(1),
+            expires: DateTime.UtcNow.AddMinutes(3),
             signingCredentials: creds
         );
 
