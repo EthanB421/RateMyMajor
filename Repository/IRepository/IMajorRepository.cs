@@ -5,5 +5,6 @@ namespace RateMyMajor.Repository.IRepository
     public interface IMajorRepository : IRepository<Major>
     {
         void Update(Major obj);
+        Task<List<Major>> GetAllMajorsAsync();
     }
 }

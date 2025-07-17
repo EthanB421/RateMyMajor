@@ -16,12 +16,12 @@ public class MajorController : ControllerBase
         _majorService = majorService;
     }
 
-    // [HttpGet("GetMajors")]
-    // public IActionResult GetMajors()
-    // {
-    //     var majors = _majorService.Major.GetAll();
-    //     return Ok(majors);
-    // }
+    [HttpGet("GetMajors")]
+    public async Task<IActionResult> GetAllMajorsAsync()
+    {
+        var majors = await _majorService.GetAllMajorsAsync();
+        return majors != null ? Ok(majors) : NotFound("No majors found.");
+    }
 
 [HttpGet("search")]
 public async Task<IActionResult> SearchMajor([FromQuery] string keyword)
