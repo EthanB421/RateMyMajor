@@ -36,6 +36,7 @@ function App() {
         <Navbar />
         <div className='main-content'>
           <Routes>
+            <Route path="/major/add-review/:majorId" element={<AddReviewPage />} />
             <Route path='/' element={<LandingPage />} />
             <Route path='/login' element={<LoginPage />} />
             <Route path='/register' element={<RegisterPage />} />

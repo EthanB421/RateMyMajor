@@ -19,6 +19,10 @@ namespace RateMyMajor.Repository
             Vote = new VoteRepository(_db);
         }
 
+        public async Task SaveAsync()
+        {
+            await _db.SaveChangesAsync();
+        }
 
         public void Save()
         {

@@ -28,7 +28,9 @@ builder.Services.AddScoped<IMajorService, MajorService>();
 //COMMENT OUT THIS LINE IF NOT USING DATABASE
 builder.Services.AddDbContext<ApplicationDbContext>(options=>options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IReviewService, ReviewService>();
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
 

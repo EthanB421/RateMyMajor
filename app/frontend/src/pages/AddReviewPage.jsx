@@ -1,10 +1,13 @@
 import { useState } from 'react';
 import { Box, Typography, Paper, Container, TextField, Grid, Button, createTheme } from "@mui/material";
 import { useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 export default function AddReviewPage() {
     const navigate = useNavigate();
     const [clickIndex, setClickIndex] = useState(null);
+    const {majorId} = useParams();
+    const [content, setContent] = useState('');
     const [major, setMajor] = useState('[major here]')
     const ratings = [1, 2, 3, 4, 5];
 
@@ -13,10 +16,37 @@ export default function AddReviewPage() {
 
     }
 
-    const handleSubmit = () => {
-        console.log("submitted");
+const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const token = localStorage.getItem('token');
+    const payload = {
+        majorId: parseInt(majorId), // or keep as string if your backend expects that
+        rating: clickIndex + 1,     // assuming rating is based on index
+        content: content
+    };
+
+    try {
+        const response = await fetch('http://localhost:5123/api/review/add', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify(payload)
+        });
+
+        if (!response.ok) {
+            const errorData = await response.text();
+            throw new Error(errorData);
+        }
+
         navigate('/');
+    } catch (error) {
+        console.error("Submit error:", error.message);
     }
+};
+
 
     return (
         <Container disableGutters maxWidth='xl'>
@@ -29,7 +59,7 @@ export default function AddReviewPage() {
                     margin: '1em',
                 }}
             >
-                <Typography variant='h4'>{major}</Typography>
+                <Typography variant='h4'>{major.name}</Typography>
                 {/* 
                     Form Structure and Styling:
                         - 3 separate box parts aligned in a column
@@ -96,6 +126,8 @@ export default function AddReviewPage() {
                         <TextField
                             multiline
                             rows={7}
+                            value={content}
+                              onChange={(e) => setContent(e.target.value)} 
                             placeholder="What did you enjoy/dislike about your major?"
                             sx={{
                                 '& .MuiOutlinedInput-root': {

@@ -25,7 +25,14 @@ namespace RateMyMajor.Models
         [ValidateNever]
         [JsonIgnore]
         public Major Major { get; set; }
-        [NotMapped]
+
+        [DisplayName("User")]
+        [ForeignKey("UserId")]
+        public string UserId { get; set; }        // <- This is the Id from IdentityUser
+
+        public ApplicationUser User { get; set; } // Navigation property        [NotMapped]
         public int VoteScore { get; set; }
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+
     }
 }

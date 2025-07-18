@@ -16,5 +16,10 @@ namespace RateMyMajor.Repository
         {
             _db.Review.Update(obj);
         }
+
+            public async Task AddAsync(Review review)
+            {
+                await _db.Review.AddAsync(review);
+            }
     }
 }

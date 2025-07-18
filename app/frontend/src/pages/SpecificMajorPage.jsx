@@ -5,6 +5,7 @@ import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import LinearProgress from '@mui/material/LinearProgress';
+import { Link } from 'react-router-dom';
 
 import {
   Container,
@@ -51,6 +52,7 @@ const handleVote = async (reviewId, value) => {
     console.error('Vote API error:', err);
   }
 };
+
 
 
 
@@ -207,6 +209,8 @@ const handleVote = async (reviewId, value) => {
               </Box>
             </Box>
             <Button
+            component = {Link} to={`/major/add-review/${major.id}`}
+
               fullWidth
               // color='secondary'
               variant='contained'

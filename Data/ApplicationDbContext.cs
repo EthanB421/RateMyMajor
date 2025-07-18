@@ -37,17 +37,17 @@ namespace RateMyMajor.Data
             );
 
             modelBuilder.Entity<Review>().HasData(
-                new Review { Id = 1, Content = "Challenging but rewarding.", Rating = 5, MajorId = 1 },
-                new Review { Id = 2, Content = "A lot of math and theory.", Rating = 4, MajorId = 1 },
-                new Review { Id = 3, Content = "Man this major stinks", Rating = 4, MajorId = 1 },
-                new Review { Id = 4, Content = "Very hands-on and practical.", Rating = 5, MajorId = 2 },
-                new Review { Id = 5, Content = "Brain power!", Rating = 5, MajorId = 2 },
-                new Review { Id = 6, Content = "A lot of butt wiping", Rating = 5, MajorId = 3 },
-                new Review { Id = 7, Content = "THis is really hard", Rating = 2, MajorId = 3 },
-                new Review { Id = 8, Content = "I love nursing", Rating = 5, MajorId = 3 },
-                new Review { Id = 9, Content = "I HATE nursing", Rating = 1, MajorId = 3 },
-                new Review { Id = 10, Content = "I wanna do nursing", Rating = 4, MajorId = 3 },
-                new Review { Id = 11, Content = "Please please please nursing", Rating = 3, MajorId = 3 }
+                new Review { Id = 1, UserId="1", Content = "Challenging but rewarding.", Rating = 5, MajorId = 1 },
+                new Review { Id = 2, UserId="1",Content = "A lot of math and theory.", Rating = 4, MajorId = 1 },
+                new Review { Id = 3, UserId="1",Content = "Man this major stinks", Rating = 4, MajorId = 1 },
+                new Review { Id = 4, UserId="1",Content = "Very hands-on and practical.", Rating = 5, MajorId = 2 },
+                new Review { Id = 5, UserId="1",Content = "Brain power!", Rating = 5, MajorId = 2 },
+                new Review { Id = 6, UserId="1",Content = "A lot of butt wiping", Rating = 5, MajorId = 3 },
+                new Review { Id = 7, UserId="1",Content = "THis is really hard", Rating = 2, MajorId = 3 },
+                new Review { Id = 8, UserId="1",Content = "I love nursing", Rating = 5, MajorId = 3 },
+                new Review { Id = 9, UserId="1",Content = "I HATE nursing", Rating = 1, MajorId = 3 },
+                new Review { Id = 10, UserId="1",Content = "I wanna do nursing", Rating = 4, MajorId = 3 },
+                new Review { Id = 11, UserId="1",Content = "Please please please nursing", Rating = 3, MajorId = 3 }
             );
         }
 
