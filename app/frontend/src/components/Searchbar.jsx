@@ -2,6 +2,7 @@ import { Box, TextField, Typography, InputAdornment } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import heroImage from '../images/heroSearchbar.avif';
 
 /*
     TODO:
@@ -35,9 +36,12 @@ export default function Searchbar() {
   return (
     <Box
       sx={{
-        backgroundImage: `url(src/images/heroSearchbar.avif)`,
+        backgroundImage: `
+    linear-gradient(135deg, rgba(255, 255, 255, 0.6), rgba(0, 0, 0, 0.3)),
+    url(${heroImage})
+  `,
         backgroundSize: 'cover',
-        opacity: '90%',
+        backgroundPosition: 'center',
         height: '100vh',
         width: '100%',
         display: 'flex',
@@ -50,9 +54,9 @@ export default function Searchbar() {
         variant='h2'
         align='center'
         color='#002884'
-        fontWeight='bold'
         sx={{
-          fontSize: { xs: '2rem', sm: '2.5rem', md: '4rem' },
+          fontFamily: ' Bebas Neue',
+          fontSize: { xs: '2rem', sm: '3.5rem', md: '6rem' },
         }}
       >
         Discover your career path here!

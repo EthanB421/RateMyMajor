@@ -6,8 +6,9 @@ import {
   Paper,
   Link,
   Rating,
+  Grow,
+  styled,
 } from '@mui/material';
-import { styled } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
@@ -67,6 +68,9 @@ export default function MajorPage() {
             sx={{
               textAlign: { xs: 'center', md: 'left' },
               fontSize: { xs: '2.5rem', md: '3rem' },
+              fontFamily: 'Bebas Neue',
+              fontWeight: 500,
+              fontStyle: 'Italic',
             }}
           >
             Find a path here.
@@ -88,16 +92,27 @@ export default function MajorPage() {
                   borderRadius: '30px',
                   backgroundColor: '#ebebeb',
                   height: '100%',
-                  p: '3em',
+                  p: { xs: '2em', sm: '2.5em', md: '3em' },
                   gap: '.5em',
+                  transition: 'transform 0.3s ease',
+                  '&:hover': {
+                    transform: 'scale(1.05)',
+                    cursor: 'pointer',
+                  },
                 }}
+                onClick={() => navigate(`/major/${major.name}`)}
               >
                 <Typography
                   textAlign='center'
                   variant='h5'
                   sx={{
-                    fontFamily: 'Bebas Neue, sans-serif',
-                    fontSize: '3rem',
+                    fontFamily: 'Raleway, Bebas Neue, sans-serif',
+                    fontSize: {
+                      xs: '1rem',
+                      sm: '1.5rem',
+                      md: '2rem',
+                      lg: '2.5rem',
+                    },
                   }}
                 >
                   {major.name}
@@ -111,7 +126,11 @@ export default function MajorPage() {
             </Grid>
           ))}
         </Grid>
-        <Typography textAlign='center' variant='body1'>
+        <Typography
+          textAlign='center'
+          variant='body1'
+          sx={{ fontFamily: 'Raleway, Bebas Neue' }}
+        >
           Don't see your major? Add it{' '}
           <Link onClick={() => navigate('/')}>here</Link>.
         </Typography>
