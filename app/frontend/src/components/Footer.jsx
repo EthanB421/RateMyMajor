@@ -1,6 +1,8 @@
 import { AppBar, Typography, Box, Link } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 export default function Footer() {
+  const navigate = useNavigate();
   return (
     <AppBar position='static'>
       {/* Footer Container */}
@@ -16,15 +18,21 @@ export default function Footer() {
       >
         {/* 1st Box - RateMyMajor, Privacy Policy, TOS, Copyright */}
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1em' }}>
-          <Typography align='center'
-                    sx={{
-            fontSize: { xs: '2rem', sm: '2rem', md: '3rem' },
-            color: 'white',
-            flexGrow: 1,
-            fontFamily: 'Bebas Neue, sans-serif',
-            fontWeight: 200,
-            fontStyle: 'italic',
-          }}>
+          <Typography
+            align='center'
+            onClick={() => navigate('/')}
+            sx={{
+              fontSize: { xs: '2rem', sm: '2rem', md: '3rem' },
+              color: 'white',
+              flexGrow: 1,
+              fontFamily: 'Bebas Neue, sans-serif',
+              fontWeight: 200,
+              fontStyle: 'italic',
+              '&:hover': {
+                cursor: 'pointer',
+              },
+            }}
+          >
             RateMyCareer
           </Typography>
           <Box
@@ -45,8 +53,13 @@ export default function Footer() {
               underline='none'
               variant='subtitle1'
               align='center'
-              href='/'
-              sx={{ color: 'white' }}
+              onClick={() => navigate('/')}
+              sx={{
+                color: 'white',
+                '&:hover': {
+                  cursor: 'pointer',
+                },
+              }}
             >
               Privacy Policy
             </Link>
@@ -54,8 +67,13 @@ export default function Footer() {
               underline='none'
               variant='subtitle1'
               align='center'
-              href='/'
-              sx={{ color: 'white' }}
+              onClick={() => navigate('/')}
+              sx={{
+                color: 'white',
+                '&:hover': {
+                  cursor: 'pointer',
+                },
+              }}
             >
               Terms of Service
             </Link>
@@ -70,53 +88,63 @@ export default function Footer() {
             Note:
             - There is a lot of repeated code for the links, but I don't think I need to make a component since we aren't using them anywhere else
         */}
-        <Box
-          sx={{ display: 'flex', flexDirection: 'row', gap: '1em', }}
-        >
+        <Box sx={{ display: 'flex', flexDirection: 'row', gap: '1em' }}>
           <Link
-            href='/'
+            onClick={() => navigate('/major')}
             variant='subtitle1'
             underline='none'
             sx={{
               fontSize: { xs: '1rem', sm: '1rem', md: '1.3rem' },
               color: 'white',
               flexGrow: 1,
+              '&:hover': {
+                cursor: 'pointer',
+              },
             }}
           >
             Majors
           </Link>
           <Link
-            href='/'
+            onClick={() => navigate('/')}
             variant='subtitle1'
             underline='none'
             sx={{
               fontSize: { xs: '1rem', sm: '1rem', md: '1.3rem' },
               color: 'white',
               flexGrow: 1,
+              '&:hover': {
+                cursor: 'pointer',
+              },
             }}
           >
             Reviews
           </Link>{' '}
-          <Link
-            href='/'
+          <Typography
+            onClick={() => navigate('/')}
             variant='subtitle1'
             underline='none'
             sx={{
               fontSize: { xs: '1rem', sm: '1rem', md: '1.3rem' },
               color: 'white',
               flexGrow: 1,
+              '&:hover': {
+                cursor: 'pointer',
+              },
             }}
           >
             Account
-          </Link>{' '}
+          </Typography>{' '}
           <Link
-            href='/'
+            onClick={() => navigate('/')}
             variant='subtitle1'
             underline='none'
             sx={{
               fontSize: { xs: '1rem', sm: '1rem', md: '1.3rem' },
               color: 'white',
               flexGrow: 1,
+              '&:hover': {
+                cursor: 'pointer',
+              },
             }}
           >
             Contact Us

@@ -16,6 +16,7 @@ import {
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export default function Navbar() {
   /*
@@ -31,6 +32,8 @@ export default function Navbar() {
   const handleDrawerToggle = () => {
     setDrawerOpen(!drawerOpen);
   };
+
+  const navigate = useNavigate();
 
   /*
         Navbar Content
@@ -53,7 +56,7 @@ export default function Navbar() {
   const drawer = (
     <Box sx={{ width: 250 }} role='presentation' onClick={handleDrawerToggle}>
       <Typography variant='h5' p='15px'>
-        Test
+        Navigation
       </Typography>
       <Divider />
       <List>
@@ -63,7 +66,12 @@ export default function Navbar() {
             key={item.text}
             text-decoration='none'
             component='a'
-            href={item.path}
+            onClick={() => navigate(`${item.path}`)}
+            sx={{
+              '&:hover': {
+                cursor: 'pointer',
+              },
+            }}
           >
             <ListItemText primary={item.text} />
           </ListItem>
@@ -82,7 +90,7 @@ export default function Navbar() {
         <Button
           key={item.text}
           color='inherit'
-          href={item.path}
+          onClick={() => navigate(`${item.path}`)}
           sx={{
             fontSize: '1.2rem',
           }}
@@ -107,18 +115,26 @@ export default function Navbar() {
           justifyContent: 'center',
         }}
       >
-        <Toolbar>
+        <Toolbar
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}
+        >
           <Link
-            href='/'
+            onClick={() => navigate('/')}
             variant='h4'
             underline='none'
             sx={{
               fontSize: { xs: '2rem', sm: '2rem', md: '3rem' },
               color: 'white',
-              flexGrow: 1,
               fontFamily: 'Bebas Neue, sans-serif',
               fontWeight: 200,
               fontStyle: 'italic',
+              '&:hover': {
+                cursor: 'pointer',
+              },
             }}
           >
             RateMyCareer
