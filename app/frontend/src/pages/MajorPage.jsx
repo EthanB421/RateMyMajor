@@ -1,4 +1,13 @@
-import { Typography, Grid, Container, Box, Paper, Link } from '@mui/material';
+import {
+  Typography,
+  Grid,
+  Container,
+  Box,
+  Paper,
+  Link,
+  Rating,
+} from '@mui/material';
+import { styled } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
@@ -7,6 +16,12 @@ export default function MajorPage() {
   const [majors, setMajors] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+
+  const StyledRating = styled(Rating)({
+    '& .MuiRating-iconFilled': {
+      color: '#757ce8',
+    },
+  });
 
   useEffect(() => {
     const fetchMajors = async () => {
@@ -67,15 +82,31 @@ export default function MajorPage() {
               <Box
                 sx={{
                   display: 'flex',
+                  flexDirection: 'column',
                   justifyContent: 'center',
                   alignItems: 'center',
-                  border: '1px solid black',
+                  borderRadius: '30px',
+                  backgroundColor: '#ebebeb',
                   height: '100%',
+                  p: '3em',
+                  gap: '.5em',
                 }}
               >
-                <Typography textAlign='center' sx={{ p: ' 5em' }}>
+                <Typography
+                  textAlign='center'
+                  variant='h5'
+                  sx={{
+                    fontFamily: 'Bebas Neue, sans-serif',
+                    fontSize: '3rem',
+                  }}
+                >
                   {major.name}
                 </Typography>
+                <StyledRating
+                  name='major-rating'
+                  defaultValue={major.majorRating}
+                  readOnly
+                />
               </Box>
             </Grid>
           ))}
