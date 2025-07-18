@@ -42,7 +42,12 @@ export default function LandingPage() {
                   alignItems: 'center',
                 }}
               >
-                <Typography variant='h4' fontWeight='bold' align='center'>
+                <Typography
+                  variant='h4'
+                  fontWeight='bold'
+                  align='center'
+                  sx={{ fontFamily: 'Raleway' }}
+                >
                   Anonymous reviews
                 </Typography>
                 <Box
@@ -72,7 +77,12 @@ export default function LandingPage() {
                   alignItems: 'center',
                 }}
               >
-                <Typography variant='h4' fontWeight='bold' align='center'>
+                <Typography
+                  variant='h4'
+                  fontWeight='bold'
+                  align='center'
+                  sx={{ fontFamily: 'Raleway' }}
+                >
                   Find career paths
                 </Typography>
                 <Box
@@ -101,8 +111,13 @@ export default function LandingPage() {
                   alignItems: 'center',
                 }}
               >
-                <Typography variant='h4' fontWeight='bold' align='center'>
-                  Agree to disagree
+                <Typography
+                  variant='h4'
+                  fontWeight='bold'
+                  align='center'
+                  sx={{ fontFamily: 'Raleway' }}
+                >
+                  Rate other reviews
                 </Typography>
                 <Box
                   component='img'

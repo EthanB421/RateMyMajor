@@ -56,7 +56,7 @@ export default function Searchbar() {
         color='#002884'
         sx={{
           fontFamily: ' Bebas Neue',
-          fontSize: { xs: '2rem', sm: '3.5rem', md: '6rem' },
+          fontSize: { xs: '2rem', sm: '4rem', md: '5rem', lg: '6rem' },
         }}
       >
         Discover your career path here!
@@ -90,7 +90,7 @@ export default function Searchbar() {
         }}
         sx={{
           padding: '1em',
-          width: { xs: '100%', sm: '70%', md: '50%' },
+          width: { xs: '100%', sm: '70%', md: '80%', lg: '50%' },
           mb: { xs: '20em', sm: '10em', md: '5em', lg: '5em' },
         }}
         placeholder='Search for a major here...'

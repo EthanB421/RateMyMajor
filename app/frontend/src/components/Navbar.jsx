@@ -95,14 +95,18 @@ export default function Navbar() {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position='static' sx={{
-        p: {
-          xs: '1em',
-          sm: '1em',
-          md: '1.5em',
-          lg: '2em'
-        }, justifyContent: 'center'
-      }}>
+      <AppBar
+        position='static'
+        sx={{
+          p: {
+            xs: '1em',
+            sm: '1em',
+            md: '1.5em',
+            lg: '2em',
+          },
+          justifyContent: 'center',
+        }}
+      >
         <Toolbar>
           <Link
             href='/'
