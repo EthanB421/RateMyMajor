@@ -1,20 +1,39 @@
 import { Typography, Grid, Container, Box, Paper, Link } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 
 export default function MajorPage() {
   const navigate = useNavigate();
-  const testMajors = [
-    'computer science',
-    'nursing',
-    'biology',
-    'pharmacy',
-    'psychology',
-    'history',
-  ];
+  const [majors, setMajors] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
 
-  const handleNavigate = () => {
-    navigate('/');
-  };
+  useEffect(() => {
+    const fetchMajors = async () => {
+      try {
+        const response = await fetch(
+          'http://localhost:5123/api/Major/GetMajors'
+        );
+
+        if (!response.ok) {
+          throw new Error(`Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        setMajors(data);
+      } catch (err) {
+        setError(`Failed to fetch major: ${err.message}`);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchMajors();
+  }, []);
+
+  if (loading) return <Typography>Loading...</Typography>;
+  if (error) return <Typography color='error'>{error}</Typography>;
+  if (!majors) return <Typography>No major found.</Typography>;
 
   return (
     <Container maxWidth='xl' sx={{ p: '2em' }}>
@@ -29,12 +48,13 @@ export default function MajorPage() {
       >
         <Box>
           <Typography
-            variant='h2'
+            variant='h3'
             sx={{
-              textAlign: { sm: 'center', md: 'left' },
+              textAlign: { xs: 'center', md: 'left' },
+              fontSize: { xs: '2.5rem', md: '3rem' },
             }}
           >
-            Majors
+            Find a path here.
           </Typography>
         </Box>
         <Grid
@@ -42,7 +62,7 @@ export default function MajorPage() {
           spacing={{ xs: 2, md: 3 }}
           columns={{ xs: 1, sm: 8, md: 12 }}
         >
-          {testMajors.map((major, index) => (
+          {majors.map((major, index) => (
             <Grid key={index} size={{ xs: 2, sm: 4, md: 4 }}>
               <Box
                 sx={{
@@ -54,7 +74,7 @@ export default function MajorPage() {
                 }}
               >
                 <Typography textAlign='center' sx={{ p: ' 5em' }}>
-                  {major}
+                  {major.name}
                 </Typography>
               </Box>
             </Grid>
@@ -62,7 +82,7 @@ export default function MajorPage() {
         </Grid>
         <Typography textAlign='center' variant='body1'>
           Don't see your major? Add it{' '}
-          <Link onClick={handleNavigate}>here</Link>.
+          <Link onClick={() => navigate('/')}>here</Link>.
         </Typography>
       </Paper>
     </Container>

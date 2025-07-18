@@ -7,9 +7,11 @@ import {
   Button,
   Divider,
 } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 import Searchbar from '../components/Searchbar';
 
 export default function LandingPage() {
+  const navigate = useNavigate();
   return (
     <Box>
       {/* Searchbar component with Hero Image */}
@@ -180,6 +182,7 @@ export default function LandingPage() {
                 p: { xs: '1em', md: '1.75em' },
                 borderRadius: '20px',
               }}
+              onClick={() => navigate('/register')}
             >
               Get Started
             </Button>
@@ -189,6 +192,7 @@ export default function LandingPage() {
                 p: { xs: '1em', md: '1.75em' },
                 borderRadius: '20px',
               }}
+              onClick={() => navigate('/major')}
             >
               Explore Careers
             </Button>
