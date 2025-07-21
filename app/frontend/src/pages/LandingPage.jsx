@@ -7,9 +7,11 @@ import {
   Button,
   Divider,
 } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 import Searchbar from '../components/Searchbar';
 
 export default function LandingPage() {
+  const navigate = useNavigate();
   return (
     <Box>
       {/* Searchbar component with Hero Image */}
@@ -40,7 +42,12 @@ export default function LandingPage() {
                   alignItems: 'center',
                 }}
               >
-                <Typography variant='h4' fontWeight='bold' align='center'>
+                <Typography
+                  variant='h4'
+                  fontWeight='bold'
+                  align='center'
+                  sx={{ fontFamily: 'Raleway' }}
+                >
                   Anonymous reviews
                 </Typography>
                 <Box
@@ -70,7 +77,12 @@ export default function LandingPage() {
                   alignItems: 'center',
                 }}
               >
-                <Typography variant='h4' fontWeight='bold' align='center'>
+                <Typography
+                  variant='h4'
+                  fontWeight='bold'
+                  align='center'
+                  sx={{ fontFamily: 'Raleway' }}
+                >
                   Find career paths
                 </Typography>
                 <Box
@@ -99,8 +111,13 @@ export default function LandingPage() {
                   alignItems: 'center',
                 }}
               >
-                <Typography variant='h4' fontWeight='bold' align='center'>
-                  Agree to disagree
+                <Typography
+                  variant='h4'
+                  fontWeight='bold'
+                  align='center'
+                  sx={{ fontFamily: 'Raleway' }}
+                >
+                  Rate other reviews
                 </Typography>
                 <Box
                   component='img'
@@ -180,6 +197,7 @@ export default function LandingPage() {
                 p: { xs: '1em', md: '1.75em' },
                 borderRadius: '20px',
               }}
+              onClick={() => navigate('/register')}
             >
               Get Started
             </Button>
@@ -189,6 +207,7 @@ export default function LandingPage() {
                 p: { xs: '1em', md: '1.75em' },
                 borderRadius: '20px',
               }}
+              onClick={() => navigate('/major')}
             >
               Explore Careers
             </Button>

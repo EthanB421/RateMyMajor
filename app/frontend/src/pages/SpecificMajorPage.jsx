@@ -27,34 +27,31 @@ export default function SpecificMajorPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [userVotes, setUserVotes] = useState({});
 
-const handleVote = async (reviewId, value) => {
-  try {
-    const response = await fetch(`http://localhost:5123/api/votes`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('token')}`,
-      },
-      body: JSON.stringify({ reviewId, value }),
-    });
+  const handleVote = async (reviewId, value) => {
+    try {
+      const response = await fetch(`http://localhost:5123/api/votes`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+        body: JSON.stringify({ reviewId, value }),
+      });
 
-    const result = await response.json();
+      const result = await response.json();
 
-    // ✅ Trust the backend – use result directly
-    setUserVotes(prev => ({ ...prev, [reviewId]: result.userVote }));
-    setMajor(prev => ({
-      ...prev,
-      reviews: prev.reviews.map(r =>
-        r.id === reviewId ? { ...r, voteScore: result.newVoteScore } : r
-      ),
-    }));
-  } catch (err) {
-    console.error('Vote API error:', err);
-  }
-};
-
-
-
+      // ✅ Trust the backend – use result directly
+      setUserVotes((prev) => ({ ...prev, [reviewId]: result.userVote }));
+      setMajor((prev) => ({
+        ...prev,
+        reviews: prev.reviews.map((r) =>
+          r.id === reviewId ? { ...r, voteScore: result.newVoteScore } : r
+        ),
+      }));
+    } catch (err) {
+      console.error('Vote API error:', err);
+    }
+  };
 
 
   useEffect(() => {
@@ -90,8 +87,6 @@ const handleVote = async (reviewId, value) => {
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
-
-  console.log(paginatedItems);
 
   return (
     <Container disableGutters maxWidth='xl'>
@@ -257,21 +252,25 @@ const handleVote = async (reviewId, value) => {
                     <Typography variant='body2'>{review.content}</Typography>
 
                     <Box display='flex' alignItems='center' gap={2}>
-                    <Button
-                      variant={userVotes[review.id] === 1 ? 'contained' : 'outlined'}
-                      color="success"
-                      onClick={() => handleVote(review.id, 1)}
-                    >
-                      <ThumbUpIcon />
-                    </Button>
+                      <Button
+                        variant={
+                          userVotes[review.id] === 1 ? 'contained' : 'outlined'
+                        }
+                        color='success'
+                        onClick={() => handleVote(review.id, 1)}
+                      >
+                        <ThumbUpIcon />
+                      </Button>
 
                       <Typography variant='body2' color='textSecondary'>
                         {review.voteScore ?? 0}
                       </Typography>
 
                       <Button
-                        variant={userVotes[review.id] === -1 ? 'contained' : 'outlined'}
-                        color="error"
+                        variant={
+                          userVotes[review.id] === -1 ? 'contained' : 'outlined'
+                        }
+                        color='error'
                         onClick={() => handleVote(review.id, -1)}
                       >
                         <ThumbDownIcon />
