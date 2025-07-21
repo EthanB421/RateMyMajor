@@ -7,8 +7,12 @@ import {
   Link,
   Rating,
   Grow,
+  TextField,
+  InputAdornment,
   styled,
 } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
+import patrickImage from '../images/patrick404.jpg';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
@@ -17,6 +21,7 @@ export default function MajorPage() {
   const [majors, setMajors] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
 
   const StyledRating = styled(Rating)({
     '& .MuiRating-iconFilled': {
@@ -51,6 +56,9 @@ export default function MajorPage() {
   if (error) return <Typography color='error'>{error}</Typography>;
   if (!majors) return <Typography>No major found.</Typography>;
 
+  const filteredMajors = majors.filter((major) =>
+    major.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
   return (
     <Container maxWidth='xl' sx={{ p: '2em' }}>
       <Paper
@@ -60,14 +68,15 @@ export default function MajorPage() {
           gap: '2em',
           p: '2em',
           flexGrow: 1,
+          justifyContent: 'center',
         }}
       >
-        <Box>
+        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
           <Typography
             variant='h3'
             sx={{
-              textAlign: { xs: 'center', md: 'left' },
-              fontSize: { xs: '2.5rem', md: '3rem' },
+              textAlign: 'center',
+              fontSize: { xs: '2.5rem', sm: '3.5rem', md: '4rem' },
               fontFamily: 'Bebas Neue',
               fontWeight: 500,
               fontStyle: 'Italic',
@@ -75,64 +84,131 @@ export default function MajorPage() {
           >
             Find a path here.
           </Typography>
+          <TextField
+            // slotprops.input.sx is necessary here to directly edit the input (TextField in this case)
+            slotProps={{
+              input: {
+                sx: {
+                  borderRadius: '20px',
+                  bgcolor: 'white',
+                },
+                startAdornment: (
+                  <InputAdornment position='start'>
+                    <SearchIcon />
+                  </InputAdornment>
+                ),
+              },
+            }}
+            sx={{
+              padding: '1em',
+              fontSize: '1rem',
+            }}
+            autoComplete='off'
+            placeholder='Ex: Statistics...'
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
         </Box>
-        <Grid
-          container
-          spacing={{ xs: 2, md: 3 }}
-          columns={{ xs: 1, sm: 8, md: 12 }}
-        >
-          {majors.map((major, index) => (
-            <Grid key={index} size={{ xs: 2, sm: 4, md: 4 }}>
-              <Box
-                sx={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  borderRadius: '30px',
-                  backgroundColor: '#ebebeb',
-                  height: '100%',
-                  p: { xs: '2em', sm: '2.5em', md: '3em' },
-                  gap: '.5em',
-                  transition: 'transform 0.3s ease',
-                  '&:hover': {
-                    transform: 'scale(1.05)',
-                    cursor: 'pointer',
-                  },
-                }}
-                onClick={() => navigate(`/major/${major.name}`)}
-              >
-                <Typography
-                  textAlign='center'
-                  variant='h5'
+        {filteredMajors.length === 0 ? (
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+              gap: '1em',
+            }}
+          >
+            <Typography
+              variant='h6'
+              textAlign='center'
+              sx={{
+                fontFamily: 'Raleway',
+                color: 'red',
+                fontSize: { xs: '1rem', sm: '2rem', md: '2.5rem' },
+              }}
+            >
+              No results found for "{searchTerm}"
+            </Typography>
+            <Box
+              component='img'
+              src={patrickImage}
+              alt='404 Patrick'
+              sx={{
+                height: 'auto',
+                width: { xs: '100%', md: '50%' },
+              }}
+            ></Box>
+          </Box>
+        ) : (
+          <Grid
+            container
+            spacing={{ xs: 2, md: 3 }}
+            columns={{ xs: 1, sm: 8, md: 12 }}
+          >
+            {filteredMajors.map((major, index) => (
+              <Grid key={index} size={{ xs: 2, sm: 4, md: 4 }}>
+                <Box
                   sx={{
-                    fontFamily: 'Raleway, Bebas Neue, sans-serif',
-                    fontSize: {
-                      xs: '1rem',
-                      sm: '1.5rem',
-                      md: '2rem',
-                      lg: '2.5rem',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    borderRadius: '30px',
+                    backgroundColor: '#ebebeb',
+                    height: '100%',
+                    p: { xs: '2em', sm: '2.5em', md: '3em' },
+                    gap: '.5em',
+                    transition: 'transform 0.3s ease',
+                    '&:hover': {
+                      transform: 'scale(1.05)',
+                      cursor: 'pointer',
                     },
                   }}
+                  onClick={() => navigate(`/major/${major.name}`)}
                 >
-                  {major.name}
-                </Typography>
-                <StyledRating
-                  name='major-rating'
-                  defaultValue={major.majorRating}
-                  readOnly
-                />
-              </Box>
-            </Grid>
-          ))}
-        </Grid>
+                  <Typography
+                    textAlign='center'
+                    variant='h5'
+                    sx={{
+                      fontFamily: 'Raleway, Bebas Neue, sans-serif',
+                      fontSize: {
+                        xs: '1rem',
+                        sm: '1.5rem',
+                        md: '2rem',
+                        lg: '2.5rem',
+                      },
+                    }}
+                  >
+                    {major.name}
+                  </Typography>
+                  <StyledRating
+                    name='major-rating'
+                    defaultValue={major.majorRating}
+                    readOnly
+                  />
+                </Box>
+              </Grid>
+            ))}
+          </Grid>
+        )}
         <Typography
           textAlign='center'
           variant='body1'
           sx={{ fontFamily: 'Raleway, Bebas Neue' }}
         >
           Don't see your major? Add it{' '}
-          <Link onClick={() => navigate('/')}>here</Link>.
+          <Link
+            onClick={() => navigate('/')}
+            sx={{
+              '&:hover': {
+                cursor: 'pointer',
+              },
+            }}
+          >
+            here
+          </Link>
+          .
         </Typography>
       </Paper>
     </Container>

@@ -93,6 +93,7 @@ export default function Searchbar() {
           width: { xs: '100%', sm: '70%', md: '80%', lg: '50%' },
           mb: { xs: '20em', sm: '10em', md: '5em', lg: '5em' },
         }}
+        autoComplete='off'
         placeholder='Search for a major here...'
         value={inputValue}
         onChange={handleInputChange}
