@@ -63,8 +63,6 @@ export default function LoginPage() {
           throw new Error(data.message || 'Login failed');
         }
 
-        localStorage.setItem('token', data.token);
-        localStorage.setItem('user', JSON.stringify(data.user));
         localStorage.setItem('authToken', data.token);
         localStorage.setItem('user', JSON.stringify(data.user));
 

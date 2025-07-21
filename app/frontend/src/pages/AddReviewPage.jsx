@@ -19,7 +19,7 @@ export default function AddReviewPage() {
 const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('authToken');
     const payload = {
         majorId: parseInt(majorId), // or keep as string if your backend expects that
         rating: clickIndex + 1,     // assuming rating is based on index
