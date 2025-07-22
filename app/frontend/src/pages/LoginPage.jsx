@@ -8,9 +8,12 @@ import {
   FormControl,
   FormLabel,
   Link,
+  Snackbar,
+  Alert,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import { useAuth } from './AuthContext';
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -18,11 +21,15 @@ export default function LoginPage() {
     email: '',
     password: '',
   });
-
   const [errors, setErrors] = useState({
     email: '',
     password: '',
   });
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const handleCloseSnackbar = () => {
+    setIsSubmitted(false);
+  };
 
   // Captures new input value from textfields and updates formData
   const handleChange = (e) => {
@@ -41,6 +48,8 @@ export default function LoginPage() {
   };
 
   // In case you want an idea of what handleSubmit should look like after
+
+  const { login } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -63,13 +72,12 @@ export default function LoginPage() {
           throw new Error(data.message || 'Login failed');
         }
 
-        localStorage.setItem('token', data.token);
-        localStorage.setItem('user', JSON.stringify(data.user));
-        localStorage.setItem('authToken', data.token);
-        localStorage.setItem('user', JSON.stringify(data.user));
+        login(data.user, data.token);
+        setIsSubmitted(true);
 
-        navigate('/'); // Redirect to home page after successful login
-        window.location.reload();
+        setTimeout(() => {
+          navigate('/');
+        }, 6000);
       } catch (error) {
         console.error('Login error:', error);
         alert(`Login failed: ${error.message}`);
@@ -179,6 +187,17 @@ export default function LoginPage() {
           </Typography>
         </Box>
       </Paper>
+      <Snackbar
+        open={isSubmitted}
+        onClose={handleCloseSnackbar}
+        autoHideDuration={6000}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+        sx={{ mb: { xs: 'none', sm: '20em', md: '16em' } }}
+      >
+        <Alert severity='success' variant='filled' sx={{ width: '100%' }}>
+          Login successful!
+        </Alert>
+      </Snackbar>
     </Container>
   );
 }
