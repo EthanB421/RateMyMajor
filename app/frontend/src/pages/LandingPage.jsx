@@ -149,7 +149,7 @@ export default function LandingPage() {
             borderRadius: '15px',
             justifyContent: 'space-between',
             alignItems: 'center',
-            gap: { xs: '2em', md: '0' },
+            gap: { xs: '2em' },
           }}
         >
           <Box
@@ -194,7 +194,7 @@ export default function LandingPage() {
             <Button
               variant='contained'
               sx={{
-                p: { xs: '1em', md: '1.75em' },
+                p: { xs: '1em', md: '1.5em', lg: '1.75em' },
                 borderRadius: '20px',
               }}
               onClick={() => navigate('/register')}

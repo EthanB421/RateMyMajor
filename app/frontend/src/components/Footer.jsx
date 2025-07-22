@@ -20,7 +20,6 @@ export default function Footer() {
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1em' }}>
           <Typography
             align='center'
-            onClick={() => navigate('/')}
             sx={{
               fontSize: { xs: '2rem', sm: '2rem', md: '3rem' },
               color: 'white',
@@ -28,9 +27,6 @@ export default function Footer() {
               fontFamily: 'Bebas Neue, sans-serif',
               fontWeight: 200,
               fontStyle: 'italic',
-              '&:hover': {
-                cursor: 'pointer',
-              },
             }}
           >
             RateMyCareer

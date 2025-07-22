@@ -15,7 +15,7 @@ import {
   Link,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export default function Navbar() {
@@ -27,6 +27,8 @@ export default function Navbar() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
+  const [loggedIn, setIsLoggedIn] = useState(false);
+
   // useState for opening and closing of drawer when screen size is small
   const [drawerOpen, setDrawerOpen] = useState(false);
   const handleDrawerToggle = () => {
@@ -34,6 +36,26 @@ export default function Navbar() {
   };
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    const userData = localStorage.getItem('user');
+
+    if (token && userData) {
+      setIsLoggedIn(true);
+      try {
+        console.log('im logged in');
+      } catch (error) {
+        console.log('Error parsing user data:', error);
+      }
+    }
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    setIsLoggedIn(false);
+    navigate('/login');
+  };
 
   /*
         Navbar Content
@@ -43,11 +65,16 @@ export default function Navbar() {
         - update content with actual links and navigation names, simply placeholder content
 
   */
-  const navItems = [
-    { text: 'Majors', path: '/major' },
-    { text: 'Reviews', path: '/review' },
-    { text: 'Account', path: '/account' },
-  ];
+  const navItems = loggedIn
+    ? [
+        { text: 'Majors', path: '/major' },
+        { text: 'Reviews', path: '/review' },
+      ]
+    : [
+        { text: 'Majors', path: '/major' },
+        { text: 'Login', path: '/login' },
+        { text: 'Register', path: '/register' },
+      ];
 
   /*
         Drawer content
@@ -85,7 +112,14 @@ export default function Navbar() {
         - Pulls from navItems list to display buttons that lead to their respective links
   */
   const NavButtons = () => (
-    <Box sx={{ display: 'flex', gap: 2 }}>
+    <Box
+      sx={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        gap: '1em',
+      }}
+    >
       {navItems.map((item) => (
         <Button
           key={item.text}
@@ -98,6 +132,21 @@ export default function Navbar() {
           {item.text}
         </Button>
       ))}
+
+      {/* Display hello message if logged in */}
+      {loggedIn ? (
+        <Button
+          color='inherit'
+          sx={{
+            fontSize: '1.2rem',
+          }}
+          onClick={handleLogout}
+        >
+          My Account
+        </Button>
+      ) : (
+        []
+      )}
     </Box>
   );
 
