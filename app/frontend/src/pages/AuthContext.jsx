@@ -8,15 +8,15 @@ export const AuthProvider = ({ children }) => {
     return storedUser ? JSON.parse(storedUser) : null;
   });
 
-  const login = (userData, token) => {
+  const login = (userData, authToken) => {
     localStorage.setItem('user', JSON.stringify(userData));
-    localStorage.setItem('token', token);
+    localStorage.setItem('authToken', authToken);
     setUser(userData);
   };
 
   const logout = () => {
     localStorage.removeItem('user');
-    localStorage.removeItem('token');
+    localStorage.removeItem('authToken');
     setUser(null);
   };
 
