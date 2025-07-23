@@ -128,7 +128,7 @@ export default function Navbar() {
           }}
           onClick={handleLogout}
         >
-          My Account
+          Sign Out
         </Button>
       ) : (
         []
