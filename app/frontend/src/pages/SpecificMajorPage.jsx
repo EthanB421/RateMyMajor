@@ -6,6 +6,7 @@ import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import LinearProgress from '@mui/material/LinearProgress';
 import { Link } from 'react-router-dom';
+import { format, parseISO } from 'date-fns';
 
 import {
   Container,
@@ -26,6 +27,7 @@ export default function SpecificMajorPage() {
   const itemsPerPage = 3;
   const [currentPage, setCurrentPage] = useState(1);
   const [userVotes, setUserVotes] = useState({});
+  
 
   const handleVote = async (reviewId, value) => {
     try {
@@ -68,6 +70,8 @@ export default function SpecificMajorPage() {
         }
 
         const data = await response.json();
+            console.log('Fetched major data:', data);  // <-- add this line
+
         setMajor(data);
       } catch (err) {
         setError(`Failed to fetch major: ${err.message}`);
@@ -87,6 +91,14 @@ export default function SpecificMajorPage() {
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
+
+  const DateComponent = ({rawDate}) => {
+    const dateObj = parseISO(rawDate);
+    const formatted = format(dateObj, 'MMMM d, yyyy');
+    return <Typography>{formatted}</Typography>;
+  }
+  const recommendationText = major.rating < 3 ? 'Would Not Recommend' : 'Would Recommend';
+
 
   return (
     <Container disableGutters maxWidth='xl'>
@@ -136,7 +148,7 @@ export default function SpecificMajorPage() {
               </Typography>
               <Box sx={{ my: 2 }}>
                 <Typography variant='h5' textAlign='center' gutterBottom>
-                  4.3/5 - Would Recommend
+                  {major.rating.toFixed(1)}/5 - {recommendationText}
                 </Typography>
                 <LinearProgress
                   variant='determinate'
@@ -245,39 +257,89 @@ export default function SpecificMajorPage() {
                     key={review.id}
                     sx={{ mb: 2, p: 2, borderRadius: '15px' }}
                   >
-                    <Typography variant='subtitle1' fontWeight='bold'>
-                      Rating: {review.rating} / 5
-                    </Typography>
-                    {/* <Typography variant='body2' sx={{ mb: 1 }}>{review.content}</Typography> */}
-                    <Typography variant='body2'>{review.content}</Typography>
-
-                    <Box display='flex' alignItems='center' gap={2}>
-                      <Button
-                        variant={
-                          userVotes[review.id] === 1 ? 'contained' : 'outlined'
-                        }
-                        color='success'
-                        onClick={() => handleVote(review.id, 1)}
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      alignItems: 'stretch',
+                      gap: 2,
+                      padding: 2,
+                      borderRadius: '12px',
+                        flexWrap: 'wrap',          
+                      width: '100%',             
+                      overflow: 'hidden',         
+                      wordBreak: 'break-word',    
+                    }}
+                  >
+                    {/* Rating Box on the Left */}
+                    <Box
+                    sx={{
+                      marginBottom: '1em',
+                    }}>
+                      <Typography
+                      variant='h7'
+                      sx={{
+                        fontWeight: 'bold'
+                      }}>Rating</Typography>
+                    <Box
+                      sx={{
+                        backgroundColor: review.rating >= 4 ? '#84F8C3' : review.rating >= 2 ? '#FFF26A' : '#FF9999',
+                        padding: '0.5em 1em',
+                        borderRadius: '8px',
+                        minWidth: '50px',
+                        textAlign: 'center',
+                      }}
+                    >
+                      <Typography
+                        variant='h6'
+                        sx={{
+                          color: 'black',
+                          fontWeight: 'bold',
+                        }}
                       >
-                        <ThumbUpIcon />
-                      </Button>
+                        {review.rating}
+                      </Typography>
+                    </Box>
+                    </Box>
 
-                      <Typography variant='body2' color='textSecondary'>
-                        {review.voteScore ?? 0}
+                    {/* Review Content + Voting Buttons on Bottom */}
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'space-between',
+                        flex: 1,
+                      }}
+                    >
+                      <Typography variant='body2'  
+                       sx={{
+                      mb: 2,
+                      whiteSpace: 'normal',
+                      wordBreak: 'break-word',
+                      }}>
+                        {review.content}
                       </Typography>
 
-                      <Button
-                        variant={
-                          userVotes[review.id] === -1 ? 'contained' : 'outlined'
-                        }
-                        color='error'
-                        onClick={() => handleVote(review.id, -1)}
-                      >
-                        <ThumbDownIcon />
-                      </Button>
-
-                      {/* Optional placeholder for showing current vote score */}
+                      {/* Voting Buttons at the Bottom */}
+                      <Box display='flex' alignItems='center' gap={2}>
+                        <Button
+                          variant={userVotes[review.id] === 1 ? 'contained' : 'outlined'}
+                          color='success'
+                          onClick={() => handleVote(review.id, 1)}
+                        >
+                          <ThumbUpIcon />
+                        </Button>
+                        <Button
+                          variant={userVotes[review.id] === -1 ? 'contained' : 'outlined'}
+                          color='error'
+                          onClick={() => handleVote(review.id, -1)}
+                        >
+                          <ThumbDownIcon />
+                        </Button>
+                      </Box>
                     </Box>
+                    <DateComponent rawDate={review.createdAt} />
+                  </Box>
+
                   </Paper>
                 ))
               )}
