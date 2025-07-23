@@ -8,6 +8,8 @@ import {
   FormControl,
   FormLabel,
   Link,
+  Snackbar,
+  Alert,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
@@ -29,6 +31,12 @@ export default function RegisterPage() {
     password: '',
     confirmPassword: '',
   });
+
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const handleCloseSnackbar = () => {
+    setIsSubmitted(false);
+  };
 
   // Captures new input value from textfields and updates formData
   const handleChange = (e) => {
@@ -71,8 +79,9 @@ export default function RegisterPage() {
           throw new Error(data.message || 'Account Creation Failed');
         }
 
-        navigate('/login');
-        window.location.reload();
+        setTimeout(() => {
+          navigate('/login');
+        }, 2000);
       } catch (error) {
         console.error('Account creation error:', error);
         alert(`Account Creation Failed: ${error.message}`);
@@ -239,6 +248,16 @@ export default function RegisterPage() {
           </Typography>
         </Box>
       </Paper>
+      <Snackbar
+        open={isSubmitted}
+        onClose={handleCloseSnackbar}
+        autoHideDuration={2000}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+      >
+        <Alert severity='success' variant='filled' sx={{ width: '100%' }}>
+          Register successful!
+        </Alert>
+      </Snackbar>
     </Container>
   );
 }

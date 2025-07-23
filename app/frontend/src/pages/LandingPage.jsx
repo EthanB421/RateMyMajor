@@ -9,13 +9,23 @@ import {
   Alert,
   Divider,
 } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import Searchbar from '../components/Searchbar';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export default function LandingPage() {
   const navigate = useNavigate();
-  const [isSubmitted, setIsSubmitted] = useState(true);
+  const location = useLocation();
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  useEffect(() => {
+    if (location.state?.showSnackbar) {
+      setIsSubmitted(true);
+
+      // Clear the state so it doesn't trigger again on refresh
+      window.history.replaceState({}, document.title);
+    }
+  }, [location]);
 
   const handleCloseSnackbar = () => {
     setIsSubmitted(false);
