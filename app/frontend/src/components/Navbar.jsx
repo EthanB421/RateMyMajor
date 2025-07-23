@@ -15,8 +15,9 @@ import {
   Link,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../pages/AuthContext';
 
 export default function Navbar() {
   /*
@@ -27,8 +28,6 @@ export default function Navbar() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
-  const [loggedIn, setIsLoggedIn] = useState(false);
-
   // useState for opening and closing of drawer when screen size is small
   const [drawerOpen, setDrawerOpen] = useState(false);
   const handleDrawerToggle = () => {
@@ -37,23 +36,10 @@ export default function Navbar() {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    const userData = localStorage.getItem('user');
-
-    if (token && userData) {
-      setIsLoggedIn(true);
-      try {
-        console.log('im logged in');
-      } catch (error) {
-        console.log('Error parsing user data:', error);
-      }
-    }
-  }, []);
+  const { user, logout } = useAuth();
 
   const handleLogout = () => {
-    localStorage.removeItem('token');
-    setIsLoggedIn(false);
+    logout();
     navigate('/login');
   };
 
@@ -65,7 +51,7 @@ export default function Navbar() {
         - update content with actual links and navigation names, simply placeholder content
 
   */
-  const navItems = loggedIn
+  const navItems = user
     ? [
         { text: 'Majors', path: '/major' },
         { text: 'Reviews', path: '/review' },
@@ -134,7 +120,7 @@ export default function Navbar() {
       ))}
 
       {/* Display hello message if logged in */}
-      {loggedIn ? (
+      {user ? (
         <Button
           color='inherit'
           sx={{

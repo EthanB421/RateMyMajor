@@ -25,11 +25,6 @@ export default function LoginPage() {
     email: '',
     password: '',
   });
-  const [isSubmitted, setIsSubmitted] = useState(false);
-
-  const handleCloseSnackbar = () => {
-    setIsSubmitted(false);
-  };
 
   // Captures new input value from textfields and updates formData
   const handleChange = (e) => {
@@ -73,11 +68,8 @@ export default function LoginPage() {
         }
 
         login(data.user, data.token);
-        setIsSubmitted(true);
 
-        setTimeout(() => {
-          navigate('/');
-        }, 6000);
+        navigate('/');
       } catch (error) {
         console.error('Login error:', error);
         alert(`Login failed: ${error.message}`);
@@ -187,17 +179,6 @@ export default function LoginPage() {
           </Typography>
         </Box>
       </Paper>
-      <Snackbar
-        open={isSubmitted}
-        onClose={handleCloseSnackbar}
-        autoHideDuration={6000}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-        sx={{ mb: { xs: 'none', sm: '20em', md: '16em' } }}
-      >
-        <Alert severity='success' variant='filled' sx={{ width: '100%' }}>
-          Login successful!
-        </Alert>
-      </Snackbar>
     </Container>
   );
 }
