@@ -5,13 +5,32 @@ import {
   Paper,
   Grid,
   Button,
+  Snackbar,
+  Alert,
   Divider,
 } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import Searchbar from '../components/Searchbar';
+import { useState, useEffect } from 'react';
 
 export default function LandingPage() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  useEffect(() => {
+    if (location.state?.showSnackbar) {
+      setIsSubmitted(true);
+
+      // Clear the state so it doesn't trigger again on refresh
+      window.history.replaceState({}, document.title);
+    }
+  }, [location]);
+
+  const handleCloseSnackbar = () => {
+    setIsSubmitted(false);
+  };
+
   return (
     <Box>
       {/* Searchbar component with Hero Image */}
@@ -149,7 +168,7 @@ export default function LandingPage() {
             borderRadius: '15px',
             justifyContent: 'space-between',
             alignItems: 'center',
-            gap: { xs: '2em', md: '0' },
+            gap: { xs: '2em' },
           }}
         >
           <Box
@@ -194,7 +213,7 @@ export default function LandingPage() {
             <Button
               variant='contained'
               sx={{
-                p: { xs: '1em', md: '1.75em' },
+                p: { xs: '1em', md: '1.5em', lg: '1.75em' },
                 borderRadius: '20px',
               }}
               onClick={() => navigate('/register')}
@@ -214,6 +233,16 @@ export default function LandingPage() {
           </Box>
         </Box>
       </Container>
+      <Snackbar
+        open={isSubmitted}
+        onClose={handleCloseSnackbar}
+        autoHideDuration={2000}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+      >
+        <Alert severity='success' variant='filled' sx={{ width: '100%' }}>
+          Login successful!
+        </Alert>
+      </Snackbar>
     </Box>
   );
 }

@@ -17,6 +17,7 @@ import {
 import MenuIcon from '@mui/icons-material/Menu';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../pages/AuthContext';
 
 export default function Navbar() {
   /*
@@ -35,6 +36,13 @@ export default function Navbar() {
 
   const navigate = useNavigate();
 
+  const { user, logout } = useAuth();
+
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
+  };
+
   /*
         Navbar Content
         - Store in list for ease of use in drawer/navbar content through mapping
@@ -43,11 +51,16 @@ export default function Navbar() {
         - update content with actual links and navigation names, simply placeholder content
 
   */
-  const navItems = [
-    { text: 'Majors', path: '/major' },
-    { text: 'Reviews', path: '/review' },
-    { text: 'Account', path: '/account' },
-  ];
+  const navItems = user
+    ? [
+        { text: 'Majors', path: '/major' },
+        { text: 'Reviews', path: '/review' },
+      ]
+    : [
+        { text: 'Majors', path: '/major' },
+        { text: 'Login', path: '/login' },
+        { text: 'Register', path: '/register' },
+      ];
 
   /*
         Drawer content
@@ -85,7 +98,14 @@ export default function Navbar() {
         - Pulls from navItems list to display buttons that lead to their respective links
   */
   const NavButtons = () => (
-    <Box sx={{ display: 'flex', gap: 2 }}>
+    <Box
+      sx={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        gap: '1em',
+      }}
+    >
       {navItems.map((item) => (
         <Button
           key={item.text}
@@ -98,6 +118,21 @@ export default function Navbar() {
           {item.text}
         </Button>
       ))}
+
+      {/* Display hello message if logged in */}
+      {user ? (
+        <Button
+          color='inherit'
+          sx={{
+            fontSize: '1.2rem',
+          }}
+          onClick={handleLogout}
+        >
+          Sign Out
+        </Button>
+      ) : (
+        []
+      )}
     </Box>
   );
 
