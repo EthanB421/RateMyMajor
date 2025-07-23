@@ -1,6 +1,7 @@
 using RateMyMajor.Repository.IRepository;
 using RateMyMajor.Data;
 using RateMyMajor.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace RateMyMajor.Repository
 {
@@ -17,9 +18,18 @@ namespace RateMyMajor.Repository
             _db.Review.Update(obj);
         }
 
-            public async Task AddAsync(Review review)
-            {
-                await _db.Review.AddAsync(review);
-            }
+        public async Task AddAsync(Review review)
+        {
+            await _db.Review.AddAsync(review);
+        }
+            
+        public async Task<List<Review>> GetReviewsByMajorIdAsync(int majorId)
+        {
+            return await _db.Review
+                .Where(r => r.MajorId == majorId)
+                .ToListAsync();
+        }
+
+        
     }
 }

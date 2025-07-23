@@ -6,5 +6,7 @@ namespace RateMyMajor.Repository.IRepository
     {
         void Update(Major obj);
         Task<List<Major>> GetAllMajorsAsync();
+        Task<Major> GetByIdAsync(int majorId);
+
     }
 }

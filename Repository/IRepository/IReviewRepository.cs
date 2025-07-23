@@ -6,6 +6,7 @@ namespace RateMyMajor.Repository.IRepository
     {
         void Update(Review obj);
         Task AddAsync(Review review);
+        Task<List<Review>> GetReviewsByMajorIdAsync(int majorId);
 
     }
 }

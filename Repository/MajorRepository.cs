@@ -22,5 +22,11 @@ namespace RateMyMajor.Repository
         {
             return await _db.Major.ToListAsync();
         }
+
+        public async Task<Major> GetByIdAsync(int majorId)
+        {
+            return await _db.Major.FindAsync(majorId);
+        }
+
     }
 }

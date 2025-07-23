@@ -9,7 +9,7 @@ namespace RateMyMajor.Models
         public int Id { get; set; }
         public required string Name { get; set; }
         public string Description { get; set; }
-        public int Rating { get; set; }
+        public double Rating { get; set; }
         
         [NotMapped]
         public float WouldRecommend { get; set; }
