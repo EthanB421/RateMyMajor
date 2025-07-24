@@ -11,12 +11,15 @@ import {
   Snackbar,
   Alert,
 } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import { useAuth } from './AuthContext';
 
 export default function LoginPage() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -25,6 +28,19 @@ export default function LoginPage() {
     email: '',
     password: '',
   });
+
+  useEffect(() => {
+    const state = location.state;
+    if (state?.showRegisterSnackbar) {
+      setIsSubmitted(true);
+    }
+    // Clear the state after evaluating both
+    navigate(location.pathname, { replace: true });
+  }, [location, navigate]);
+
+  const handleCloseSnackbar = () => {
+    setIsSubmitted(false);
+  };
 
   // Captures new input value from textfields and updates formData
   const handleChange = (e) => {
@@ -69,7 +85,7 @@ export default function LoginPage() {
 
         login(data.user, data.token);
 
-        navigate('/', { state: { showSnackbar: true } });
+        navigate('/', { state: { showLoginSnackbar: true } });
       } catch (error) {
         console.error('Login error:', error);
         alert(`Login failed: ${error.message}`);
@@ -179,6 +195,16 @@ export default function LoginPage() {
           </Typography>
         </Box>
       </Paper>
+      <Snackbar
+        open={isSubmitted}
+        onClose={handleCloseSnackbar}
+        autoHideDuration={3000}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+      >
+        <Alert severity='success' variant='filled' sx={{ width: '100%' }}>
+          Register successful!
+        </Alert>
+      </Snackbar>
     </Container>
   );
 }

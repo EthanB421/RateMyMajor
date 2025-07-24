@@ -17,18 +17,24 @@ export default function LandingPage() {
   const navigate = useNavigate();
   const location = useLocation();
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [logoutSubmitted, setLogoutSubmitted] = useState(false);
 
   useEffect(() => {
-    if (location.state?.showSnackbar) {
+    const state = location.state;
+    if (state?.showLoginSnackbar) {
       setIsSubmitted(true);
-
-      // Clear the state so it doesn't trigger again on refresh
-      window.history.replaceState({}, document.title);
+    } else if (state?.showLogoutSnackbar) {
+      setLogoutSubmitted(true);
     }
-  }, [location]);
+    // Clear the state after evaluating both
+    if (state?.showLoginSnackbar || state?.showLogoutSnackbar) {
+      navigate(location.pathname, { replace: true });
+    }
+  }, [location, navigate]);
 
   const handleCloseSnackbar = () => {
     setIsSubmitted(false);
+    setLogoutSubmitted(false);
   };
 
   return (
@@ -236,11 +242,21 @@ export default function LandingPage() {
       <Snackbar
         open={isSubmitted}
         onClose={handleCloseSnackbar}
-        autoHideDuration={2000}
+        autoHideDuration={3000}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
       >
         <Alert severity='success' variant='filled' sx={{ width: '100%' }}>
-          Login successful!
+          "Login successful!"
+        </Alert>
+      </Snackbar>
+      <Snackbar
+        open={logoutSubmitted}
+        onClose={handleCloseSnackbar}
+        autoHideDuration={3000}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+      >
+        <Alert severity='success' variant='filled' sx={{ width: '100%' }}>
+          "Logout successful!"
         </Alert>
       </Snackbar>
     </Box>

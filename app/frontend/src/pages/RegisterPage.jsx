@@ -14,6 +14,13 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 
+/*
+  *****************IMPORTANT*****************
+    - Need to include feedback when user doesn't have a password that meets the standards
+    
+    - Seems like backend has checks for duplicate users, incorrect passwords, etc.
+*/
+
 export default function RegisterPage() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -31,12 +38,6 @@ export default function RegisterPage() {
     password: '',
     confirmPassword: '',
   });
-
-  const [isSubmitted, setIsSubmitted] = useState(false);
-
-  const handleCloseSnackbar = () => {
-    setIsSubmitted(false);
-  };
 
   // Captures new input value from textfields and updates formData
   const handleChange = (e) => {
@@ -76,12 +77,11 @@ export default function RegisterPage() {
         const data = await response.json();
 
         if (!response.ok) {
+          console.log('Backend response', data);
           throw new Error(data.message || 'Account Creation Failed');
         }
 
-        setTimeout(() => {
-          navigate('/login');
-        }, 2000);
+        navigate('/login', { state: { showRegisterSnackbar: true } });
       } catch (error) {
         console.error('Account creation error:', error);
         alert(`Account Creation Failed: ${error.message}`);
@@ -248,16 +248,6 @@ export default function RegisterPage() {
           </Typography>
         </Box>
       </Paper>
-      <Snackbar
-        open={isSubmitted}
-        onClose={handleCloseSnackbar}
-        autoHideDuration={2000}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-      >
-        <Alert severity='success' variant='filled' sx={{ width: '100%' }}>
-          Register successful!
-        </Alert>
-      </Snackbar>
     </Container>
   );
 }
