@@ -69,7 +69,7 @@ export default function LoginPage() {
 
         login(data.user, data.token);
 
-        navigate('/', { state: { showSnackbar: true } });
+        navigate('/', { state: { showLoginSnackbar: true } });
       } catch (error) {
         console.error('Login error:', error);
         alert(`Login failed: ${error.message}`);
