@@ -2,10 +2,13 @@ import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
+import ThumbDownTwoToneIcon from '@mui/icons-material/ThumbDownTwoTone';
+import ThumbUpTwoToneIcon from '@mui/icons-material/ThumbUpTwoTone';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import LinearProgress from '@mui/material/LinearProgress';
 import { Link } from 'react-router-dom';
+import { format, parseISO } from 'date-fns';
 
 import {
   Container,
@@ -53,7 +56,6 @@ export default function SpecificMajorPage() {
     }
   };
 
-
   useEffect(() => {
     const fetchMajor = async () => {
       try {
@@ -68,6 +70,8 @@ export default function SpecificMajorPage() {
         }
 
         const data = await response.json();
+        console.log('Fetched major data:', data); // <-- add this line
+
         setMajor(data);
       } catch (err) {
         setError(`Failed to fetch major: ${err.message}`);
@@ -87,6 +91,14 @@ export default function SpecificMajorPage() {
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
+
+  const DateComponent = ({ rawDate }) => {
+    const dateObj = parseISO(rawDate);
+    const formatted = format(dateObj, 'MMMM d, yyyy');
+    return <Typography>{formatted}</Typography>;
+  };
+  const recommendationText =
+    major.rating < 3 ? 'Would Not Recommend' : 'Would Recommend';
 
   return (
     <Container disableGutters maxWidth='xl'>
@@ -136,7 +148,7 @@ export default function SpecificMajorPage() {
               </Typography>
               <Box sx={{ my: 2 }}>
                 <Typography variant='h5' textAlign='center' gutterBottom>
-                  4.3/5 - Would Recommend
+                  {major.rating.toFixed(1)}/5 - {recommendationText}
                 </Typography>
                 <LinearProgress
                   variant='determinate'
@@ -204,8 +216,8 @@ export default function SpecificMajorPage() {
               </Box>
             </Box>
             <Button
-            component = {Link} to={`/major/add-review/${major.id}`}
-
+              component={Link}
+              to={`/major/add-review/${major.id}`}
               fullWidth
               // color='secondary'
               variant='contained'
@@ -237,6 +249,7 @@ export default function SpecificMajorPage() {
               <Typography variant='h5' gutterBottom>
                 Reviews
               </Typography>
+              {/* Start of Card Formatting */}
               {major.reviews.length === 0 ? (
                 <Typography>No reviews yet.</Typography>
               ) : (
@@ -244,39 +257,137 @@ export default function SpecificMajorPage() {
                   <Paper
                     key={review.id}
                     sx={{ mb: 2, p: 2, borderRadius: '15px' }}
+                    elevation={1}
                   >
-                    <Typography variant='subtitle1' fontWeight='bold'>
-                      Rating: {review.rating} / 5
-                    </Typography>
-                    {/* <Typography variant='body2' sx={{ mb: 1 }}>{review.content}</Typography> */}
-                    <Typography variant='body2'>{review.content}</Typography>
-
-                    <Box display='flex' alignItems='center' gap={2}>
-                      <Button
-                        variant={
-                          userVotes[review.id] === 1 ? 'contained' : 'outlined'
-                        }
-                        color='success'
-                        onClick={() => handleVote(review.id, 1)}
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        flexDirection: { xs: 'column', sm: 'row' },
+                        padding: '1em',
+                        borderRadius: '12px',
+                        width: '100%',
+                        overflow: 'hidden',
+                        wordBreak: 'break-word',
+                        gap: { xs: '1em', sm: '3em' },
+                      }}
+                    >
+                      {/* Rating Box on the Left */}
+                      <Box
+                        sx={{
+                          display: 'flex',
+                          flexDirection: { xs: 'row', sm: 'column' },
+                          justifyContent: 'start',
+                          alignItems: 'center',
+                          gap: ' 1em',
+                        }}
                       >
-                        <ThumbUpIcon />
-                      </Button>
+                        <Box>
+                          <Typography
+                            variant='h7'
+                            sx={{
+                              fontWeight: 'bold',
+                            }}
+                          >
+                            Rating
+                          </Typography>
+                          <Box
+                            sx={{
+                              backgroundColor:
+                                review.rating >= 4
+                                  ? '#84F8C3'
+                                  : review.rating >= 2
+                                  ? '#FFF26A'
+                                  : '#FF9999',
+                              padding: '0.5em 1em',
+                              borderRadius: '8px',
+                              textAlign: 'center',
+                            }}
+                          >
+                            <Typography
+                              variant='h6'
+                              sx={{
+                                color: 'black',
+                                fontWeight: 'bold',
+                              }}
+                            >
+                              {review.rating}
+                            </Typography>
+                          </Box>
+                        </Box>
+                      </Box>
 
-                      <Typography variant='body2' color='textSecondary'>
-                        {review.voteScore ?? 0}
-                      </Typography>
-
-                      <Button
-                        variant={
-                          userVotes[review.id] === -1 ? 'contained' : 'outlined'
-                        }
-                        color='error'
-                        onClick={() => handleVote(review.id, -1)}
+                      {/* Review Content */}
+                      <Box
+                        sx={{
+                          display: 'flex',
+                          flexDirection: 'column',
+                          justifyContent: 'space-between',
+                          flex: 1,
+                        }}
                       >
-                        <ThumbDownIcon />
-                      </Button>
+                        <Typography
+                          variant='body2'
+                          sx={{
+                            mb: 2,
+                            whiteSpace: 'normal',
+                            wordBreak: 'break-word',
+                          }}
+                        >
+                          {review.content}
+                        </Typography>
+                      </Box>
 
-                      {/* Optional placeholder for showing current vote score */}
+                      {/* Date component + voting component */}
+                      <Box
+                        display='flex'
+                        flexDirection={{ xs: 'row', sm: 'column' }}
+                        justifyContent='space-between'
+                        alignItems='center'
+                      >
+                        <DateComponent rawDate={review.createdAt} />
+
+                        {/* Voting Buttons at the Bottom */}
+                        <Box
+                          display='flex'
+                          flexDirection='row'
+                          alignItems='center'
+                        >
+                          <ArrowUpwardIcon
+                            onClick={() => handleVote(review.id, 1)}
+                            sx={{
+                              scale: '1.1',
+                              transition: 'transform 0.3s ease',
+                              '&:hover': {
+                                cursor: 'pointer',
+                                transform: 'scale(1.3)',
+                              },
+                              color: 'green',
+                            }}
+                          />
+                          <Typography
+                            sx={{
+                              width: '2.5em',
+                              textAlign: 'center',
+                              fontVariantNumeric: 'tabular-nums',
+                            }}
+                          >
+                            {review.voteScore}
+                          </Typography>
+
+                          <ArrowDownwardIcon
+                            onClick={() => handleVote(review.id, -1)}
+                            sx={{
+                              scale: '1.1',
+                              transition: 'transform 0.3s ease',
+                              '&:hover': {
+                                cursor: 'pointer',
+                                transform: 'scale(1.3)',
+                              },
+                              color: 'red',
+                            }}
+                          />
+                        </Box>
+                      </Box>
                     </Box>
                   </Paper>
                 ))
