@@ -16,7 +16,7 @@ export default function Footer() {
           alignItems: 'center',
         }}
       >
-        {/* 1st Box - RateMyMajor, Privacy Policy, TOS, Copyright */}
+        {/* 1st Box - RateMyCollege, Privacy Policy, TOS, Copyright */}
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1em' }}>
           <Typography
             align='center'
@@ -29,7 +29,7 @@ export default function Footer() {
               fontStyle: 'italic',
             }}
           >
-            RateMyCareer
+            RateMyCollege
           </Typography>
           <Box
             sx={{
@@ -75,7 +75,7 @@ export default function Footer() {
             </Link>
           </Box>
           <Typography variant='subtitle1' align='center'>
-            © Copyright 2025 RateMyCareer
+            © Copyright 2025 RateMyCollege
           </Typography>
         </Box>
 
@@ -86,7 +86,7 @@ export default function Footer() {
         */}
         <Box sx={{ display: 'flex', flexDirection: 'row', gap: '1em' }}>
           <Link
-            onClick={() => navigate('/major')}
+            onClick={() => navigate('/college')}
             variant='subtitle1'
             underline='none'
             sx={{
@@ -98,7 +98,7 @@ export default function Footer() {
               },
             }}
           >
-            Majors
+            Colleges
           </Link>
           <Link
             onClick={() => navigate('/')}
@@ -152,8 +152,8 @@ export default function Footer() {
 }
 
 //   <Typography variant='subtitle2' align='center'>
-//     RateMyMajor
+//     RateMyCollege
 //   </Typography>
 //   <Typography variant='body2' align='center'>
-//     © Copyright 2025 RateMyMajor
+//     © Copyright 2025 RateMyCollege
 //   </Typography>

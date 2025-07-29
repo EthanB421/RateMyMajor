@@ -6,13 +6,13 @@ import { useParams } from 'react-router-dom';
 export default function AddReviewPage() {
     const navigate = useNavigate();
     const [clickIndex, setClickIndex] = useState(null);
-    const {majorId} = useParams();
+    const {collegeId} = useParams();
     const [content, setContent] = useState('');
-    const [major, setMajor] = useState('[major here]')
+    const [college, setCollege] = useState('[college here]')
     const ratings = [1, 2, 3, 4, 5];
 
     // todo
-    const fetchMajorName = async () => {
+    const fetchCollegeName = async () => {
 
     }
 
@@ -21,7 +21,7 @@ const handleSubmit = async (e) => {
 
     const token = localStorage.getItem('authToken');
     const payload = {
-        majorId: parseInt(majorId), // or keep as string if your backend expects that
+        collegeId: parseInt(collegeId), // or keep as string if your backend expects that
         rating: clickIndex + 1,     // assuming rating is based on index
         content: content
     };
@@ -59,7 +59,7 @@ const handleSubmit = async (e) => {
                     margin: '1em',
                 }}
             >
-                <Typography variant='h4'>{major.name}</Typography>
+                <Typography variant='h4'>{college.name}</Typography>
                 {/* 
                     Form Structure and Styling:
                         - 3 separate box parts aligned in a column
@@ -128,7 +128,7 @@ const handleSubmit = async (e) => {
                             rows={7}
                             value={content}
                               onChange={(e) => setContent(e.target.value)} 
-                            placeholder="What did you enjoy/dislike about your major?"
+                            placeholder="What did you enjoy/dislike about your college?"
                             sx={{
                                 '& .MuiOutlinedInput-root': {
                                     '& fieldset': {

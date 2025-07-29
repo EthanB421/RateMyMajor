@@ -10,13 +10,13 @@ public class ReviewService : IReviewService
     {
         _unitOfWork = unitOfWork;
     }
-    private async Task UpdateMajorRatingAsync(int majorId)
+    private async Task UpdateCollegeRatingAsync(int collegeId)
     {
-        var reviews = await _unitOfWork.Review.GetReviewsByMajorIdAsync(majorId);
-        var major = await _unitOfWork.Major.GetByIdAsync(majorId);
-        if (major == null) return;
+        var reviews = await _unitOfWork.Review.GetReviewsByCollegeIdAsync(collegeId);
+        var college = await _unitOfWork.College.GetByIdAsync(collegeId);
+        if (college == null) return;
 
-        major.Rating = reviews.Any() ? reviews.Average(r => r.Rating) : 0;
+        college.Rating = reviews.Any() ? reviews.Average(r => r.Rating) : 0;
         await _unitOfWork.SaveAsync();
     }
 
@@ -41,11 +41,11 @@ public class ReviewService : IReviewService
             return (false, "gg.");
         }
 
-        // Check if major exists
-        var major = await _unitOfWork.Major.GetAsync(m => m.Id == dto.MajorId);
-        if (major == null)
+        // Check if college exists
+        var college = await _unitOfWork.College.GetAsync(m => m.Id == dto.CollegeId);
+        if (college == null)
         {
-            return (false, "Major not found.");
+            return (false, "College not found.");
         }
 
         // Create and populate review object
@@ -53,7 +53,7 @@ public class ReviewService : IReviewService
         {
             Rating = dto.Rating,
             Content = dto.Content,
-            MajorId = dto.MajorId,
+            CollegeId = dto.CollegeId,
             UserId = userId,
             CreatedAt = DateTime.UtcNow
         };
@@ -62,8 +62,8 @@ public class ReviewService : IReviewService
         await _unitOfWork.Review.AddAsync(review);
         await _unitOfWork.SaveAsync();
 
-        //Update major rating
-        await UpdateMajorRatingAsync(dto.MajorId);
+        //Update college rating
+        await UpdateCollegeRatingAsync(dto.CollegeId);
 
         return (true, "Review added successfully.");
     }

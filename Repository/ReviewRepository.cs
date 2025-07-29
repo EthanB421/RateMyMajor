@@ -23,10 +23,10 @@ namespace RateMyMajor.Repository
             await _db.Review.AddAsync(review);
         }
             
-        public async Task<List<Review>> GetReviewsByMajorIdAsync(int majorId)
+        public async Task<List<Review>> GetReviewsByCollegeIdAsync(int majorId)
         {
             return await _db.Review
-                .Where(r => r.MajorId == majorId)
+                .Where(r => r.CollegeId == majorId)
                 .ToListAsync();
         }
 

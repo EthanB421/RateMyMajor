@@ -232,7 +232,7 @@ export default function LandingPage() {
                 p: { xs: '1em', md: '1.75em' },
                 borderRadius: '20px',
               }}
-              onClick={() => navigate('/major')}
+              onClick={() => navigate('/college')}
             >
               Explore Careers
             </Button>

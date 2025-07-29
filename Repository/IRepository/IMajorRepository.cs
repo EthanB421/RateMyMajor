@@ -2,11 +2,11 @@ using RateMyMajor.Models;
 
 namespace RateMyMajor.Repository.IRepository
 {
-    public interface IMajorRepository : IRepository<Major>
+    public interface ICollegeRepository : IRepository<College>
     {
-        void Update(Major obj);
-        Task<List<Major>> GetAllMajorsAsync();
-        Task<Major> GetByIdAsync(int majorId);
+        void Update(College obj);
+        Task<List<College>> GetAllCollegesAsync();
+        Task<College> GetByIdAsync(int collegeId);
 
     }
 }

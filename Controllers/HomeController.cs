@@ -7,9 +7,9 @@ namespace RateMyMajor.Controllers;
 
 public class HomeController : Controller
 {
-    private readonly ILogger<MajorController> _logger;
+    private readonly ILogger<CollegeController> _logger;
 
-    public HomeController(ILogger<MajorController> logger)
+    public HomeController(ILogger<CollegeController> logger)
     {
         _logger = logger;
     }

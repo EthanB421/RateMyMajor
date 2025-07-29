@@ -18,13 +18,13 @@ namespace RateMyMajor.Models
         [Range(1, 5)]
         public int Rating { get; set; }
 
-        [DisplayName("Major")]
-        public int MajorId { get; set; }
+        [DisplayName("College")]
+        public int CollegeId { get; set; }
 
-        [ForeignKey("MajorId")]
+        [ForeignKey("CollegeId")]
         [ValidateNever]
         [JsonIgnore]
-        public Major Major { get; set; }
+        public College College { get; set; }
 
         [DisplayName("User")]
         [ForeignKey("UserId")]

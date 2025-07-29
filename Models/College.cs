@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RateMyMajor.Models
 {
-    public class Major
+    public class College
     {
         [Key]
         public int Id { get; set; }

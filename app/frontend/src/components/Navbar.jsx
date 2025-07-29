@@ -53,11 +53,11 @@ export default function Navbar() {
   */
   const navItems = user
     ? [
-        { text: 'Majors', path: '/major' },
+        { text: 'Colleges', path: '/college' },
         { text: 'Reviews', path: '/review' },
       ]
     : [
-        { text: 'Majors', path: '/major' },
+        { text: 'Colleges', path: '/college' },
         { text: 'Login', path: '/login' },
         { text: 'Register', path: '/register' },
       ];
@@ -172,7 +172,7 @@ export default function Navbar() {
               },
             }}
           >
-            RateMyCareer
+            RateMyCollege
           </Link>
 
           {/* Drawer code for when screen size is small */}

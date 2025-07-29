@@ -16,7 +16,7 @@ namespace RateMyMajor.Repository
         {
             _db = db;
             this.dbSet = _db.Set<T>();
-            _db.Review.Include(u => u.Major);
+            _db.Review.Include(u => u.College);
         }
         
         public void Add(T entity)

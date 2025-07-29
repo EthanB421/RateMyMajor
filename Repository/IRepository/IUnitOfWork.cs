@@ -4,7 +4,7 @@ namespace RateMyMajor.Repository.IRepository
 {
     public interface IUnitOfWork
     {
-        IMajorRepository Major {get;}
+        ICollegeRepository College {get;}
         IReviewRepository Review { get; }
         IVoteRepository Vote { get; }
         void Save();

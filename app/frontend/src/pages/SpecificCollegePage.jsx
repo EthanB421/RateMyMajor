@@ -21,9 +21,9 @@ import {
   Pagination,
 } from '@mui/material';
 
-export default function SpecificMajorPage() {
-  const { specificMajor } = useParams();
-  const [major, setMajor] = useState(null);
+export default function SpecificCollegePage() {
+  const { specificCollege } = useParams();
+  const [college, setCollege] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const itemsPerPage = 3;
@@ -45,7 +45,7 @@ export default function SpecificMajorPage() {
 
       // ✅ Trust the backend – use result directly
       setUserVotes((prev) => ({ ...prev, [reviewId]: result.userVote }));
-      setMajor((prev) => ({
+      setCollege((prev) => ({
         ...prev,
         reviews: prev.reviews.map((r) =>
           r.id === reviewId ? { ...r, voteScore: result.newVoteScore } : r
@@ -57,11 +57,11 @@ export default function SpecificMajorPage() {
   };
 
   useEffect(() => {
-    const fetchMajor = async () => {
+    const fetchCollege = async () => {
       try {
         const response = await fetch(
-          `http://localhost:5123/api/major/search?keyword=${encodeURIComponent(
-            specificMajor.trim()
+          `http://localhost:5123/api/college/search?keyword=${encodeURIComponent(
+            specificCollege.trim()
           )}`
         );
 
@@ -70,24 +70,24 @@ export default function SpecificMajorPage() {
         }
 
         const data = await response.json();
-        console.log('Fetched major data:', data); // <-- add this line
+        console.log('Fetched college data:', data); // <-- add this line
 
-        setMajor(data);
+        setCollege(data);
       } catch (err) {
-        setError(`Failed to fetch major: ${err.message}`);
+        setError(`Failed to fetch college: ${err.message}`);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchMajor();
-  }, [specificMajor]);
+    fetchCollege();
+  }, [specificCollege]);
 
   if (loading) return <Typography>Loading...</Typography>;
   if (error) return <Typography color='error'>{error}</Typography>;
-  if (!major) return <Typography>No major found.</Typography>;
+  if (!college) return <Typography>No college found.</Typography>;
 
-  const paginatedItems = major.reviews.slice(
+  const paginatedItems = college.reviews.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
@@ -98,7 +98,7 @@ export default function SpecificMajorPage() {
     return <Typography>{formatted}</Typography>;
   };
   const recommendationText =
-    major.rating < 3 ? 'Would Not Recommend' : 'Would Recommend';
+    college.rating < 3 ? 'Would Not Recommend' : 'Would Recommend';
 
   return (
     <Container disableGutters maxWidth='xl'>
@@ -122,7 +122,7 @@ export default function SpecificMajorPage() {
             gap: { sm: '1em', md: '4em' },
           }}
         >
-          {/* Major & Description container */}
+          {/* College & Description container */}
           <Box
             sx={{
               display: 'flex',
@@ -133,7 +133,7 @@ export default function SpecificMajorPage() {
               alignItems: 'center',
             }}
           >
-            {/* Major/general information block */}
+            {/* College/general information block */}
             <Box sx={{ width: '100%' }}>
               <Typography
                 variant='h3'
@@ -144,15 +144,15 @@ export default function SpecificMajorPage() {
                   fontSize: '4.25rem',
                 }}
               >
-                {major.name}
+                {college.name}
               </Typography>
               <Box sx={{ my: 2 }}>
                 <Typography variant='h5' textAlign='center' gutterBottom>
-                  {major.rating.toFixed(1)}/5 - {recommendationText}
+                  {college.rating.toFixed(1)}/5 - {recommendationText}
                 </Typography>
                 <LinearProgress
                   variant='determinate'
-                  value={major.wouldRecommend}
+                  value={college.wouldRecommend}
                   sx={{
                     height: '1em',
                     borderRadius: '15px',
@@ -161,7 +161,7 @@ export default function SpecificMajorPage() {
                   }}
                 />
                 <Typography variant='body2' textAlign='center'>
-                  {major.wouldRecommend}% of reviewers rated this major 3 or
+                  {college.wouldRecommend}% of reviewers rated this college 3 or
                   higher.
                 </Typography>
               </Box>
@@ -196,7 +196,7 @@ export default function SpecificMajorPage() {
                 >
                   Description
                 </Typography>
-                {/* <Typography variant='body1'>{major.description}</Typography> */}
+                {/* <Typography variant='body1'>{college.description}</Typography> */}
                 <Typography
                   sx={{
                     textAlign: {
@@ -217,7 +217,7 @@ export default function SpecificMajorPage() {
             </Box>
             <Button
               component={Link}
-              to={`/major/add-review/${major.id}`}
+              to={`/college/add-review/${college.id}`}
               fullWidth
               // color='secondary'
               variant='contained'
@@ -250,7 +250,7 @@ export default function SpecificMajorPage() {
                 Reviews
               </Typography>
               {/* Start of Card Formatting */}
-              {major.reviews.length === 0 ? (
+              {college.reviews.length === 0 ? (
                 <Typography>No reviews yet.</Typography>
               ) : (
                 paginatedItems.map((review) => (
@@ -400,7 +400,7 @@ export default function SpecificMajorPage() {
                 justifyContent: 'center',
                 alignItems: 'center',
               }}
-              count={Math.ceil(major.reviews.length / itemsPerPage)}
+              count={Math.ceil(college.reviews.length / itemsPerPage)}
               page={currentPage}
               onChange={(e, value) => setCurrentPage(value)}
             ></Pagination>

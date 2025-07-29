@@ -16,9 +16,9 @@ import patrickImage from '../images/patrick404.jpg';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
-export default function MajorPage() {
+export default function CollegePage() {
   const navigate = useNavigate();
-  const [majors, setMajors] = useState([]);
+  const [colleges, setColleges] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
@@ -30,10 +30,10 @@ export default function MajorPage() {
   });
 
   useEffect(() => {
-    const fetchMajors = async () => {
+    const fetchColleges = async () => {
       try {
         const response = await fetch(
-          'http://localhost:5123/api/Major/GetMajors'
+          'http://localhost:5123/api/College/GetColleges'
         );
 
         if (!response.ok) {
@@ -41,23 +41,23 @@ export default function MajorPage() {
         }
 
         const data = await response.json();
-        setMajors(data);
+        setColleges(data);
       } catch (err) {
-        setError(`Failed to fetch major: ${err.message}`);
+        setError(`Failed to fetch college: ${err.message}`);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchMajors();
+    fetchColleges();
   }, []);
 
   if (loading) return <Typography>Loading...</Typography>;
   if (error) return <Typography color='error'>{error}</Typography>;
-  if (!majors) return <Typography>No major found.</Typography>;
+  if (!colleges) return <Typography>No college found.</Typography>;
 
-  const filteredMajors = majors.filter((major) =>
-    major.name.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredColleges = colleges.filter((college) =>
+    college.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
   return (
     <Container maxWidth='xl' sx={{ p: '2em' }}>
@@ -109,7 +109,7 @@ export default function MajorPage() {
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </Box>
-        {filteredMajors.length === 0 ? (
+        {filteredColleges.length === 0 ? (
           <Box
             sx={{
               display: 'flex',
@@ -146,7 +146,7 @@ export default function MajorPage() {
             spacing={{ xs: 2, md: 3 }}
             columns={{ xs: 1, sm: 8, md: 12 }}
           >
-            {filteredMajors.map((major, index) => (
+            {filteredColleges.map((college, index) => (
               <Grid key={index} size={{ xs: 2, sm: 4, md: 4 }}>
                 <Box
                   sx={{
@@ -165,7 +165,7 @@ export default function MajorPage() {
                       cursor: 'pointer',
                     },
                   }}
-                  onClick={() => navigate(`/major/${major.name}`)}
+                  onClick={() => navigate(`/college/${college.name}`)}
                 >
                   <Typography
                     textAlign='center'
@@ -180,11 +180,11 @@ export default function MajorPage() {
                       },
                     }}
                   >
-                    {major.name}
+                    {college.name}
                   </Typography>
                   <StyledRating
-                    name='major-rating'
-                    defaultValue={major.majorRating}
+                    name='college-rating'
+                    defaultValue={college.collegeRating}
                     readOnly
                   />
                 </Box>
@@ -197,7 +197,7 @@ export default function MajorPage() {
           variant='body1'
           sx={{ fontFamily: 'Raleway, Bebas Neue' }}
         >
-          Don't see your major? Add it{' '}
+          Don't see your college? Add it{' '}
           <Link
             onClick={() => navigate('/')}
             sx={{
