@@ -16,10 +16,27 @@ public class CollegeScorecardService : ICollegeScorecardService
 
     public async Task<string> GetCollegeDataAsync(string collegeName)
     {
-        var url = $"https://api.data.gov/ed/collegescorecard/v1/schools" +
-                  $"?api_key={_apiKey}&school.name={Uri.EscapeDataString(collegeName)}" +
-                  $"&fields=id,school.name,latest.student.size,latest.admissions.admission_rate.overall," +
-                  $"latest.cost.avg_net_price.overall,latest.earnings.10_yrs_after_entry.median";
+        var encodedName = Uri.EscapeDataString(collegeName);
+
+        var fields = string.Join(',',
+            "school.name",
+            "latest.cost.avg_net_price.public",
+            "latest.cost.avg_net_price.private",
+            "latest.earnings.1_yr_after_completion.median",
+            "latest.earnings.4_yrs_after_completion.median",
+            "latest.earnings.5_yrs_after_completion.median",
+            "latest.earnings.cip_4_digit.4_yr.male_median_earnings",
+            "latest.completion.completion_rate_4yr_150nt",
+            "latest.repayment.1_yr_bb_fed_repayment.grcomp.fully_paid",
+            "latest.demographics.race_ethnicity.black",
+            "latest.demographics.race_ethnicity.white",
+            "latest.demographics.race_ethnicity.hispanic",
+            "latest.demographics.race_ethnicity.asian",
+            "latest.demographics.race_ethnicity.aian",
+            "latest.demographics.race_ethnicity.nhpi"
+        );
+
+        var url = $"https://api.data.gov/ed/collegescorecard/v1/schools?api_key={_apiKey}&school.name={encodedName}&fields={fields}";
 
         var response = await _httpClient.GetAsync(url);
         response.EnsureSuccessStatusCode();

@@ -9,6 +9,7 @@ import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import LinearProgress from '@mui/material/LinearProgress';
 import { Link } from 'react-router-dom';
 import { format, parseISO } from 'date-fns';
+import CollegeEarningsChart from '../components/CollegeEarningsChart';
 
 import {
   Container,
@@ -197,22 +198,14 @@ export default function SpecificCollegePage() {
                   Description
                 </Typography>
                 {/* <Typography variant='body1'>{college.description}</Typography> */}
-                <Typography
+                <CollegeEarningsChart collegeName="Harvard University"
                   sx={{
                     textAlign: {
                       xs: 'center',
                       md: 'left',
                     },
                   }}
-                >
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic
-                  unde aliquam enim nesciunt sunt commodi eos omnis ratione
-                  iste, tenetur quos rem aut. Et vel dicta maiores ad obcaecati
-                  nihil. Lorem ipsum dolor sit, amet consectetur adipisicing
-                  elit. Quas ducimus ex omnis nemo aut velit, recusandae nostrum
-                  earum hic nam. Asperiores sapiente numquam inventore
-                  repudiandae doloribus corrupti ea adipisci magni!
-                </Typography>
+               />
               </Box>
             </Box>
             <Button
