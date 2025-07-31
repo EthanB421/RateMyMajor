@@ -9,7 +9,9 @@ import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import LinearProgress from '@mui/material/LinearProgress';
 import { Link } from 'react-router-dom';
 import { format, parseISO } from 'date-fns';
+import axios from 'axios';
 import CollegeEarningsChart from '../components/CollegeEarningsChart';
+import DemographicChart from '../components/DemographicChart';
 
 import {
   Container,
@@ -25,12 +27,19 @@ import {
 export default function SpecificCollegePage() {
   const { specificCollege } = useParams();
   const [college, setCollege] = useState(null);
+  const [collegeChart, setCollegeChart] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const itemsPerPage = 3;
   const [currentPage, setCurrentPage] = useState(1);
   const [userVotes, setUserVotes] = useState({});
 
+  useEffect(() => {
+  axios.get(`http://localhost:5123/api/CollegeScorecard/ucla`)
+    .then(res => setCollegeChart(res.data.results[0]))
+    .catch(err => console.error(err));
+}, [college]);
+  
   const handleVote = async (reviewId, value) => {
     try {
       const response = await fetch(`http://localhost:5123/api/votes`, {
@@ -161,10 +170,62 @@ export default function SpecificCollegePage() {
                     p: '1em',
                   }}
                 />
-                <Typography variant='body2' textAlign='center'>
+                <Typography variant='body2' textAlign='center'
+                sx={{
+                  fontFamily: 'Bebas Neue, sans-serif',
+                  fontWeight: 100,
+                  fontSize: '1.2rem',
+                }}>
                   {college.wouldRecommend}% of reviewers rated this college 3 or
                   higher.
                 </Typography>
+                  <Box sx={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    mt: '1em',
+                    mb: '2em',
+                  }}>
+                    <Box
+                    sx={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                    }}>
+                    <Typography
+                    sx={{
+                      fontFamily: 'Bebas Neue, sans-serif',
+                      fontWeight: 600,
+                      fontSize: '1.8rem',
+                      borderBottom: '3px solid #4357b2',
+                    }}>  Average Price Per Year </Typography>
+                    <Typography
+                      sx={{
+                      fontFamily: 'Bebas Neue, sans-serif',
+                      fontWeight: 600,
+                      fontSize: '1.5rem',
+                    }}>${collegeChart?.['latest.cost.avg_net_price.consumer.overall_median']?.toLocaleString() || 'N/A'}</Typography>
+                    </Box>
+                    <Box
+                    sx={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                    }}>
+                    <Typography
+                    sx={{
+                      fontFamily: 'Bebas Neue, sans-serif',
+                      fontWeight: 600,
+                      fontSize: '1.8rem',
+                      borderBottom: '3px solid #4357b2',
+                    }}>  Admission Rate </Typography>
+                    <Typography
+                      sx={{
+                      fontFamily: 'Bebas Neue, sans-serif',
+                      fontWeight: 600,
+                      fontSize: '1.5rem',
+                    }}>{collegeChart?.['latest.admissions.admission_rate_suppressed.overall']?.toLocaleString('en-US', {style:'percent'}) || 'N/A'}</Typography>
+                    </Box>                  </Box>
               </Box>
             </Box>
             {/* Description block */}
@@ -190,15 +251,15 @@ export default function SpecificCollegePage() {
                   sx={{
                     textAlign: {
                       xs: 'center',
-                      md: 'left',
+                      md: 'center',
                     },
                   }}
                   variant='h5'
                 >
-                  Description
+                  Demographic
                 </Typography>
                 {/* <Typography variant='body1'>{college.description}</Typography> */}
-                <CollegeEarningsChart collegeName="Harvard University"
+                <DemographicChart data={collegeChart}
                   sx={{
                     textAlign: {
                       xs: 'center',
@@ -206,6 +267,7 @@ export default function SpecificCollegePage() {
                     },
                   }}
                />
+
               </Box>
             </Box>
             <Button
