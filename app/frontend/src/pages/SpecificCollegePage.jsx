@@ -23,6 +23,8 @@ import {
   Divider,
   Pagination,
 } from '@mui/material';
+import RepaymentGauge from '../components/RepaymentGauge';
+import CostChart from '../components/CostChart';
 
 export default function SpecificCollegePage() {
   const { specificCollege } = useParams();
@@ -35,7 +37,7 @@ export default function SpecificCollegePage() {
   const [userVotes, setUserVotes] = useState({});
 
   useEffect(() => {
-  axios.get(`http://localhost:5123/api/CollegeScorecard/ucla`)
+  axios.get(`http://localhost:5123/api/CollegeScorecard/${specificCollege}`)
     .then(res => setCollegeChart(res.data.results[0]))
     .catch(err => console.error(err));
 }, [college]);
@@ -259,14 +261,14 @@ export default function SpecificCollegePage() {
                   Demographic
                 </Typography>
                 {/* <Typography variant='body1'>{college.description}</Typography> */}
-                <DemographicChart data={collegeChart}
+                {collegeChart && <CostChart data={collegeChart}
                   sx={{
                     textAlign: {
                       xs: 'center',
                       md: 'left',
                     },
                   }}
-               />
+               />}
 
               </Box>
             </Box>

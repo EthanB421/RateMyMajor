@@ -21,6 +21,12 @@ public class CollegeScorecardService : ICollegeScorecardService
         var fields = string.Join(',',
             "school.name",
             "latest.cost.avg_net_price.consumer.overall_median",
+            "latest.cost.booksupply",
+            "latest.cost.roomboard.oncampus",
+            "latest.cost.otherexpense.oncampus",
+            "latest.cost.roomboard.offcampus",
+            "latest.cost.otherexpense.offcampus",
+            "latest.cost.otherexpense.withfamily",
             "latest.earnings.1_yr_after_completion.median",
             "latest.earnings.4_yrs_after_completion.median",
             "latest.earnings.5_yrs_after_completion.median",
@@ -35,7 +41,13 @@ public class CollegeScorecardService : ICollegeScorecardService
             "latest.student.demographics.race_ethnicity.nhpi",
             "latest.academics.program_reporter.programs_offered",
             "latest.admissions.sat_scores.average.overall",
-            "latest.admissions.admission_rate_suppressed.overall"
+            "latest.admissions.admission_rate_suppressed.overall",
+            "latest.repayment.3_yr_repayment.income.0_30000",
+            "latest.repayment.3_yr_repayment.income.30000_75000",
+            "latest.repayment.3_yr_repayment.income.greater_than_75000",
+            "latest.repayment.5_yr_repayment.income.0_30000",
+            "latest.repayment.5_yr_repayment.income.30000_75000",
+            "latest.repayment.5_yr_repayment.income.greater_than_75000"
         );
 
         var url = $"https://api.data.gov/ed/collegescorecard/v1/schools?api_key={_apiKey}&school.name={encodedName}&fields={fields}";
