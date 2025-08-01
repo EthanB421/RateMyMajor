@@ -4,20 +4,6 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import heroImage from '../images/heroSearchbar.avif';
 
-/*
-    TODO:
-        - Find a nice background image for the website and figure out the height after - DONE
-        - Implement functionality for:
-            1) Moving to different pages - DONE
-            2) A dropdown for existing colleges
-            3) NEW - figure out functionality when college has white space (eg. 'computer science') 
-                *** Maybe not? Need to figure out as more of the project is fleshed out ***
-        - Fix responsiveness when screen size is between md-lg - DONE
-    
-    Notes:
-        - Probably shouldn't allow randoms to add their own college, if we do get users like that and they want to add their own colleges, we can have a page that will allow them to submit a request
-*/
-
 export default function Searchbar() {
   const [inputValue, setInputValue] = useState('');
   const navigate = useNavigate();
@@ -41,8 +27,8 @@ export default function Searchbar() {
     url(${heroImage})
   `,
         backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        height: '100vh',
+        backgroundPosition: 'center 0%r',
+        height: '90vh',
         width: '100%',
         display: 'flex',
         flexDirection: 'column',
@@ -50,59 +36,70 @@ export default function Searchbar() {
         alignItems: 'center',
       }}
     >
-      <Typography
-        variant='h2'
-        align='center'
-        color='#002884'
+      <Box
+        width='100%'
+        display='flex'
+        flexDirection='column'
+        alignItems='center'
+        justifyContent='center'
         sx={{
-          fontFamily: ' Bebas Neue',
-          fontSize: { xs: '2rem', sm: '4rem', md: '5rem', lg: '6rem' },
+          mt: { xs: '-1em', sm: '-10em', md: '-12em', lg: '-14em' },
         }}
       >
-        Discover your career path here!
-      </Typography>
-      <TextField
-        // slotprops.input.sx is necessary here to directly edit the input (TextField in this case)
-        slotProps={{
-          input: {
-            sx: {
-              borderRadius: '20px',
-              bgcolor: 'white',
-              // No focus outline
-              '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                border: 'none',
+        <Typography
+          variant='h2'
+          align='center'
+          color='#002884'
+          sx={{
+            fontFamily: ' Bebas Neue',
+            fontSize: { xs: '2rem', sm: '3rem', md: '5rem', lg: '6rem' },
+          }}
+        >
+          Find your future college here!
+        </Typography>
+        <TextField
+          // slotprops.input.sx is necessary here to directly edit the input (TextField in this case)
+          slotProps={{
+            input: {
+              sx: {
+                borderRadius: '20px',
+                bgcolor: 'white',
+                // No focus outline
+                '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                  border: 'none',
+                },
+                // No hover outline
+                '&:hover .MuiOutlinedInput-notchedOutline': {
+                  border: 'none',
+                },
+                // No default outline
+                '& .MuiOutlinedInput-notchedOutline': {
+                  border: 'none',
+                },
               },
-              // No hover outline
-              '&:hover .MuiOutlinedInput-notchedOutline': {
-                border: 'none',
-              },
-              // No default outline
-              '& .MuiOutlinedInput-notchedOutline': {
-                border: 'none',
-              },
+              startAdornment: (
+                <InputAdornment position='start'>
+                  <SearchIcon />
+                </InputAdornment>
+              ),
             },
-            startAdornment: (
-              <InputAdornment position='start'>
-                <SearchIcon />
-              </InputAdornment>
-            ),
-          },
-        }}
-        sx={{
-          padding: '1em',
-          width: { xs: '100%', sm: '70%', md: '80%', lg: '50%' },
-          mb: { xs: '20em', sm: '10em', md: '5em', lg: '5em' },
-        }}
-        autoComplete='off'
-        placeholder='Search for a college here...'
-        value={inputValue}
-        onChange={handleInputChange}
-        onKeyDown={(e) => {
-          if (e.key === 'Enter') {
-            handleNavigation();
-          }
-        }}
-      />
+          }}
+          sx={{
+            padding: '1em',
+            width: { xs: '100%', sm: '70%', md: '80%', lg: '60%' },
+            mb: { xs: '20em', sm: '10em', md: '5em', lg: '5em' },
+          }}
+          autoComplete='off'
+          placeholder='Search for a college here...'
+          value={inputValue}
+          onChange={handleInputChange}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              handleNavigation();
+            }
+          }}
+        />
+      </Box>
     </Box>
   );
 }
