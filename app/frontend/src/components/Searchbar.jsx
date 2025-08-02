@@ -27,7 +27,7 @@ export default function Searchbar() {
     url(${heroImage})
   `,
         backgroundSize: 'cover',
-        backgroundPosition: 'center 0%r',
+        backgroundPosition: 'center 0%',
         height: '90vh',
         width: '100%',
         display: 'flex',

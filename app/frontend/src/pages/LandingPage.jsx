@@ -8,6 +8,7 @@ import {
   Snackbar,
   Alert,
   Divider,
+  Fade,
 } from '@mui/material';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Searchbar from '../components/Searchbar';
@@ -18,6 +19,14 @@ export default function LandingPage() {
   const location = useLocation();
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [logoutSubmitted, setLogoutSubmitted] = useState(false);
+  const [fade, setFade] = useState(true);
+  const [currentImage, setCurrentImage] = useState(0);
+
+  const imageList = [
+    'src/images/landingTest.png',
+    'src/images/landingTest2.png',
+    'src/images/landingTest3.png',
+  ];
 
   useEffect(() => {
     const state = location.state;
@@ -32,6 +41,20 @@ export default function LandingPage() {
     }
   }, [location, navigate]);
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setFade(false);
+      setTimeout(() => {
+        setCurrentImage((prev) =>
+          prev === imageList.length - 1 ? 0 : prev + 1
+        );
+        setFade(true);
+      }, 500);
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, [imageList.length]);
+
   const handleCloseSnackbar = () => {
     setIsSubmitted(false);
     setLogoutSubmitted(false);
@@ -41,6 +64,79 @@ export default function LandingPage() {
     <Box>
       {/* Searchbar component with Hero Image */}
       <Searchbar />
+
+      {/* Preview section */}
+      <Container disableGutters maxWidth='xl' sx={{ p: '3em' }}>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: { xs: 'column', md: 'row' },
+            justifyContent: 'space-evenly',
+            alignItems: 'center',
+            gap: '3em',
+            backgroundColor: '#D2E1E3',
+            borderRadius: '30px',
+            p: '3em',
+          }}
+        >
+          <Box
+            display='flex'
+            flexDirection='column'
+            gap='1.5em'
+            width={{ xs: '100%', md: '50%' }}
+          >
+            <Typography
+              variant='h4'
+              textAlign='center'
+              sx={{
+                fontFamily: 'Raleway, sans-serif',
+                fontSize: { xs: '2rem', md: '3rem' },
+              }}
+            >
+              Curious about college?
+            </Typography>
+            <Typography
+              variant='h4'
+              textAlign='center'
+              sx={{
+                fontFamily: 'Raleway, sans-serif',
+                fontSize: { xs: '1.5rem', md: '2rem' },
+              }}
+            >
+              We provide the latest information on colleges you may be
+              interested in.
+            </Typography>
+          </Box>
+
+          <Fade in={fade} timeout={1000}>
+            <Box
+              sx={{
+                width: { xs: '90vw', md: '600px' }, // Set consistent width
+                height: { xs: '50vh', md: '400px' }, // Set consistent height
+                overflow: 'hidden', // Crop overflow
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                order: { xs: 1, md: 2 },
+                backgroundColor: '#f5f5f5', // Optional: avoid flicker
+              }}
+            >
+              <Box
+                component='img'
+                src={imageList[currentImage]}
+                alt='Test Image'
+                sx={{
+                  height: '100%',
+                  width: '100%',
+                  order: { xs: 1, md: 2 },
+                }}
+              />
+            </Box>
+          </Fade>
+        </Box>
+      </Container>
+
+      <Divider />
 
       {/* Container section */}
       <Container disableGutters maxWidth='xl' sx={{ p: '1em' }}>
