@@ -31,9 +31,20 @@ namespace RateMyMajor.Data
                 });
 
             modelBuilder.Entity<College>().HasData(
-                new College { Id = 1, Name = "Computer Science", Description = "Its cooked", Rating = 1 },
-                new College { Id = 2, Name = "Neuroscience", Description = "You must be smart", Rating = 1 },
-                new College { Id = 3, Name = "Nursing", Description = "Job market is always good", Rating = 1 }
+            
+                new College { Id = 1,  Name = "University of California, Los Angeles (UCLA)",           Description = "Flagship UC campus in Los Angeles",                  Rating = 5.0, FederalSchoolCode = "001315" },
+                new College { Id = 2,  Name = "University of California, San Diego (UCSD)",            Description = "Public UC in La Jolla (R1 research)",                 Rating = 5.0, FederalSchoolCode = "001317" },
+                new College { Id = 3,  Name = "University of California, Irvine (UCI)",               Description = "Public UC in Orange County",                         Rating = 5.0, FederalSchoolCode = "001314" },
+                new College { Id = 4,  Name = "University of California, Santa Barbara (UCSB)",       Description = "Coastal UC campus",                                   Rating = 4.5, FederalSchoolCode = "001320" },
+                new College { Id = 5,  Name = "University of California, Riverside (UCR)",           Description = "Inland Empire UC campus",                             Rating = 4.0, FederalSchoolCode = "001316" },
+                new College { Id = 6,  Name = "University of California, San Francisco (UCSF)",       Description = "Graduate‑only UC campus in health sciences",          Rating = 4.5, FederalSchoolCode = "001319" },
+                new College { Id = 7,  Name = "San Diego State University (SDSU)",                  Description = "Major public research university in San Diego",       Rating = 4.5, FederalSchoolCode = "001151" },
+                new College { Id = 8,  Name = "California State University, Long Beach (CSULB)",       Description = "CSU public campus in Long Beach",                      Rating = 4.5, FederalSchoolCode = "001139" },
+                new College { Id = 9,  Name = "California State University, Fullerton (CSUF)",         Description = "Large CSU in Orange County",                          Rating = 4.0, FederalSchoolCode = "001137" },
+                new College { Id = 10, Name = "California State University, Los Angeles (CSULA)",       Description = "Urban CSU campus in Los Angeles",                     Rating = 4.0, FederalSchoolCode = "001140" },
+                new College { Id = 11, Name = "California State Polytechnic University, Pomona",       Description = "Polytechnic CSU in Pomona",                           Rating = 4.5, FederalSchoolCode = "001144" },
+                new College { Id = 12, Name = "California State University, Northridge (CSUN)",         Description = "CSU campus in the San Fernando Valley",               Rating = 4.0, FederalSchoolCode = "001153" },
+                new College { Id = 13, Name = "California State University, San Bernardino (CSUSB)",  Description = "CSU campus in Inland Empire",                          Rating = 4.0, FederalSchoolCode = "001142" }
             );
 
             modelBuilder.Entity<Review>().HasData(

@@ -9,6 +9,9 @@ import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import LinearProgress from '@mui/material/LinearProgress';
 import { Link } from 'react-router-dom';
 import { format, parseISO } from 'date-fns';
+import axios from 'axios';
+import CollegeEarningsChart from '../components/CollegeEarningsChart';
+import DemographicChart from '../components/DemographicChart';
 
 import {
   Container,
@@ -20,16 +23,29 @@ import {
   Divider,
   Pagination,
 } from '@mui/material';
+import RepaymentGauge from '../components/RepaymentGauge';
+import CostChart from '../components/CostChart';
 
 export default function SpecificCollegePage() {
-  const { specificCollege } = useParams();
-  const [college, setCollege] = useState(null);
+  const { specificCollege } = useParams(); //COLLEGE NAME FROM URL
+  const [college, setCollege] = useState(null); //COLLEGE DATA FROM BACKEND
+  const [collegeChartData, setcollegeChartData] = useState(null); //COLLEGE DATA FROM COLLEGE SCORECARD API
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const itemsPerPage = 3;
   const [currentPage, setCurrentPage] = useState(1);
   const [userVotes, setUserVotes] = useState({});
 
+
+    useEffect(() => {
+      if (!college || !college.federalSchoolCode) return;
+
+      axios
+        .get(`http://localhost:5123/api/CollegeScorecard/${college.federalSchoolCode}`)
+        .then((res) => setcollegeChartData(res.data.results[0]))
+        .catch((err) => console.error('CollegeScorecard API error:', err));
+    }, [college]);
+      
   const handleVote = async (reviewId, value) => {
     try {
       const response = await fetch(`http://localhost:5123/api/votes`, {
@@ -160,10 +176,62 @@ export default function SpecificCollegePage() {
                     p: '1em',
                   }}
                 />
-                <Typography variant='body2' textAlign='center'>
+                <Typography variant='body2' textAlign='center'
+                sx={{
+                  fontFamily: 'Bebas Neue, sans-serif',
+                  fontWeight: 100,
+                  fontSize: '1.2rem',
+                }}>
                   {college.wouldRecommend}% of reviewers rated this college 3 or
                   higher.
                 </Typography>
+                  <Box sx={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    mt: '1em',
+                    mb: '2em',
+                  }}>
+                    <Box
+                    sx={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                    }}>
+                    <Typography
+                    sx={{
+                      fontFamily: 'Bebas Neue, sans-serif',
+                      fontWeight: 600,
+                      fontSize: '1.8rem',
+                      borderBottom: '3px solid #4357b2',
+                    }}>  Average Price Per Year </Typography>
+                    <Typography
+                      sx={{
+                      fontFamily: 'Bebas Neue, sans-serif',
+                      fontWeight: 600,
+                      fontSize: '1.5rem',
+                    }}>${collegeChartData?.['latest.cost.attendance.academic_year']?.toLocaleString() || 'N/A'}</Typography>
+                    </Box>
+                    <Box
+                    sx={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                    }}>
+                    <Typography
+                    sx={{
+                      fontFamily: 'Bebas Neue, sans-serif',
+                      fontWeight: 600,
+                      fontSize: '1.8rem',
+                      borderBottom: '3px solid #4357b2',
+                    }}>  Admission Rate </Typography>
+                    <Typography
+                      sx={{
+                      fontFamily: 'Bebas Neue, sans-serif',
+                      fontWeight: 600,
+                      fontSize: '1.5rem',
+                    }}>{collegeChartData?.['latest.admissions.admission_rate_suppressed.overall']?.toLocaleString('en-US', {style:'percent'}) || 'N/A'}</Typography>
+                    </Box>                  </Box>
               </Box>
             </Box>
             {/* Description block */}
@@ -189,30 +257,23 @@ export default function SpecificCollegePage() {
                   sx={{
                     textAlign: {
                       xs: 'center',
-                      md: 'left',
+                      md: 'center',
                     },
                   }}
                   variant='h5'
                 >
-                  Description
+                  Demographic
                 </Typography>
                 {/* <Typography variant='body1'>{college.description}</Typography> */}
-                <Typography
+                {collegeChartData && <CostChart data={collegeChartData}
                   sx={{
                     textAlign: {
                       xs: 'center',
                       md: 'left',
                     },
                   }}
-                >
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic
-                  unde aliquam enim nesciunt sunt commodi eos omnis ratione
-                  iste, tenetur quos rem aut. Et vel dicta maiores ad obcaecati
-                  nihil. Lorem ipsum dolor sit, amet consectetur adipisicing
-                  elit. Quas ducimus ex omnis nemo aut velit, recusandae nostrum
-                  earum hic nam. Asperiores sapiente numquam inventore
-                  repudiandae doloribus corrupti ea adipisci magni!
-                </Typography>
+               />}
+
               </Box>
             </Box>
             <Button
