@@ -10,10 +10,11 @@ namespace RateMyMajor.Models
         public required string Name { get; set; }
         public string Description { get; set; }
         public double Rating { get; set; }
-        
+
         [NotMapped]
         public float WouldRecommend { get; set; }
         public ICollection<Review> Reviews { get; set; } = new List<Review>();
+        public string FederalSchoolCode { get; set; }
 
     }
 }

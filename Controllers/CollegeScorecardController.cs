@@ -12,10 +12,10 @@ public class CollegeScorecardController : ControllerBase
         _collegeService = collegeService;
     }
 
-    [HttpGet("{collegeName}")]
-    public async Task<IActionResult> GetCollegeData(string collegeName)
+    [HttpGet("{unitId}")]
+    public async Task<IActionResult> GetCollegeData(string unitId)
     {
-        var result = await _collegeService.GetCollegeDataAsync(collegeName);
+        var result = await _collegeService.GetCollegeDataAsync(unitId);
         return Content(result, "application/json");
     }
 

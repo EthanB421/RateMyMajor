@@ -27,21 +27,25 @@ import RepaymentGauge from '../components/RepaymentGauge';
 import CostChart from '../components/CostChart';
 
 export default function SpecificCollegePage() {
-  const { specificCollege } = useParams();
-  const [college, setCollege] = useState(null);
-  const [collegeChart, setCollegeChart] = useState(null);
+  const { specificCollege } = useParams(); //COLLEGE NAME FROM URL
+  const [college, setCollege] = useState(null); //COLLEGE DATA FROM BACKEND
+  const [collegeChartData, setcollegeChartData] = useState(null); //COLLEGE DATA FROM COLLEGE SCORECARD API
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const itemsPerPage = 3;
   const [currentPage, setCurrentPage] = useState(1);
   const [userVotes, setUserVotes] = useState({});
 
-  useEffect(() => {
-  axios.get(`http://localhost:5123/api/CollegeScorecard/${specificCollege}`)
-    .then(res => setCollegeChart(res.data.results[0]))
-    .catch(err => console.error(err));
-}, [college]);
-  
+
+    useEffect(() => {
+      if (!college || !college.federalSchoolCode) return;
+
+      axios
+        .get(`http://localhost:5123/api/CollegeScorecard/${college.federalSchoolCode}`)
+        .then((res) => setcollegeChartData(res.data.results[0]))
+        .catch((err) => console.error('CollegeScorecard API error:', err));
+    }, [college]);
+      
   const handleVote = async (reviewId, value) => {
     try {
       const response = await fetch(`http://localhost:5123/api/votes`, {
@@ -206,7 +210,7 @@ export default function SpecificCollegePage() {
                       fontFamily: 'Bebas Neue, sans-serif',
                       fontWeight: 600,
                       fontSize: '1.5rem',
-                    }}>${collegeChart?.['latest.cost.avg_net_price.consumer.overall_median']?.toLocaleString() || 'N/A'}</Typography>
+                    }}>${collegeChartData?.['latest.cost.attendance.academic_year']?.toLocaleString() || 'N/A'}</Typography>
                     </Box>
                     <Box
                     sx={{
@@ -226,7 +230,7 @@ export default function SpecificCollegePage() {
                       fontFamily: 'Bebas Neue, sans-serif',
                       fontWeight: 600,
                       fontSize: '1.5rem',
-                    }}>{collegeChart?.['latest.admissions.admission_rate_suppressed.overall']?.toLocaleString('en-US', {style:'percent'}) || 'N/A'}</Typography>
+                    }}>{collegeChartData?.['latest.admissions.admission_rate_suppressed.overall']?.toLocaleString('en-US', {style:'percent'}) || 'N/A'}</Typography>
                     </Box>                  </Box>
               </Box>
             </Box>
@@ -261,7 +265,7 @@ export default function SpecificCollegePage() {
                   Demographic
                 </Typography>
                 {/* <Typography variant='body1'>{college.description}</Typography> */}
-                {collegeChart && <CostChart data={collegeChart}
+                {collegeChartData && <CostChart data={collegeChartData}
                   sx={{
                     textAlign: {
                       xs: 'center',

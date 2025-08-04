@@ -14,12 +14,13 @@ public class CollegeScorecardService : ICollegeScorecardService
         _apiKey = configuration["CollegeScorecardApiKey"]; // Add this to appsettings.json
     }
 
-    public async Task<string> GetCollegeDataAsync(string collegeName)
+    public async Task<string> GetCollegeDataAsync(string unitId)
     {
-        var encodedName = Uri.EscapeDataString(collegeName);
-
         var fields = string.Join(',',
             "school.name",
+            "id",
+            "fed_sch_cd",
+            "latest.cost.attendance.academic_year",
             "latest.cost.avg_net_price.consumer.overall_median",
             "latest.cost.booksupply",
             "latest.cost.roomboard.oncampus",
@@ -50,7 +51,7 @@ public class CollegeScorecardService : ICollegeScorecardService
             "latest.repayment.5_yr_repayment.income.greater_than_75000"
         );
 
-        var url = $"https://api.data.gov/ed/collegescorecard/v1/schools?api_key={_apiKey}&school.name={encodedName}&fields={fields}";
+        var url = $"https://api.data.gov/ed/collegescorecard/v1/schools?api_key={_apiKey}&fed_sch_cd={unitId}&fields={fields}";
 
         var response = await _httpClient.GetAsync(url);
         response.EnsureSuccessStatusCode();
