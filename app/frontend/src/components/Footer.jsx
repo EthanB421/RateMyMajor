@@ -26,6 +26,7 @@ export default function Footer() {
               flexGrow: 1,
               fontFamily: 'Bebas Neue, sans-serif',
               fontWeight: 200,
+
               fontStyle: 'italic',
             }}
           >

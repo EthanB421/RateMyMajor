@@ -111,14 +111,15 @@ export default function LandingPage() {
           <Fade in={fade} timeout={1000}>
             <Box
               sx={{
-                width: { xs: '90vw', md: '600px' }, // Set consistent width
-                height: { xs: '50vh', md: '400px' }, // Set consistent height
-                overflow: 'hidden', // Crop overflow
+                width: { xs: '100%', md: '50%' }, // Half width on desktop, full on mobile
+                maxWidth: '100%',
+                aspectRatio: '4 / 3', // Keep consistent image ratio (optional but ideal)
+                overflow: 'hidden',
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
                 order: { xs: 1, md: 2 },
-                backgroundColor: '#f5f5f5', // Optional: avoid flicker
+                backgroundColor: '#f5f5f5',
               }}
             >
               <Box
@@ -126,9 +127,9 @@ export default function LandingPage() {
                 src={imageList[currentImage]}
                 alt='Test Image'
                 sx={{
-                  height: '100%',
                   width: '100%',
-                  order: { xs: 1, md: 2 },
+                  height: '100%',
+                  objectFit: 'cover', // or 'contain' if you want full image
                 }}
               />
             </Box>
@@ -292,7 +293,7 @@ export default function LandingPage() {
                 fontSize: { xs: '2rem', sm: '3rem' },
               }}
             >
-              Ready to level up your future?
+              Ready to find your future college?
             </Typography>
             <Typography
               variant='body1'
@@ -301,8 +302,8 @@ export default function LandingPage() {
                 width: '90%',
               }}
             >
-              Get recommendations from people in fields you are interested in,
-              as well as information on career prospects and progression.
+              Get insight from students and alumni that have attended specific
+              colleges, from program information to campus life.
             </Typography>
           </Box>
           <Box
@@ -330,7 +331,7 @@ export default function LandingPage() {
               }}
               onClick={() => navigate('/college')}
             >
-              Explore Careers
+              Explore Colleges
             </Button>
           </Box>
         </Box>

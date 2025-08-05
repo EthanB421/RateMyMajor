@@ -34,6 +34,7 @@ export default function Searchbar() {
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
+        overflowX: 'hidden',
       }}
     >
       <Box
@@ -43,6 +44,7 @@ export default function Searchbar() {
         alignItems='center'
         justifyContent='center'
         sx={{
+          px: '2',
           mt: { xs: '-1em', sm: '-10em', md: '-12em', lg: '-14em' },
         }}
       >
@@ -85,8 +87,7 @@ export default function Searchbar() {
             },
           }}
           sx={{
-            padding: '1em',
-            width: { xs: '100%', sm: '70%', md: '80%', lg: '60%' },
+            width: { xs: '90%', sm: '70%', md: '80%', lg: '60%' },
             mb: { xs: '20em', sm: '10em', md: '5em', lg: '5em' },
           }}
           autoComplete='off'
