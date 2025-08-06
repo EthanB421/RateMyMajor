@@ -12,6 +12,10 @@ import { format, parseISO } from 'date-fns';
 import axios from 'axios';
 import CollegeEarningsChart from '../components/CollegeEarningsChart';
 import DemographicChart from '../components/DemographicChart';
+import { motion, AnimatePresence } from 'framer-motion';
+
+
+
 
 import {
   Container,
@@ -33,6 +37,20 @@ export default function SpecificCollegePage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const itemsPerPage = 3;
+  const chartTitles = ['Earnings Over Time', 'Cost Breakdown', 'Demographics', 'Repayment Rates'];
+  const [chartPage, setChartPage] = useState(1);
+    const charts = [
+    <CollegeEarningsChart data={collegeChartData} />,
+    <CostChart data={collegeChartData} />,
+    <DemographicChart data={collegeChartData} />,
+    <RepaymentGauge data={collegeChartData} />
+  ];
+  const chartVariants = {
+  initial: { opacity: 0, y: 20 },
+  animate: { opacity: 1, y: 0 },
+  exit: { opacity: 0, y: -20 },
+};
+
   const [currentPage, setCurrentPage] = useState(1);
   const [userVotes, setUserVotes] = useState({});
 
@@ -103,11 +121,6 @@ export default function SpecificCollegePage() {
   if (error) return <Typography color='error'>{error}</Typography>;
   if (!college) return <Typography>No college found.</Typography>;
 
-  const paginatedItems = college.reviews.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
-  );
-
   const DateComponent = ({ rawDate }) => {
     const dateObj = parseISO(rawDate);
     const formatted = format(dateObj, 'MMMM d, yyyy');
@@ -127,6 +140,16 @@ export default function SpecificCollegePage() {
           margin: '1em',
         }}
       >
+          <Box
+              sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              width: '100%',
+              gap: '1em',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
         {/* Main box container */}
         <Box
           sx={{
@@ -138,6 +161,7 @@ export default function SpecificCollegePage() {
             gap: { sm: '1em', md: '4em' },
           }}
         >
+
           {/* College & Description container */}
           <Box
             sx={{
@@ -180,14 +204,15 @@ export default function SpecificCollegePage() {
                 sx={{
                   fontFamily: 'Bebas Neue, sans-serif',
                   fontWeight: 100,
-                  fontSize: '1.2rem',
+                  fontSize: '1.3rem',
                 }}>
                   {college.wouldRecommend}% of reviewers rated this college 3 or
                   higher.
                 </Typography>
                   <Box sx={{
                     display: 'flex',
-                    justifyContent: 'space-between',
+                    flexDirection: { xs: 'column', md: 'row' },
+                    justifyContent: 'space-evenly',
                     alignItems: 'center',
                     mt: '1em',
                     mb: '2em',
@@ -202,7 +227,7 @@ export default function SpecificCollegePage() {
                     sx={{
                       fontFamily: 'Bebas Neue, sans-serif',
                       fontWeight: 600,
-                      fontSize: '1.8rem',
+                      fontSize: '1.3rem',
                       borderBottom: '3px solid #4357b2',
                     }}>  Average Price Per Year </Typography>
                     <Typography
@@ -211,6 +236,32 @@ export default function SpecificCollegePage() {
                       fontWeight: 600,
                       fontSize: '1.5rem',
                     }}>${collegeChartData?.['latest.cost.attendance.academic_year']?.toLocaleString() || 'N/A'}</Typography>
+                     <Typography
+                    sx={{
+                      fontFamily: 'Bebas Neue, sans-serif',
+                      fontWeight: 600,
+                      fontSize: '1.3rem',
+                      borderBottom: '3px solid #4357b2',
+                    }}>  In-State Tuition Fees </Typography>
+                    <Typography
+                      sx={{
+                      fontFamily: 'Bebas Neue, sans-serif',
+                      fontWeight: 600,
+                      fontSize: '1.5rem',
+                    }}>${collegeChartData?.['latest.cost.tuition.in_state']?.toLocaleString() || 'N/A'}</Typography>
+                     <Typography
+                    sx={{
+                      fontFamily: 'Bebas Neue, sans-serif',
+                      fontWeight: 600,
+                      fontSize: '1.3rem',
+                      borderBottom: '3px solid #4357b2',
+                    }}>  Out-Of-State Tutition Fees </Typography>
+                    <Typography
+                      sx={{
+                      fontFamily: 'Bebas Neue, sans-serif',
+                      fontWeight: 600,
+                      fontSize: '1.5rem',
+                    }}>${collegeChartData?.['latest.cost.tuition.out_of_state']?.toLocaleString() || 'N/A'}</Typography>
                     </Box>
                     <Box
                     sx={{
@@ -222,7 +273,7 @@ export default function SpecificCollegePage() {
                     sx={{
                       fontFamily: 'Bebas Neue, sans-serif',
                       fontWeight: 600,
-                      fontSize: '1.8rem',
+                      fontSize: '1.3rem',
                       borderBottom: '3px solid #4357b2',
                     }}>  Admission Rate </Typography>
                     <Typography
@@ -231,6 +282,32 @@ export default function SpecificCollegePage() {
                       fontWeight: 600,
                       fontSize: '1.5rem',
                     }}>{collegeChartData?.['latest.admissions.admission_rate_suppressed.overall']?.toLocaleString('en-US', {style:'percent'}) || 'N/A'}</Typography>
+                     <Typography
+                    sx={{
+                      fontFamily: 'Bebas Neue, sans-serif',
+                      fontWeight: 600,
+                      fontSize: '1.3rem',
+                      borderBottom: '3px solid #4357b2',
+                    }}>  Federal Loan Recievement Rate </Typography>
+                    <Typography
+                      sx={{
+                      fontFamily: 'Bebas Neue, sans-serif',
+                      fontWeight: 600,
+                      fontSize: '1.5rem',
+                    }}>{collegeChartData?.['latest.aid.federal_loan_rate']?.toLocaleString('en-US', {style:'percent'}) || 'N/A'}</Typography>
+                     <Typography
+                    sx={{
+                      fontFamily: 'Bebas Neue, sans-serif',
+                      fontWeight: 600,
+                      fontSize: '1.3rem',
+                      borderBottom: '3px solid #4357b2',
+                    }}>  Total Undergrad Enrollment </Typography>
+                    <Typography
+                      sx={{
+                      fontFamily: 'Bebas Neue, sans-serif',
+                      fontWeight: 600,
+                      fontSize: '1.5rem',
+                    }}>{collegeChartData?.['latest.student.size']?.toLocaleString() || 'N/A'}</Typography>
                     </Box>                  </Box>
               </Box>
             </Box>
@@ -243,7 +320,12 @@ export default function SpecificCollegePage() {
                 gap: '2em',
               }}
             >
-              <Box
+              
+                
+                {/* <Typography variant='body1'>{college.description}</Typography> */}
+              </Box>
+            </Box>
+            <Box
                 sx={{
                   display: 'flex',
                   flexDirection: 'column',
@@ -251,6 +333,7 @@ export default function SpecificCollegePage() {
                   backgroundColor: '#ebebeb',
                   p: '1em',
                   borderRadius: '15px',
+                  justifyContent:"space-evenly"
                 }}
               >
                 <Typography
@@ -262,35 +345,34 @@ export default function SpecificCollegePage() {
                   }}
                   variant='h5'
                 >
-                  Demographic
+                {chartTitles[chartPage - 1]}
                 </Typography>
-                {/* <Typography variant='body1'>{college.description}</Typography> */}
-                {collegeChartData && <CostChart data={collegeChartData}
-                  sx={{
-                    textAlign: {
-                      xs: 'center',
-                      md: 'left',
-                    },
-                  }}
-               />}
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={chartPage} // ensure each chart transition is triggered
+                    variants={chartVariants}
+                    initial="initial"
+                    animate="animate"
+                    exit="exit"
+                    transition={{ duration: 0.4 }}
+                  >
+                    {charts[chartPage - 1]}
+                  </motion.div>
+                </AnimatePresence>
 
-              </Box>
-            </Box>
-            <Button
-              component={Link}
-              to={`/college/add-review/${college.id}`}
-              fullWidth
-              // color='secondary'
-              variant='contained'
-              sx={{
-                borderRadius: '15px',
-                p: '.5em',
-                // width: '50%',
-              }}
-            >
-              Add a review
-            </Button>
+                <Pagination
+                  count={charts.length}
+                  page={chartPage}
+                  onChange={(e, value) => setChartPage(value)}
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    mt: 2,
+                  }}
+                />
+                </Box>
           </Box>
+
 
           <Divider sx={{ my: 3 }} />
 
@@ -300,10 +382,9 @@ export default function SpecificCollegePage() {
               display: 'flex',
               flexDirection: 'column',
               width: '100%',
-              backgroundColor: '#ebebeb',
               p: '1em',
               borderRadius: '15px',
-              justifyContent: 'space-between',
+              justifyContent: 'space-evenly',
             }}
           >
             <Box>
@@ -314,10 +395,13 @@ export default function SpecificCollegePage() {
               {college.reviews.length === 0 ? (
                 <Typography>No reviews yet.</Typography>
               ) : (
-                paginatedItems.map((review) => (
+                college.reviews.map((review) => (
                   <Paper
                     key={review.id}
-                    sx={{ mb: 2, p: 2, borderRadius: '15px' }}
+                    sx={{ mb: 2, p: 2, borderRadius: '15px',
+              backgroundColor: '#ebebeb',
+
+                     }}
                     elevation={1}
                   >
                     <Box
@@ -369,6 +453,7 @@ export default function SpecificCollegePage() {
                               sx={{
                                 color: 'black',
                                 fontWeight: 'bold',
+                                fontSize: '2.2rem',
                               }}
                             >
                               {review.rating}
@@ -382,7 +467,7 @@ export default function SpecificCollegePage() {
                         sx={{
                           display: 'flex',
                           flexDirection: 'column',
-                          justifyContent: 'space-between',
+                          justifyContent: 'space-evenly',
                           flex: 1,
                         }}
                       >
@@ -392,6 +477,7 @@ export default function SpecificCollegePage() {
                             mb: 2,
                             whiteSpace: 'normal',
                             wordBreak: 'break-word',
+                            fontSize: '1rem',
                           }}
                         >
                           {review.content}
@@ -402,7 +488,7 @@ export default function SpecificCollegePage() {
                       <Box
                         display='flex'
                         flexDirection={{ xs: 'row', sm: 'column' }}
-                        justifyContent='space-between'
+                        justifyContent='space-evenly'
                         alignItems='center'
                       >
                         <DateComponent rawDate={review.createdAt} />
@@ -455,16 +541,6 @@ export default function SpecificCollegePage() {
               )}
             </Box>
 
-            <Pagination
-              sx={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}
-              count={Math.ceil(college.reviews.length / itemsPerPage)}
-              page={currentPage}
-              onChange={(e, value) => setCurrentPage(value)}
-            ></Pagination>
           </Box>
         </Box>
       </Paper>

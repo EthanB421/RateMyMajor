@@ -33,7 +33,7 @@ const RepaymentGauge = ({ data }) => {
     <Grid container spacing={3}>
       {gauges.map((g, index) => (
         <Grid item xs={12} sm={4} key={index}>
-          <Box display="flex" flexDirection="column" alignItems="center">
+          <Box display="flex" flexDirection="column" alignItems="center" justifyContent="space-evenly">
             <Gauge
               width={120}
               height={120}
