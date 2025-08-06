@@ -8,6 +8,9 @@ import SpecificCollegePage from './pages/SpecificCollegePage';
 import AddReviewPage from './pages/AddReviewPage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
+import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
+import TermsOfServicePage from './pages/TermsOfServicePage';
+import ScrollTop from './components/ScrollTop';
 import './styles/index.css';
 import { createTheme, ThemeProvider } from '@mui/material';
 import { AuthProvider } from './pages/AuthContext';
@@ -32,6 +35,7 @@ const theme = createTheme({
 function App() {
   return (
     <BrowserRouter>
+      <ScrollTop />
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <AuthProvider>
@@ -50,6 +54,8 @@ function App() {
                 path='/college/:specificCollege'
                 element={<SpecificCollegePage />}
               />
+              <Route path='privacy-policy' element={<PrivacyPolicyPage />} />
+              <Route path='terms-of-service' element={<TermsOfServicePage />} />
               <Route path='college/add-review' element={<AddReviewPage />} />
             </Routes>
           </div>

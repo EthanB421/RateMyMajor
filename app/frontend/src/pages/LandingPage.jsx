@@ -90,7 +90,7 @@ export default function LandingPage() {
               textAlign='center'
               sx={{
                 fontFamily: 'Raleway, sans-serif',
-                fontSize: { xs: '2rem', md: '3rem' },
+                fontSize: { xs: '2rem', sm: '2.5rem', md: '3rem' },
               }}
             >
               Curious about college?
@@ -100,10 +100,10 @@ export default function LandingPage() {
               textAlign='center'
               sx={{
                 fontFamily: 'Raleway, sans-serif',
-                fontSize: { xs: '1.5rem', md: '2rem' },
+                fontSize: { xs: '1.5rem', sm: '1.75rem', md: '2rem' },
               }}
             >
-              We provide the latest information on colleges you may be
+              We provide the latest federal information on colleges you may be
               interested in.
             </Typography>
           </Box>
@@ -111,14 +111,15 @@ export default function LandingPage() {
           <Fade in={fade} timeout={1000}>
             <Box
               sx={{
-                width: { xs: '90vw', md: '600px' }, // Set consistent width
-                height: { xs: '50vh', md: '400px' }, // Set consistent height
-                overflow: 'hidden', // Crop overflow
+                width: { xs: '100%', md: '50%' }, // Half width on desktop, full on mobile
+                maxWidth: '100%',
+                aspectRatio: '4 / 3', // Keep consistent image ratio (optional but ideal)
+                overflow: 'hidden',
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
                 order: { xs: 1, md: 2 },
-                backgroundColor: '#f5f5f5', // Optional: avoid flicker
+                backgroundColor: '#f5f5f5',
               }}
             >
               <Box
@@ -126,9 +127,9 @@ export default function LandingPage() {
                 src={imageList[currentImage]}
                 alt='Test Image'
                 sx={{
-                  height: '100%',
                   width: '100%',
-                  order: { xs: 1, md: 2 },
+                  height: '100%',
+                  objectFit: 'cover', // or 'contain' if you want full image
                 }}
               />
             </Box>
@@ -278,7 +279,7 @@ export default function LandingPage() {
               display: 'flex',
               flexDirection: 'column',
               gap: '1em',
-              width: { xs: '100%', md: '50%' },
+              width: { xs: '100%', md: '60%' },
               textAlign: { xs: 'center', md: 'left' },
               alignItems: { xs: 'center', md: 'start' },
             }}
@@ -292,7 +293,7 @@ export default function LandingPage() {
                 fontSize: { xs: '2rem', sm: '3rem' },
               }}
             >
-              Ready to level up your future?
+              Unsure about a prospective college?
             </Typography>
             <Typography
               variant='body1'
@@ -301,26 +302,26 @@ export default function LandingPage() {
                 width: '90%',
               }}
             >
-              Get recommendations from people in fields you are interested in,
-              as well as information on career prospects and progression.
+              Get insight from students and alumni that have attended specific
+              colleges, from program information to campus life.
             </Typography>
           </Box>
           <Box
             sx={{
               display: 'flex',
-              flexDirection: { xs: 'column', sm: 'row' },
+              flexDirection: { md: 'column', lg: 'row' },
               gap: '1em',
             }}
           >
             <Button
               variant='contained'
               sx={{
-                p: { xs: '1em', md: '1.5em', lg: '1.75em' },
+                p: { xs: '2em', md: '1.5em', lg: '1.75em' },
                 borderRadius: '20px',
               }}
               onClick={() => navigate('/register')}
             >
-              Get Started
+              Sign Up
             </Button>
             <Button
               variant='outlined'
@@ -330,7 +331,7 @@ export default function LandingPage() {
               }}
               onClick={() => navigate('/college')}
             >
-              Explore Careers
+              Explore Colleges
             </Button>
           </Box>
         </Box>
