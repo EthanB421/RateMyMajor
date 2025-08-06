@@ -50,7 +50,7 @@ export default function Footer() {
               underline='none'
               variant='subtitle1'
               align='center'
-              onClick={() => navigate('/')}
+              onClick={() => navigate('/privacy-policy')}
               sx={{
                 color: 'white',
                 '&:hover': {

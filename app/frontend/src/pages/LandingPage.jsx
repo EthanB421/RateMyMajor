@@ -90,7 +90,7 @@ export default function LandingPage() {
               textAlign='center'
               sx={{
                 fontFamily: 'Raleway, sans-serif',
-                fontSize: { xs: '2rem', md: '3rem' },
+                fontSize: { xs: '2rem', sm: '2.5rem', md: '3rem' },
               }}
             >
               Curious about college?
@@ -100,10 +100,10 @@ export default function LandingPage() {
               textAlign='center'
               sx={{
                 fontFamily: 'Raleway, sans-serif',
-                fontSize: { xs: '1.5rem', md: '2rem' },
+                fontSize: { xs: '1.5rem', sm: '1.75rem', md: '2rem' },
               }}
             >
-              We provide the latest information on colleges you may be
+              We provide the latest federal information on colleges you may be
               interested in.
             </Typography>
           </Box>
@@ -279,7 +279,7 @@ export default function LandingPage() {
               display: 'flex',
               flexDirection: 'column',
               gap: '1em',
-              width: { xs: '100%', md: '50%' },
+              width: { xs: '100%', md: '60%' },
               textAlign: { xs: 'center', md: 'left' },
               alignItems: { xs: 'center', md: 'start' },
             }}
@@ -293,7 +293,7 @@ export default function LandingPage() {
                 fontSize: { xs: '2rem', sm: '3rem' },
               }}
             >
-              Ready to find your future college?
+              Unsure about a prospective college?
             </Typography>
             <Typography
               variant='body1'
@@ -309,19 +309,19 @@ export default function LandingPage() {
           <Box
             sx={{
               display: 'flex',
-              flexDirection: { xs: 'column', sm: 'row' },
+              flexDirection: { md: 'column', lg: 'row' },
               gap: '1em',
             }}
           >
             <Button
               variant='contained'
               sx={{
-                p: { xs: '1em', md: '1.5em', lg: '1.75em' },
+                p: { xs: '2em', md: '1.5em', lg: '1.75em' },
                 borderRadius: '20px',
               }}
               onClick={() => navigate('/register')}
             >
-              Get Started
+              Sign Up
             </Button>
             <Button
               variant='outlined'
