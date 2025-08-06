@@ -1,16 +1,16 @@
 import { useNavigate } from 'react-router-dom';
+
 import {
   Typography,
   Container,
   Box,
-  Paper,
   Divider,
   List,
   ListItem,
   Link,
 } from '@mui/material';
 
-export default function PrivacyPolicyPage() {
+export default function TermsOfServicePage() {
   const navigate = useNavigate();
   return (
     <Container maxWidth='md' disableGutter sx={{ p: '2em' }}>
@@ -23,7 +23,7 @@ export default function PrivacyPolicyPage() {
           mb: '.5em',
         }}
       >
-        Privacy Policy
+        Terms of Service
       </Typography>
       <Divider />
 
@@ -40,13 +40,12 @@ export default function PrivacyPolicyPage() {
           </Typography>
           <Typography>
             RateMyCollege is a platform for writing reviews on colleges and
-            presenting information regarding said colleges. This privacy policy
-            describes how we collect, use, and protect your personal information
-            when you use our website and its services.
+            presenting information regarding said colleges. By using our
+            platform, you agree to be bound by these Terms of Service.
           </Typography>
         </Box>
 
-        {/* Information we collect */}
+        {/* Eligibility */}
         <Box display='flex' flexDirection='column' gap='.5em'>
           <Typography
             sx={{
@@ -54,13 +53,69 @@ export default function PrivacyPolicyPage() {
               fontWeight: '600',
             }}
           >
-            Information we collect
+            Eligibility
           </Typography>
           <Typography>
-            RateMyCollege collects information from website visitors.
-            Registering an account will provide us with personal information,
-            although optional. Navigation throughout our website can still be
-            done anonymously.
+            Users must be 13 or older in order to use this service.
+          </Typography>
+        </Box>
+
+        {/* User Account Safety  */}
+        <Box display='flex' flexDirection='column' gap='.5em'>
+          <Typography
+            sx={{
+              fontSize: { xs: '2rem', sm: '1.5rem', md: '2rem' },
+              fontWeight: '600',
+            }}
+          >
+            User Account Safety
+          </Typography>
+          <Typography>
+            When creating an account with RateMyCollege, we will uphold our end
+            to provide the necessary account security, as per our{' '}
+            <Link
+              onClick={() => navigate('/privacy-policy')}
+              sx={{
+                '&:hover': {
+                  cursor: 'pointer',
+                },
+              }}
+            >
+              Privacy Policy
+            </Link>
+            . However, users are responsible for the confidentiality of their
+            login.
+          </Typography>
+        </Box>
+
+        {/* User Generated Content */}
+        <Box display='flex' flexDirection='column' gap='.5em'>
+          <Typography
+            sx={{
+              fontSize: { xs: '2rem', sm: '1.5rem', md: '2rem' },
+              fontWeight: '600',
+            }}
+          >
+            User generated content
+          </Typography>
+          <Typography>
+            When posting any content on RateMyCollege, it will be reviewed
+            before going live on the website. Content must be Safe For Work
+            (SFW) and any content that is deemed innapropriate will be removed.
+            Users retain ownership of their content but grant RateMyMajor a
+            license to display, reproduce, and distribute it.
+          </Typography>
+        </Box>
+
+        {/* Forbidden Activities */}
+        <Box display='flex' flexDirection='column' gap='.5em'>
+          <Typography
+            sx={{
+              fontSize: { xs: '2rem', sm: '1.5rem', md: '2rem' },
+              fontWeight: '600',
+            }}
+          >
+            Forbidden activities
           </Typography>
           <Typography
             sx={{
@@ -69,29 +124,22 @@ export default function PrivacyPolicyPage() {
               mt: '.5em',
             }}
           >
-            Personal Information:
+            Bannable offenses:
           </Typography>
           <List>
-            <ListItem>Full name</ListItem>
-            <ListItem>Email address</ListItem>
-            <ListItem>IP address</ListItem>
+            <ListItem>Posting of false or misleading content</ListItem>
+            <ListItem>No harassment, hate speech, or impersonations</ListItem>
+            <ListItem>Data scraping, mining, or reverse engineering</ListItem>
           </List>
-          <Typography
-            sx={{
-              fontSize: { xs: '2rem', sm: '1.1rem', md: '1.5rem' },
-              fontWeight: '500',
-            }}
-          >
-            Non-Personal Information:
+          <Typography>
+            We reserve the right to remove content / delete accounts that
+            violate these Terms of Service without any notice. Any other
+            offenses unmentioned that may harm others or be misleading will be
+            dealt with accordingly.
           </Typography>
-          <List>
-            <ListItem>Device and browser type</ListItem>
-            <ListItem>Visited pages</ListItem>
-            <ListItem>Time spent on site</ListItem>
-          </List>
         </Box>
 
-        {/* Use of personal information  */}
+        {/* Intellectual Property */}
         <Box display='flex' flexDirection='column' gap='.5em'>
           <Typography
             sx={{
@@ -99,19 +147,19 @@ export default function PrivacyPolicyPage() {
               fontWeight: '600',
             }}
           >
-            Use of personal information
+            Intellectual property
           </Typography>
           <Typography>
-            Your information will be used to create and manage accounts,
-            personalize content, and enforce terms. We may send users emails if
-            they were provided in regards to newsletters and any account-related
-            notifications. Furthermore, we will analyze any information in order
-            to improve our services, from user experience to overall website
-            functionality.
+            All content and intellectual property are owned by or licensed to
+            RateMyCollege. You may not copy, reproduce, or distrubute without
+            permission. In the event you believe RateMyCollege has infringed on
+            any of your Intellectual Property, please reach out to us at{' '}
+            <Link>support@ratemycollege.com</Link> and we will respond as
+            needed.
           </Typography>
         </Box>
 
-        {/* Cookies and third party sharing */}
+        {/* Third Party Links / Services */}
         <Box display='flex' flexDirection='column' gap='.5em'>
           <Typography
             sx={{
@@ -119,18 +167,17 @@ export default function PrivacyPolicyPage() {
               fontWeight: '600',
             }}
           >
-            Cookies and third party sharing
+            Third-party services
           </Typography>
           <Typography>
-            Cookies and similar technologies are used to improve user experience
-            and analyze site traffic. If you do not wish to opt in, you can
-            disable cookies through your browser settings. Additionally, we will
-            never sell or trade your data to any third party services except for
-            those required by law from service providers.
+            RateMyCollege uses information from the Federal Department of
+            Education. This information can be freely found on their respective
+            website. While RateMyCollege has no third-party advertisements as of
+            now, we reserve the right to implement them in the future.
           </Typography>
         </Box>
 
-        {/* Data Privacy */}
+        {/* Disclaimers */}
         <Box display='flex' flexDirection='column' gap='.5em'>
           <Typography
             sx={{
@@ -138,50 +185,13 @@ export default function PrivacyPolicyPage() {
               fontWeight: '600',
             }}
           >
-            Protection of your data
+            Disclaimers and limitation of liability
           </Typography>
           <Typography>
-            We make sure to take the steps necessary to protect your information
-            as best as possible. Even so, transmission over the Internet is
-            never fully secure. As a result, we cannot guarantee 100% security
-            in all cases.
-          </Typography>
-        </Box>
-
-        {/* User Rights */}
-        <Box display='flex' flexDirection='column' gap='.5em'>
-          <Typography
-            sx={{
-              fontSize: { xs: '2rem', sm: '1.5rem', md: '2rem' },
-              fontWeight: '600',
-            }}
-          >
-            User rights
-          </Typography>
-          <Typography>
-            We comply with all user rights laws and those under the GDPR AND
-            CCPA laws. If these laws apply to you, you have the right to
-            access/correct data, request the deletion of data, and opt out of
-            tracking/communications.
-          </Typography>
-        </Box>
-
-        {/* Children's Privacy */}
-        <Box display='flex' flexDirection='column' gap='.5em'>
-          <Typography
-            sx={{
-              fontSize: { xs: '2rem', sm: '1.5rem', md: '2rem' },
-              fontWeight: '600',
-            }}
-          >
-            Children's privacy
-          </Typography>
-          <Typography>
-            This website is not meant for use by children under the age of 13.
-            We do not knowingly collect personal information from children. If
-            you believe your child has given us any information, please contact
-            us at <Link>support@ratemycollege.com</Link> and we will take the
-            necessary action.
+            All information is provided "as-is". We do not guarantee the
+            accuracy or completeness of any content. Opinions expressed in
+            reviews are those of individual users. RateMyCollege is not liable
+            for any damages resulting from your use of the platform.
           </Typography>
         </Box>
 
@@ -193,14 +203,14 @@ export default function PrivacyPolicyPage() {
               fontWeight: '600',
             }}
           >
-            Future changes and Terms of Service
+            Future changes and Privacy Policy
           </Typography>
           <Typography>
-            Our privacy policy may be updated from time to time. Therefore, we
-            recommend users to check this page again periodically for any
-            changes. To see our Terms of Service,{' '}
+            Our Terms may be updated from time to time. Continued use of the
+            platform indicates acceptance of the new terms. To see our privacy
+            policy,{' '}
             <Link
-              onClick={() => navigate('/terms-of-service')}
+              onClick={() => navigate('/privacy-policy')}
               sx={{
                 '&:hover': {
                   cursor: 'pointer',
@@ -223,8 +233,8 @@ export default function PrivacyPolicyPage() {
             Contact information
           </Typography>
           <Typography>
-            In the event you have more questions or concerns regarding our
-            privacy policy, please reach out to us at{' '}
+            In the event you have more questions or concerns regarding our Terms
+            of Service, please reach out to us at{' '}
             <Link>support@ratemycollege.com</Link>.
           </Typography>
         </Box>

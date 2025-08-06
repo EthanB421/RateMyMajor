@@ -64,7 +64,7 @@ export default function Footer() {
               underline='none'
               variant='subtitle1'
               align='center'
-              onClick={() => navigate('/')}
+              onClick={() => navigate('/terms-of-service')}
               sx={{
                 color: 'white',
                 '&:hover': {
