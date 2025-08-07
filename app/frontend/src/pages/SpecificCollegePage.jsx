@@ -1,9 +1,5 @@
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import ThumbUpIcon from '@mui/icons-material/ThumbUp';
-import ThumbDownIcon from '@mui/icons-material/ThumbDown';
-import ThumbDownTwoToneIcon from '@mui/icons-material/ThumbDownTwoTone';
-import ThumbUpTwoToneIcon from '@mui/icons-material/ThumbUpTwoTone';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import LinearProgress from '@mui/material/LinearProgress';
@@ -19,9 +15,10 @@ import {
   Box,
   Typography,
   Paper,
-  Grid,
   Button,
   Divider,
+  Rating,
+  styled,
   Pagination,
 } from '@mui/material';
 import RepaymentGauge from '../components/RepaymentGauge';
@@ -33,7 +30,6 @@ export default function SpecificCollegePage() {
   const [collegeChartData, setcollegeChartData] = useState(null); //COLLEGE DATA FROM COLLEGE SCORECARD API
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const itemsPerPage = 3;
   const chartTitles = [
     'Earnings Over Time',
     'Cost Breakdown',
@@ -53,7 +49,12 @@ export default function SpecificCollegePage() {
     exit: { opacity: 0, y: -20 },
   };
 
-  const [currentPage, setCurrentPage] = useState(1);
+  const StyledRating = styled(Rating)({
+    '& .MuiRating-iconFilled': {
+      color: '#757ce8',
+    },
+  });
+
   const [userVotes, setUserVotes] = useState({});
 
   useEffect(() => {
@@ -129,8 +130,6 @@ export default function SpecificCollegePage() {
     const formatted = format(dateObj, 'MMMM d, yyyy');
     return <Typography>{formatted}</Typography>;
   };
-  const recommendationText =
-    college.rating < 3 ? 'Would Not Recommend' : 'Would Recommend';
 
   return (
     <Container disableGutters maxWidth='xl'>
@@ -148,7 +147,6 @@ export default function SpecificCollegePage() {
             display: 'flex',
             flexDirection: 'column',
             width: '100%',
-            gap: '1em',
             justifyContent: 'center',
             alignItems: 'center',
           }}
@@ -159,8 +157,9 @@ export default function SpecificCollegePage() {
               display: 'flex',
               flexDirection: {
                 xs: 'column',
-                md: 'row',
+                lg: 'row',
               },
+              width: '100%',
               gap: { sm: '1em', md: '4em' },
             }}
           >
@@ -170,7 +169,6 @@ export default function SpecificCollegePage() {
                 display: 'flex',
                 flexDirection: 'column',
                 width: '100%',
-                gap: '1em',
                 justifyContent: 'center',
                 alignItems: 'center',
               }}
@@ -183,15 +181,13 @@ export default function SpecificCollegePage() {
                   sx={{
                     fontFamily: 'Bebas Neue, sans-serif',
                     fontWeight: 600,
-                    fontSize: '4.25rem',
+                    fontSize: { xs: '3rem', md: '4rem' },
+                    mb: '.3em',
                   }}
                 >
                   {college.name}
                 </Typography>
-                <Box sx={{ my: 2 }}>
-                  <Typography variant='h5' textAlign='center' gutterBottom>
-                    {college.rating.toFixed(1)}/5 - {recommendationText}
-                  </Typography>
+                <Box>
                   <LinearProgress
                     variant='determinate'
                     value={college.wouldRecommend}
@@ -214,15 +210,16 @@ export default function SpecificCollegePage() {
                     {college.wouldRecommend}% of reviewers rated this college 3
                     or higher.
                   </Typography>
+
                   {/* College stats container */}
                   <Box
                     sx={{
                       display: 'flex',
-                      flexDirection: { xs: 'column', md: 'row' },
+                      flexDirection: 'row',
                       justifyContent: 'space-evenly',
                       alignItems: 'center',
-                      mt: '1em',
-                      mb: '2em',
+                      mt: { xs: '1em', md: '3em' },
+                      mb: { xs: ' 1em', md: 0 },
                     }}
                   >
                     <Box
@@ -236,7 +233,11 @@ export default function SpecificCollegePage() {
                         sx={{
                           fontFamily: 'Bebas Neue, sans-serif',
                           fontWeight: 600,
-                          fontSize: '1.3rem',
+                          fontSize: {
+                            xs: '1rem',
+                            sm: '1.4rem',
+                            md: '1.3rem',
+                          },
                           borderBottom: '3px solid #4357b2',
                         }}
                       >
@@ -247,7 +248,13 @@ export default function SpecificCollegePage() {
                         sx={{
                           fontFamily: 'Bebas Neue, sans-serif',
                           fontWeight: 600,
-                          fontSize: '1.5rem',
+                          textAlign: 'center',
+
+                          fontSize: {
+                            xs: '1rem',
+                            sm: '1.4rem',
+                            md: '1.3rem',
+                          },
                         }}
                       >
                         $
@@ -259,7 +266,12 @@ export default function SpecificCollegePage() {
                         sx={{
                           fontFamily: 'Bebas Neue, sans-serif',
                           fontWeight: 600,
-                          fontSize: '1.3rem',
+                          textAlign: 'center',
+                          fontSize: {
+                            xs: '1rem',
+                            sm: '1.4rem',
+                            md: '1.3rem',
+                          },
                           borderBottom: '3px solid #4357b2',
                         }}
                       >
@@ -270,7 +282,13 @@ export default function SpecificCollegePage() {
                         sx={{
                           fontFamily: 'Bebas Neue, sans-serif',
                           fontWeight: 600,
-                          fontSize: '1.5rem',
+                          textAlign: 'center',
+
+                          fontSize: {
+                            xs: '1rem',
+                            sm: '1.4rem',
+                            md: '1.3rem',
+                          },
                         }}
                       >
                         $
@@ -282,7 +300,13 @@ export default function SpecificCollegePage() {
                         sx={{
                           fontFamily: 'Bebas Neue, sans-serif',
                           fontWeight: 600,
-                          fontSize: '1.3rem',
+                          textAlign: 'center',
+
+                          fontSize: {
+                            xs: '1rem',
+                            sm: '1.4rem',
+                            md: '1.3rem',
+                          },
                           borderBottom: '3px solid #4357b2',
                         }}
                       >
@@ -293,7 +317,13 @@ export default function SpecificCollegePage() {
                         sx={{
                           fontFamily: 'Bebas Neue, sans-serif',
                           fontWeight: 600,
-                          fontSize: '1.5rem',
+                          textAlign: 'center',
+
+                          fontSize: {
+                            xs: '1rem',
+                            sm: '1.4rem',
+                            md: '1.3rem',
+                          },
                         }}
                       >
                         $
@@ -313,7 +343,11 @@ export default function SpecificCollegePage() {
                         sx={{
                           fontFamily: 'Bebas Neue, sans-serif',
                           fontWeight: 600,
-                          fontSize: '1.3rem',
+                          fontSize: {
+                            xs: '1rem',
+                            sm: '1.4rem',
+                            md: '1.3rem',
+                          },
                           borderBottom: '3px solid #4357b2',
                         }}
                       >
@@ -324,7 +358,11 @@ export default function SpecificCollegePage() {
                         sx={{
                           fontFamily: 'Bebas Neue, sans-serif',
                           fontWeight: 600,
-                          fontSize: '1.5rem',
+                          fontSize: {
+                            xs: '1rem',
+                            sm: '1.4rem',
+                            md: '1.3rem',
+                          },
                         }}
                       >
                         {collegeChartData?.[
@@ -336,8 +374,13 @@ export default function SpecificCollegePage() {
                         sx={{
                           fontFamily: 'Bebas Neue, sans-serif',
                           fontWeight: 600,
-                          fontSize: '1.3rem',
+                          fontSize: {
+                            xs: '1rem',
+                            sm: '1.4rem',
+                            md: '1.3rem',
+                          },
                           borderBottom: '3px solid #4357b2',
+                          textAlign: 'center',
                         }}
                       >
                         {' '}
@@ -347,7 +390,11 @@ export default function SpecificCollegePage() {
                         sx={{
                           fontFamily: 'Bebas Neue, sans-serif',
                           fontWeight: 600,
-                          fontSize: '1.5rem',
+                          fontSize: {
+                            xs: '1rem',
+                            sm: '1.4rem',
+                            md: '1.3rem',
+                          },
                         }}
                       >
                         {collegeChartData?.[
@@ -359,7 +406,11 @@ export default function SpecificCollegePage() {
                         sx={{
                           fontFamily: 'Bebas Neue, sans-serif',
                           fontWeight: 600,
-                          fontSize: '1.3rem',
+                          fontSize: {
+                            xs: '1rem',
+                            sm: '1.4rem',
+                            md: '1.3rem',
+                          },
                           borderBottom: '3px solid #4357b2',
                         }}
                       >
@@ -370,7 +421,11 @@ export default function SpecificCollegePage() {
                         sx={{
                           fontFamily: 'Bebas Neue, sans-serif',
                           fontWeight: 600,
-                          fontSize: '1.5rem',
+                          fontSize: {
+                            xs: '1rem',
+                            sm: '1.4rem',
+                            md: '1.3rem',
+                          },
                         }}
                       >
                         {collegeChartData?.[
@@ -399,54 +454,80 @@ export default function SpecificCollegePage() {
               sx={{
                 display: 'flex',
                 flexDirection: 'column',
-                backgroundColor: '#ebebeb',
                 width: '100%',
-                maxWidth: '650px',
-                mx: 'auto',
-                height: '500px', // consistent space for all charts
                 alignItems: 'center',
                 justifyContent: 'center',
                 gap: '2em',
               }}
             >
-              <Typography
-                sx={{
-                  textAlign: {
-                    xs: 'center',
-                    md: 'center',
-                  },
-                }}
-                variant='h5'
-              >
-                {chartTitles[chartPage - 1]}
-              </Typography>
-              <AnimatePresence mode='wait'>
-                <motion.div
-                  key={chartPage} // ensure each chart transition is triggered
-                  variants={chartVariants}
-                  initial='initial'
-                  animate='animate'
-                  exit='exit'
-                  transition={{ duration: 0.4 }}
-                  style={{
-                    height: '300px', // ✅ fixed height (adjust as needed)
-                    width: '500px',
-                  }}
-                >
-                  {charts[chartPage - 1]}
-                </motion.div>
-              </AnimatePresence>
-
-              <Pagination
-                count={charts.length}
-                page={chartPage}
-                onChange={(e, value) => setChartPage(value)}
+              <Paper
+                elevation={3}
                 sx={{
                   display: 'flex',
+                  flexDirection: 'column',
+                  width: '100%',
+                  borderRadius: '15px',
+                  maxWidth: '650px',
+                  mx: 'auto',
+                  height: '500px', // consistent space for all charts
+                  alignItems: 'center',
                   justifyContent: 'center',
-                  mt: 2,
+                  p: 3,
+                  gap: '1.5em',
                 }}
-              />
+              >
+                <Typography
+                  sx={{
+                    textAlign: {
+                      xs: 'center',
+                      md: 'center',
+                    },
+                  }}
+                  variant='h5'
+                >
+                  {chartTitles[chartPage - 1]}
+                </Typography>
+                <AnimatePresence mode='wait'>
+                  <motion.div
+                    key={chartPage} // ensure each chart transition is triggered
+                    variants={chartVariants}
+                    initial='initial'
+                    animate='animate'
+                    exit='exit'
+                    transition={{ duration: 0.4 }}
+                    style={{
+                      height: '300px', // ✅ fixed height (adjust as needed)
+                      width: '500px',
+                    }}
+                  >
+                    {charts[chartPage - 1]}
+                  </motion.div>
+                </AnimatePresence>
+
+                <Pagination
+                  count={charts.length}
+                  page={chartPage}
+                  onChange={(e, value) => setChartPage(value)}
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                  }}
+                />
+              </Paper>
+              <Button
+                component={Link}
+                to={`/college/add-review/${college.id}`}
+                fullWidth
+                // color='secondary'
+                variant='contained'
+                sx={{
+                  borderRadius: '15px',
+                  p: '.5em',
+                  // width: '50%',
+                }}
+              >
+                Add a review
+              </Button>
             </Box>
           </Box>
 
