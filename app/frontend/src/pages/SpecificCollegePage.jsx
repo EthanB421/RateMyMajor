@@ -14,9 +14,6 @@ import CollegeEarningsChart from '../components/CollegeEarningsChart';
 import DemographicChart from '../components/DemographicChart';
 import { motion, AnimatePresence } from 'framer-motion';
 
-
-
-
 import {
   Container,
   Box,
@@ -37,33 +34,39 @@ export default function SpecificCollegePage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const itemsPerPage = 3;
-  const chartTitles = ['Earnings Over Time', 'Cost Breakdown', 'Demographics', 'Repayment Rates'];
+  const chartTitles = [
+    'Earnings Over Time',
+    'Cost Breakdown',
+    'Demographics',
+    'Repayment Rates',
+  ];
   const [chartPage, setChartPage] = useState(1);
-    const charts = [
+  const charts = [
     <CollegeEarningsChart data={collegeChartData} />,
     <CostChart data={collegeChartData} />,
     <DemographicChart data={collegeChartData} />,
-    <RepaymentGauge data={collegeChartData} />
+    <RepaymentGauge data={collegeChartData} />,
   ];
   const chartVariants = {
-  initial: { opacity: 0, y: 20 },
-  animate: { opacity: 1, y: 0 },
-  exit: { opacity: 0, y: -20 },
-};
+    initial: { opacity: 0, y: 20 },
+    animate: { opacity: 1, y: 0 },
+    exit: { opacity: 0, y: -20 },
+  };
 
   const [currentPage, setCurrentPage] = useState(1);
   const [userVotes, setUserVotes] = useState({});
 
+  useEffect(() => {
+    if (!college || !college.federalSchoolCode) return;
 
-    useEffect(() => {
-      if (!college || !college.federalSchoolCode) return;
+    axios
+      .get(
+        `http://localhost:5123/api/CollegeScorecard/${college.federalSchoolCode}`
+      )
+      .then((res) => setcollegeChartData(res.data.results[0]))
+      .catch((err) => console.error('CollegeScorecard API error:', err));
+  }, [college]);
 
-      axios
-        .get(`http://localhost:5123/api/CollegeScorecard/${college.federalSchoolCode}`)
-        .then((res) => setcollegeChartData(res.data.results[0]))
-        .catch((err) => console.error('CollegeScorecard API error:', err));
-    }, [college]);
-      
   const handleVote = async (reviewId, value) => {
     try {
       const response = await fetch(`http://localhost:5123/api/votes`, {
@@ -140,239 +143,312 @@ export default function SpecificCollegePage() {
           margin: '1em',
         }}
       >
-          <Box
-              sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              width: '100%',
-              gap: '1em',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          >
-        {/* Main box container */}
         <Box
           sx={{
             display: 'flex',
-            flexDirection: {
-              xs: 'column',
-              md: 'row',
-            },
-            gap: { sm: '1em', md: '4em' },
+            flexDirection: 'column',
+            width: '100%',
+            gap: '1em',
+            justifyContent: 'center',
+            alignItems: 'center',
           }}
         >
-
-          {/* College & Description container */}
+          {/* Main box container */}
           <Box
             sx={{
               display: 'flex',
-              flexDirection: 'column',
-              width: '100%',
-              gap: '1em',
-              justifyContent: 'center',
-              alignItems: 'center',
+              flexDirection: {
+                xs: 'column',
+                md: 'row',
+              },
+              gap: { sm: '1em', md: '4em' },
             }}
           >
-            {/* College/general information block */}
-            <Box sx={{ width: '100%' }}>
-              <Typography
-                variant='h3'
-                textAlign='center'
-                sx={{
-                  fontFamily: 'Bebas Neue, sans-serif',
-                  fontWeight: 600,
-                  fontSize: '4.25rem',
-                }}
-              >
-                {college.name}
-              </Typography>
-              <Box sx={{ my: 2 }}>
-                <Typography variant='h5' textAlign='center' gutterBottom>
-                  {college.rating.toFixed(1)}/5 - {recommendationText}
-                </Typography>
-                <LinearProgress
-                  variant='determinate'
-                  value={college.wouldRecommend}
-                  sx={{
-                    height: '1em',
-                    borderRadius: '15px',
-                    mb: '1em',
-                    p: '1em',
-                  }}
-                />
-                <Typography variant='body2' textAlign='center'
-                sx={{
-                  fontFamily: 'Bebas Neue, sans-serif',
-                  fontWeight: 100,
-                  fontSize: '1.3rem',
-                }}>
-                  {college.wouldRecommend}% of reviewers rated this college 3 or
-                  higher.
-                </Typography>
-                  <Box sx={{
-                    display: 'flex',
-                    flexDirection: { xs: 'column', md: 'row' },
-                    justifyContent: 'space-evenly',
-                    alignItems: 'center',
-                    mt: '1em',
-                    mb: '2em',
-                  }}>
-                    <Box
-                    sx={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      alignItems: 'center',
-                    }}>
-                    <Typography
-                    sx={{
-                      fontFamily: 'Bebas Neue, sans-serif',
-                      fontWeight: 600,
-                      fontSize: '1.3rem',
-                      borderBottom: '3px solid #4357b2',
-                    }}>  Average Price Per Year </Typography>
-                    <Typography
-                      sx={{
-                      fontFamily: 'Bebas Neue, sans-serif',
-                      fontWeight: 600,
-                      fontSize: '1.5rem',
-                    }}>${collegeChartData?.['latest.cost.attendance.academic_year']?.toLocaleString() || 'N/A'}</Typography>
-                     <Typography
-                    sx={{
-                      fontFamily: 'Bebas Neue, sans-serif',
-                      fontWeight: 600,
-                      fontSize: '1.3rem',
-                      borderBottom: '3px solid #4357b2',
-                    }}>  In-State Tuition Fees </Typography>
-                    <Typography
-                      sx={{
-                      fontFamily: 'Bebas Neue, sans-serif',
-                      fontWeight: 600,
-                      fontSize: '1.5rem',
-                    }}>${collegeChartData?.['latest.cost.tuition.in_state']?.toLocaleString() || 'N/A'}</Typography>
-                     <Typography
-                    sx={{
-                      fontFamily: 'Bebas Neue, sans-serif',
-                      fontWeight: 600,
-                      fontSize: '1.3rem',
-                      borderBottom: '3px solid #4357b2',
-                    }}>  Out-Of-State Tutition Fees </Typography>
-                    <Typography
-                      sx={{
-                      fontFamily: 'Bebas Neue, sans-serif',
-                      fontWeight: 600,
-                      fontSize: '1.5rem',
-                    }}>${collegeChartData?.['latest.cost.tuition.out_of_state']?.toLocaleString() || 'N/A'}</Typography>
-                    </Box>
-                    <Box
-                    sx={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      alignItems: 'center',
-                    }}>
-                    <Typography
-                    sx={{
-                      fontFamily: 'Bebas Neue, sans-serif',
-                      fontWeight: 600,
-                      fontSize: '1.3rem',
-                      borderBottom: '3px solid #4357b2',
-                    }}>  Admission Rate </Typography>
-                    <Typography
-                      sx={{
-                      fontFamily: 'Bebas Neue, sans-serif',
-                      fontWeight: 600,
-                      fontSize: '1.5rem',
-                    }}>{collegeChartData?.['latest.admissions.admission_rate_suppressed.overall']?.toLocaleString('en-US', {style:'percent'}) || 'N/A'}</Typography>
-                     <Typography
-                    sx={{
-                      fontFamily: 'Bebas Neue, sans-serif',
-                      fontWeight: 600,
-                      fontSize: '1.3rem',
-                      borderBottom: '3px solid #4357b2',
-                    }}>  Federal Loan Recievement Rate </Typography>
-                    <Typography
-                      sx={{
-                      fontFamily: 'Bebas Neue, sans-serif',
-                      fontWeight: 600,
-                      fontSize: '1.5rem',
-                    }}>{collegeChartData?.['latest.aid.federal_loan_rate']?.toLocaleString('en-US', {style:'percent'}) || 'N/A'}</Typography>
-                     <Typography
-                    sx={{
-                      fontFamily: 'Bebas Neue, sans-serif',
-                      fontWeight: 600,
-                      fontSize: '1.3rem',
-                      borderBottom: '3px solid #4357b2',
-                    }}>  Total Undergrad Enrollment </Typography>
-                    <Typography
-                      sx={{
-                      fontFamily: 'Bebas Neue, sans-serif',
-                      fontWeight: 600,
-                      fontSize: '1.5rem',
-                    }}>{collegeChartData?.['latest.student.size']?.toLocaleString() || 'N/A'}</Typography>
-                    </Box>                  </Box>
-              </Box>
-            </Box>
-            {/* Description block */}
+            {/* College & Description container */}
             <Box
               sx={{
                 display: 'flex',
                 flexDirection: 'column',
                 width: '100%',
-                gap: '2em',
+                gap: '1em',
+                justifyContent: 'center',
+                alignItems: 'center',
               }}
             >
-              
-                
-                {/* <Typography variant='body1'>{college.description}</Typography> */}
+              {/* College/general information block */}
+              <Box sx={{ width: '100%' }}>
+                <Typography
+                  variant='h3'
+                  textAlign='center'
+                  sx={{
+                    fontFamily: 'Bebas Neue, sans-serif',
+                    fontWeight: 600,
+                    fontSize: '4.25rem',
+                  }}
+                >
+                  {college.name}
+                </Typography>
+                <Box sx={{ my: 2 }}>
+                  <Typography variant='h5' textAlign='center' gutterBottom>
+                    {college.rating.toFixed(1)}/5 - {recommendationText}
+                  </Typography>
+                  <LinearProgress
+                    variant='determinate'
+                    value={college.wouldRecommend}
+                    sx={{
+                      height: '1em',
+                      borderRadius: '15px',
+                      mb: '1em',
+                      p: '1em',
+                    }}
+                  />
+                  <Typography
+                    variant='body2'
+                    textAlign='center'
+                    sx={{
+                      fontFamily: 'Bebas Neue, sans-serif',
+                      fontWeight: 100,
+                      fontSize: '1.3rem',
+                    }}
+                  >
+                    {college.wouldRecommend}% of reviewers rated this college 3
+                    or higher.
+                  </Typography>
+                  {/* College stats container */}
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      flexDirection: { xs: 'column', md: 'row' },
+                      justifyContent: 'space-evenly',
+                      alignItems: 'center',
+                      mt: '1em',
+                      mb: '2em',
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                      }}
+                    >
+                      <Typography
+                        sx={{
+                          fontFamily: 'Bebas Neue, sans-serif',
+                          fontWeight: 600,
+                          fontSize: '1.3rem',
+                          borderBottom: '3px solid #4357b2',
+                        }}
+                      >
+                        {' '}
+                        Average Price Per Year{' '}
+                      </Typography>
+                      <Typography
+                        sx={{
+                          fontFamily: 'Bebas Neue, sans-serif',
+                          fontWeight: 600,
+                          fontSize: '1.5rem',
+                        }}
+                      >
+                        $
+                        {collegeChartData?.[
+                          'latest.cost.attendance.academic_year'
+                        ]?.toLocaleString() || 'N/A'}
+                      </Typography>
+                      <Typography
+                        sx={{
+                          fontFamily: 'Bebas Neue, sans-serif',
+                          fontWeight: 600,
+                          fontSize: '1.3rem',
+                          borderBottom: '3px solid #4357b2',
+                        }}
+                      >
+                        {' '}
+                        In-State Tuition Fees{' '}
+                      </Typography>
+                      <Typography
+                        sx={{
+                          fontFamily: 'Bebas Neue, sans-serif',
+                          fontWeight: 600,
+                          fontSize: '1.5rem',
+                        }}
+                      >
+                        $
+                        {collegeChartData?.[
+                          'latest.cost.tuition.in_state'
+                        ]?.toLocaleString() || 'N/A'}
+                      </Typography>
+                      <Typography
+                        sx={{
+                          fontFamily: 'Bebas Neue, sans-serif',
+                          fontWeight: 600,
+                          fontSize: '1.3rem',
+                          borderBottom: '3px solid #4357b2',
+                        }}
+                      >
+                        {' '}
+                        Out-Of-State Tutition Fees{' '}
+                      </Typography>
+                      <Typography
+                        sx={{
+                          fontFamily: 'Bebas Neue, sans-serif',
+                          fontWeight: 600,
+                          fontSize: '1.5rem',
+                        }}
+                      >
+                        $
+                        {collegeChartData?.[
+                          'latest.cost.tuition.out_of_state'
+                        ]?.toLocaleString() || 'N/A'}
+                      </Typography>
+                    </Box>
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                      }}
+                    >
+                      <Typography
+                        sx={{
+                          fontFamily: 'Bebas Neue, sans-serif',
+                          fontWeight: 600,
+                          fontSize: '1.3rem',
+                          borderBottom: '3px solid #4357b2',
+                        }}
+                      >
+                        {' '}
+                        Admission Rate{' '}
+                      </Typography>
+                      <Typography
+                        sx={{
+                          fontFamily: 'Bebas Neue, sans-serif',
+                          fontWeight: 600,
+                          fontSize: '1.5rem',
+                        }}
+                      >
+                        {collegeChartData?.[
+                          'latest.admissions.admission_rate_suppressed.overall'
+                        ]?.toLocaleString('en-US', { style: 'percent' }) ||
+                          'N/A'}
+                      </Typography>
+                      <Typography
+                        sx={{
+                          fontFamily: 'Bebas Neue, sans-serif',
+                          fontWeight: 600,
+                          fontSize: '1.3rem',
+                          borderBottom: '3px solid #4357b2',
+                        }}
+                      >
+                        {' '}
+                        Federal Loan Recievement Rate{' '}
+                      </Typography>
+                      <Typography
+                        sx={{
+                          fontFamily: 'Bebas Neue, sans-serif',
+                          fontWeight: 600,
+                          fontSize: '1.5rem',
+                        }}
+                      >
+                        {collegeChartData?.[
+                          'latest.aid.federal_loan_rate'
+                        ]?.toLocaleString('en-US', { style: 'percent' }) ||
+                          'N/A'}
+                      </Typography>
+                      <Typography
+                        sx={{
+                          fontFamily: 'Bebas Neue, sans-serif',
+                          fontWeight: 600,
+                          fontSize: '1.3rem',
+                          borderBottom: '3px solid #4357b2',
+                        }}
+                      >
+                        {' '}
+                        Total Undergrad Enrollment{' '}
+                      </Typography>
+                      <Typography
+                        sx={{
+                          fontFamily: 'Bebas Neue, sans-serif',
+                          fontWeight: 600,
+                          fontSize: '1.5rem',
+                        }}
+                      >
+                        {collegeChartData?.[
+                          'latest.student.size'
+                        ]?.toLocaleString() || 'N/A'}
+                      </Typography>
+                    </Box>{' '}
+                  </Box>
+                </Box>
               </Box>
-            </Box>
-            <Box
+              {/* Description block */}
+              <Box
                 sx={{
                   display: 'flex',
                   flexDirection: 'column',
-                  gap: '.5em',
-                  backgroundColor: '#ebebeb',
-                  p: '1em',
-                  borderRadius: '15px',
-                  justifyContent:"space-evenly"
+                  width: '100%',
+                  gap: '2em',
                 }}
               >
-                <Typography
-                  sx={{
-                    textAlign: {
-                      xs: 'center',
-                      md: 'center',
-                    },
-                  }}
-                  variant='h5'
-                >
+                {/* <Typography variant='body1'>{college.description}</Typography> */}
+              </Box>
+            </Box>
+
+            {/* Chart Container */}
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                backgroundColor: '#ebebeb',
+                width: '100%',
+                maxWidth: '650px',
+                mx: 'auto',
+                height: '500px', // consistent space for all charts
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '2em',
+              }}
+            >
+              <Typography
+                sx={{
+                  textAlign: {
+                    xs: 'center',
+                    md: 'center',
+                  },
+                }}
+                variant='h5'
+              >
                 {chartTitles[chartPage - 1]}
-                </Typography>
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={chartPage} // ensure each chart transition is triggered
-                    variants={chartVariants}
-                    initial="initial"
-                    animate="animate"
-                    exit="exit"
-                    transition={{ duration: 0.4 }}
-                  >
-                    {charts[chartPage - 1]}
-                  </motion.div>
-                </AnimatePresence>
-
-                <Pagination
-                  count={charts.length}
-                  page={chartPage}
-                  onChange={(e, value) => setChartPage(value)}
-                  sx={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    mt: 2,
+              </Typography>
+              <AnimatePresence mode='wait'>
+                <motion.div
+                  key={chartPage} // ensure each chart transition is triggered
+                  variants={chartVariants}
+                  initial='initial'
+                  animate='animate'
+                  exit='exit'
+                  transition={{ duration: 0.4 }}
+                  style={{
+                    height: '300px', // ✅ fixed height (adjust as needed)
+                    width: '500px',
                   }}
-                />
-                </Box>
-          </Box>
+                >
+                  {charts[chartPage - 1]}
+                </motion.div>
+              </AnimatePresence>
 
+              <Pagination
+                count={charts.length}
+                page={chartPage}
+                onChange={(e, value) => setChartPage(value)}
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  mt: 2,
+                }}
+              />
+            </Box>
+          </Box>
 
           <Divider sx={{ my: 3 }} />
 
@@ -398,10 +474,12 @@ export default function SpecificCollegePage() {
                 college.reviews.map((review) => (
                   <Paper
                     key={review.id}
-                    sx={{ mb: 2, p: 2, borderRadius: '15px',
-              backgroundColor: '#ebebeb',
-
-                     }}
+                    sx={{
+                      mb: 2,
+                      p: 2,
+                      borderRadius: '15px',
+                      backgroundColor: '#ebebeb',
+                    }}
                     elevation={1}
                   >
                     <Box
@@ -540,7 +618,6 @@ export default function SpecificCollegePage() {
                 ))
               )}
             </Box>
-
           </Box>
         </Box>
       </Paper>
