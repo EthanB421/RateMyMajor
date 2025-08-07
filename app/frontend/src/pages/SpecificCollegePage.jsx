@@ -25,9 +25,9 @@ import RepaymentGauge from '../components/RepaymentGauge';
 import CostChart from '../components/CostChart';
 
 export default function SpecificCollegePage() {
-  const { specificCollege } = useParams(); //COLLEGE NAME FROM URL
-  const [college, setCollege] = useState(null); //COLLEGE DATA FROM BACKEND
-  const [collegeChartData, setcollegeChartData] = useState(null); //COLLEGE DATA FROM COLLEGE SCORECARD API
+  const { specificCollege } = useParams(); // COLLEGE NAME FROM URL
+  const [college, setCollege] = useState(null); // COLLEGE DATA FROM BACKEND
+  const [collegeChartData, setcollegeChartData] = useState(null); // COLLEGE DATA FROM COLLEGE SCORECARD API
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const chartTitles = [
@@ -81,7 +81,6 @@ export default function SpecificCollegePage() {
 
       const result = await response.json();
 
-      // ✅ Trust the backend – use result directly
       setUserVotes((prev) => ({ ...prev, [reviewId]: result.userVote }));
       setCollege((prev) => ({
         ...prev,
@@ -108,7 +107,7 @@ export default function SpecificCollegePage() {
         }
 
         const data = await response.json();
-        console.log('Fetched college data:', data); // <-- add this line
+        console.log('Fetched college data:', data);
 
         setCollege(data);
       } catch (err) {
@@ -444,9 +443,7 @@ export default function SpecificCollegePage() {
                   width: '100%',
                   gap: '2em',
                 }}
-              >
-                {/* <Typography variant='body1'>{college.description}</Typography> */}
-              </Box>
+              ></Box>
             </Box>
 
             {/* Chart Container */}
@@ -469,7 +466,7 @@ export default function SpecificCollegePage() {
                   borderRadius: '15px',
                   maxWidth: '650px',
                   mx: 'auto',
-                  height: '500px', // consistent space for all charts
+                  height: '500px',
                   alignItems: 'center',
                   justifyContent: 'center',
                   p: 3,
@@ -489,14 +486,14 @@ export default function SpecificCollegePage() {
                 </Typography>
                 <AnimatePresence mode='wait'>
                   <motion.div
-                    key={chartPage} // ensure each chart transition is triggered
+                    key={chartPage}
                     variants={chartVariants}
                     initial='initial'
                     animate='animate'
                     exit='exit'
                     transition={{ duration: 0.4 }}
                     style={{
-                      height: '300px', // ✅ fixed height (adjust as needed)
+                      height: '300px',
                       width: '500px',
                     }}
                   >
@@ -554,118 +551,62 @@ export default function SpecificCollegePage() {
               ) : (
                 college.reviews.map((review) => (
                   <Paper
-                    key={review.id}
                     sx={{
-                      mb: 2,
-                      p: 2,
+                      mb: '1.5em',
+                      p: '2em',
                       borderRadius: '15px',
-                      backgroundColor: '#ebebeb',
+                      backgroundColor: '#f7f7f7ed',
                     }}
                     elevation={1}
                   >
+                    {/* Top Row */}
                     <Box
-                      sx={{
-                        display: 'flex',
-                        flexDirection: { xs: 'column', sm: 'row' },
-                        padding: '1em',
-                        borderRadius: '12px',
-                        width: '100%',
-                        overflow: 'hidden',
-                        wordBreak: 'break-word',
-                        gap: { xs: '1em', sm: '3em' },
-                      }}
+                      display='flex'
+                      justifyContent='space-between'
+                      alignItems='center'
+                      mb='1.5em'
+                      flexWrap='wrap'
                     >
-                      {/* Rating Box on the Left */}
+                      {/* Rating Badge */}
                       <Box
                         sx={{
-                          display: 'flex',
-                          flexDirection: { xs: 'row', sm: 'column' },
-                          justifyContent: 'start',
-                          alignItems: 'center',
-                          gap: ' 1em',
+                          backgroundColor:
+                            review.rating >= 4
+                              ? '#84F8C3'
+                              : review.rating >= 2
+                              ? '#FFF26A'
+                              : '#FF9999',
+                          px: '1em',
+                          py: '.5em',
+                          borderRadius: '8px',
+                          minWidth: '50px',
+                          textAlign: 'center',
                         }}
                       >
-                        <Box>
-                          <Typography
-                            variant='h7'
-                            sx={{
-                              fontWeight: 'bold',
-                            }}
-                          >
-                            Rating
-                          </Typography>
-                          <Box
-                            sx={{
-                              backgroundColor:
-                                review.rating >= 4
-                                  ? '#84F8C3'
-                                  : review.rating >= 2
-                                  ? '#FFF26A'
-                                  : '#FF9999',
-                              padding: '0.5em 1em',
-                              borderRadius: '8px',
-                              textAlign: 'center',
-                            }}
-                          >
-                            <Typography
-                              variant='h6'
-                              sx={{
-                                color: 'black',
-                                fontWeight: 'bold',
-                                fontSize: '2.2rem',
-                              }}
-                            >
-                              {review.rating}
-                            </Typography>
-                          </Box>
-                        </Box>
-                      </Box>
-
-                      {/* Review Content */}
-                      <Box
-                        sx={{
-                          display: 'flex',
-                          flexDirection: 'column',
-                          justifyContent: 'space-evenly',
-                          flex: 1,
-                        }}
-                      >
-                        <Typography
-                          variant='body2'
-                          sx={{
-                            mb: 2,
-                            whiteSpace: 'normal',
-                            wordBreak: 'break-word',
-                            fontSize: '1rem',
-                          }}
-                        >
-                          {review.content}
+                        <Typography fontWeight='bold' fontSize='1.5rem'>
+                          {review.rating}
                         </Typography>
                       </Box>
 
-                      {/* Date component + voting component */}
+                      {/* Date / Vote Container */}
                       <Box
                         display='flex'
-                        flexDirection={{ xs: 'row', sm: 'column' }}
-                        justifyContent='space-evenly'
+                        flexDirection='column'
+                        justifyContent='center'
                         alignItems='center'
+                        gap='.5em'
                       >
+                        {/* Date */}
                         <DateComponent rawDate={review.createdAt} />
-
-                        {/* Voting Buttons at the Bottom */}
-                        <Box
-                          display='flex'
-                          flexDirection='row'
-                          alignItems='center'
-                        >
+                        {/* Voting */}
+                        <Box display='flex' alignItems='center'>
                           <ArrowUpwardIcon
                             onClick={() => handleVote(review.id, 1)}
                             sx={{
-                              scale: '1.1',
                               transition: 'transform 0.3s ease',
                               '&:hover': {
-                                cursor: 'pointer',
                                 transform: 'scale(1.3)',
+                                cursor: 'pointer',
                               },
                               color: 'green',
                             }}
@@ -679,15 +620,13 @@ export default function SpecificCollegePage() {
                           >
                             {review.voteScore}
                           </Typography>
-
                           <ArrowDownwardIcon
                             onClick={() => handleVote(review.id, -1)}
                             sx={{
-                              scale: '1.1',
                               transition: 'transform 0.3s ease',
                               '&:hover': {
-                                cursor: 'pointer',
                                 transform: 'scale(1.3)',
+                                cursor: 'pointer',
                               },
                               color: 'red',
                             }}
@@ -695,6 +634,18 @@ export default function SpecificCollegePage() {
                         </Box>
                       </Box>
                     </Box>
+
+                    {/* Review Content */}
+                    <Typography
+                      variant='body1'
+                      sx={{
+                        lineHeight: 1.6,
+                        whiteSpace: 'normal',
+                        wordBreak: 'break-word',
+                      }}
+                    >
+                      {review.content}
+                    </Typography>
                   </Paper>
                 ))
               )}
