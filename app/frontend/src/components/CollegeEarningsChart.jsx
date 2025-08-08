@@ -16,7 +16,7 @@ const CollegeEarningsChart = ({ data }) => {
       year: '5 Years',
       earnings: data['latest.earnings.5_yrs_after_completion.median'],
     },
-  ].filter(item => item.earnings !== null && item.earnings !== undefined); // optional cleanup
+  ].filter((item) => item.earnings !== null && item.earnings !== undefined); // optional cleanup
 
   return (
     <LineChart
@@ -29,8 +29,6 @@ const CollegeEarningsChart = ({ data }) => {
           color: 'blue',
         },
       ]}
-      width={600}
-      height={300}
     />
   );
 };

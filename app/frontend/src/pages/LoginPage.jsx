@@ -33,10 +33,9 @@ export default function LoginPage() {
     const state = location.state;
     if (state?.showRegisterSnackbar) {
       setIsSubmitted(true);
+      navigate(location.pathname, { replace: true, state: {} });
     }
-    // Clear the state after evaluating both
-    navigate(location.pathname, { replace: true });
-  }, [location, navigate]);
+  }, [location.state, location.pathname, navigate]);
 
   const handleCloseSnackbar = () => {
     setIsSubmitted(false);
@@ -83,9 +82,9 @@ export default function LoginPage() {
           throw new Error(data.message || 'Login failed');
         }
 
-        login(data.user, data.token);
+        await login(data.user, data.token);
 
-        navigate('/', { state: { showLoginSnackbar: true } });
+        navigate('/', { replace: true, state: { showLoginSnackbar: true } });
       } catch (error) {
         console.error('Login error:', error);
         alert(`Login failed: ${error.message}`);
@@ -187,12 +186,20 @@ export default function LoginPage() {
 
           <Button type='submit' fullWidth variant='contained'>
             Sign in
-            
           </Button>
 
           <Typography textAlign='center'>
             Don't have an account?{' '}
-            <Link onClick={() => navigate('/register')}>Sign up</Link>
+            <Link
+              onClick={() => navigate('/register')}
+              sx={{
+                '&:hover': {
+                  cursor: 'pointer',
+                },
+              }}
+            >
+              Sign up
+            </Link>
           </Typography>
         </Box>
       </Paper>

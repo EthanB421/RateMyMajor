@@ -244,7 +244,16 @@ export default function RegisterPage() {
 
           <Typography textAlign='center'>
             Already have an account?{' '}
-            <Link onClick={() => navigate('/login')}>Sign in</Link>
+            <Link
+              onClick={() => navigate('/login')}
+              sx={{
+                '&:hover': {
+                  cursor: 'pointer',
+                },
+              }}
+            >
+              Sign in
+            </Link>
           </Typography>
         </Box>
       </Paper>
