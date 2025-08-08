@@ -5,7 +5,6 @@ import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import LinearProgress from '@mui/material/LinearProgress';
 import { Link } from 'react-router-dom';
 import { format, parseISO } from 'date-fns';
-import axios from 'axios';
 import CollegeEarningsChart from '../components/CollegeEarningsChart';
 import DemographicChart from '../components/DemographicChart';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -27,8 +26,9 @@ import CostChart from '../components/CostChart';
 export default function SpecificCollegePage() {
   const { specificCollege } = useParams(); // COLLEGE NAME FROM URL
   const [college, setCollege] = useState(null); // COLLEGE DATA FROM BACKEND
-  const [collegeChartData, setcollegeChartData] = useState(null); // COLLEGE DATA FROM COLLEGE SCORECARD API
+  const [collegeChartData, setCollegeChartData] = useState(null); // COLLEGE DATA FROM COLLEGE SCORECARD API
   const [loading, setLoading] = useState(true);
+  const [chartLoading, setChartLoading] = useState(true);
   const [error, setError] = useState('');
   const chartTitles = [
     'Earnings Over Time',
@@ -60,12 +60,29 @@ export default function SpecificCollegePage() {
   useEffect(() => {
     if (!college || !college.federalSchoolCode) return;
 
-    axios
-      .get(
-        `http://localhost:5123/api/CollegeScorecard/${college.federalSchoolCode}`
-      )
-      .then((res) => setcollegeChartData(res.data.results[0]))
-      .catch((err) => console.error('CollegeScorecard API error:', err));
+    const fetchChartData = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:5123/api/CollegeScorecard/${college.federalSchoolCode}`
+        );
+
+        if (!response.ok) {
+          throw new Error(`Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        const setChartData = data.results[0];
+
+        setCollegeChartData(setChartData);
+      } catch (err) {
+        setError(`Failed to fetch specific chart data: ${err.message}`);
+      } finally {
+        setChartLoading(false);
+      }
+    };
+
+    fetchChartData();
   }, [college]);
 
   const handleVote = async (reviewId, value) => {
@@ -551,6 +568,7 @@ export default function SpecificCollegePage() {
               ) : (
                 college.reviews.map((review) => (
                   <Paper
+                    key={review.id}
                     sx={{
                       mb: '1.5em',
                       p: '2em',

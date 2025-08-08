@@ -82,7 +82,7 @@ export default function CollegePage() {
               fontStyle: 'Italic',
             }}
           >
-            Find a path here.
+            Find a college here.
           </Typography>
           <TextField
             // slotprops.input.sx is necessary here to directly edit the input (TextField in this case)
@@ -104,7 +104,7 @@ export default function CollegePage() {
               fontSize: '1rem',
             }}
             autoComplete='off'
-            placeholder='Ex: Statistics...'
+            placeholder='Ex: Duke University'
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
