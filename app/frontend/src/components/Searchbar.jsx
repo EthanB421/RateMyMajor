@@ -1,11 +1,14 @@
 import { Box, TextField, Typography, InputAdornment } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import heroImage from '../images/heroSearchbar.avif';
 
 export default function Searchbar() {
   const [inputValue, setInputValue] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
+  const [showDropdown, setShowDropdown] = useState(false);
+  const [error, setError] = useState('');
   const navigate = useNavigate();
 
   const handleInputChange = (event) => {
@@ -18,6 +21,40 @@ export default function Searchbar() {
       navigate(`/college/${inputValue}`);
     }
   };
+
+  const handleShowDropdownTrue = () => {
+    setShowDropdown(true);
+  };
+
+  const handleShowDropdownFalse = () => {
+    setShowDropdown(false);
+  };
+
+  useEffect(() => {
+    const fetchSearchResults = async () => {
+      try {
+        const response = await fetch(
+          'http://localhost:5123/api/College/GetColleges'
+        );
+
+        if (!response.ok) {
+          throw new Error(`Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        setSearchResults(data);
+        console.log(data);
+      } catch (err) {
+        setError(`Failed to fetch results: ${err.message}`);
+      }
+    };
+
+    fetchSearchResults();
+  }, []);
+
+  const filteredResults = searchResults.filter((college) =>
+    college.name.toLowerCase().includes(inputValue.toLowerCase())
+  );
 
   return (
     <Box
@@ -45,7 +82,7 @@ export default function Searchbar() {
         justifyContent='center'
         sx={{
           px: '2',
-          mt: { xs: '-1em', sm: '-10em', md: '-12em', lg: '-14em' },
+          // mt: { xs: '-1em', sm: '-10em', md: '-12em', lg: '-14em' },
         }}
       >
         <Typography
@@ -59,47 +96,81 @@ export default function Searchbar() {
         >
           Find your future college here!
         </Typography>
-        <TextField
-          // slotprops.input.sx is necessary here to directly edit the input (TextField in this case)
-          slotProps={{
-            input: {
-              sx: {
-                borderRadius: '20px',
-                bgcolor: 'white',
-                // No focus outline
-                '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                  border: 'none',
+        <Box
+          width='100%'
+          display='flex'
+          flexDirection='column'
+          justifyContent='center'
+          alignItems='center'
+          marginBottom={{ xs: '20em', sm: '10em', md: '5em', lg: '5em' }}
+        >
+          <TextField
+            // slotprops.input.sx is necessary here to directly edit the input (TextField in this case)
+            slotProps={{
+              input: {
+                sx: {
+                  borderRadius: '20px',
+                  bgcolor: 'white',
+                  // No focus outline
+                  '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                    border: 'none',
+                  },
+                  // No hover outline
+                  '&:hover .MuiOutlinedInput-notchedOutline': {
+                    border: 'none',
+                  },
+                  // No default outline
+                  '& .MuiOutlinedInput-notchedOutline': {
+                    border: 'none',
+                  },
                 },
-                // No hover outline
-                '&:hover .MuiOutlinedInput-notchedOutline': {
-                  border: 'none',
-                },
-                // No default outline
-                '& .MuiOutlinedInput-notchedOutline': {
-                  border: 'none',
-                },
+                startAdornment: (
+                  <InputAdornment position='start'>
+                    <SearchIcon />
+                  </InputAdornment>
+                ),
               },
-              startAdornment: (
-                <InputAdornment position='start'>
-                  <SearchIcon />
-                </InputAdornment>
-              ),
-            },
-          }}
-          sx={{
-            width: { xs: '90%', sm: '70%', md: '80%', lg: '60%' },
-            mb: { xs: '20em', sm: '10em', md: '5em', lg: '5em' },
-          }}
-          autoComplete='off'
-          placeholder='Search for a college here...'
-          value={inputValue}
-          onChange={handleInputChange}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter') {
-              handleNavigation();
-            }
-          }}
-        />
+            }}
+            sx={{
+              width: { xs: '90%', sm: '70%', md: '80%', lg: '60%' },
+              // mb: { xs: '20em', sm: '10em', md: '5em', lg: '5em' },
+            }}
+            autoComplete='off'
+            placeholder='Search for a college here...'
+            value={inputValue}
+            onChange={handleInputChange}
+            onFocus={handleShowDropdownTrue}
+            onBlur={handleShowDropdownFalse}
+          />
+
+          {showDropdown === false ? (
+            <Typography></Typography>
+          ) : (
+            <Box
+              display='flex'
+              flexDirection='column'
+              width={{ xs: '90%', sm: '70%', md: '80%', lg: '60%' }}
+              sx={{
+                backgroundColor: 'white',
+                borderRadius: '0px 0px 8px 8px',
+              }}
+            >
+              {filteredResults.map((college) => (
+                <Typography
+                  key={college.id}
+                  sx={{}}
+                  onClick={() => {
+                    setInputValue(college.name);
+                    setShowDropdown(false);
+                    navigate(`/college/${college.name}`);
+                  }}
+                >
+                  {college.name}
+                </Typography>
+              ))}
+            </Box>
+          )}
+        </Box>
       </Box>
     </Box>
   );
