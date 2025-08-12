@@ -1,23 +1,65 @@
 import { Box, TextField, Typography, InputAdornment } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import heroImage from '../images/heroSearchbar.avif';
 
 export default function Searchbar() {
   const [inputValue, setInputValue] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
+  const [showDropdown, setShowDropdown] = useState(false);
+  const [error, setError] = useState('');
+  const containerRef = useRef(null);
   const navigate = useNavigate();
 
   const handleInputChange = (event) => {
     setInputValue(event.target.value);
   };
 
-  // TODO: Eventually add verification that the route exists, if not send them to a 404 page
-  const handleNavigation = () => {
-    if (inputValue.trim()) {
-      navigate(`/college/${inputValue}`);
+  // In charge of listening for clicks outside of the dropdown menu
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(event.target)
+      ) {
+        setShowDropdown(false);
+      }
     }
-  };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  // In charge of grabbing the colleges from the backend for the dropdown
+  useEffect(() => {
+    const fetchSearchResults = async () => {
+      try {
+        const response = await fetch(
+          'http://localhost:5123/api/College/GetColleges'
+        );
+
+        if (!response.ok) {
+          throw new Error(`Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        setSearchResults(data);
+        console.log(data);
+      } catch (err) {
+        setError(`Failed to fetch results: ${err.message}`);
+      }
+    };
+
+    fetchSearchResults();
+  }, []);
+
+  // In charge of filtering results from the api call
+  const filteredResults = searchResults.filter((college) =>
+    college.name.toLowerCase().includes(inputValue.toLowerCase())
+  );
 
   return (
     <Box
@@ -59,47 +101,117 @@ export default function Searchbar() {
         >
           Find your future college here!
         </Typography>
-        <TextField
-          // slotprops.input.sx is necessary here to directly edit the input (TextField in this case)
-          slotProps={{
-            input: {
-              sx: {
-                borderRadius: '20px',
-                bgcolor: 'white',
-                // No focus outline
-                '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                  border: 'none',
+        <Box
+          width='100%'
+          display='flex'
+          position='relative'
+          flexDirection='column'
+          alignItems='center'
+          marginBottom={{ xs: '20em', sm: '10em', md: '5em', lg: '5em' }}
+          ref={containerRef}
+        >
+          <TextField
+            // slotprops.input.sx is necessary here to directly edit the input (TextField in this case)
+            slotProps={{
+              input: {
+                sx: {
+                  // If showDropdown is true, remove rounded corners from bottom; else have rounded corners everywhere
+                  borderRadius: showDropdown ? '20px 20px 0 0' : '20px',
+                  bgcolor: 'white',
+                  // No focus outline
+                  '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                    border: 'none',
+                  },
+                  // No hover outline
+                  '&:hover .MuiOutlinedInput-notchedOutline': {
+                    border: 'none',
+                  },
+                  // No default outline
+                  '& .MuiOutlinedInput-notchedOutline': {
+                    border: 'none',
+                  },
                 },
-                // No hover outline
-                '&:hover .MuiOutlinedInput-notchedOutline': {
-                  border: 'none',
-                },
-                // No default outline
-                '& .MuiOutlinedInput-notchedOutline': {
-                  border: 'none',
-                },
+                startAdornment: (
+                  <InputAdornment position='start'>
+                    <SearchIcon />
+                  </InputAdornment>
+                ),
               },
-              startAdornment: (
-                <InputAdornment position='start'>
-                  <SearchIcon />
-                </InputAdornment>
-              ),
-            },
-          }}
-          sx={{
-            width: { xs: '90%', sm: '70%', md: '80%', lg: '60%' },
-            mb: { xs: '20em', sm: '10em', md: '5em', lg: '5em' },
-          }}
-          autoComplete='off'
-          placeholder='Search for a college here...'
-          value={inputValue}
-          onChange={handleInputChange}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter') {
-              handleNavigation();
-            }
-          }}
-        />
+            }}
+            sx={{
+              width: { xs: '90%', sm: '70%', md: '80%', lg: '60%' },
+              // mb: { xs: '20em', sm: '10em', md: '5em', lg: '5em' },
+            }}
+            autoComplete='off'
+            placeholder='Search for a college here...'
+            value={inputValue}
+            onChange={handleInputChange}
+            onFocus={() => setShowDropdown(true)}
+          />
+
+          {showDropdown &&
+            (filteredResults.length === 0 ? (
+              <Box
+                display='flex'
+                flexDirection='column'
+                position='absolute'
+                width={{ xs: '90%', sm: '70%', md: '80%', lg: '60%' }}
+                sx={{
+                  backgroundColor: 'white',
+                  borderRadius: '0px 0px 20px 20px',
+                  top: '100%',
+                  maxHeight: '200px',
+                  overflowY: 'auto',
+                }}
+              >
+                <Typography
+                  fontFamily='Raleway'
+                  sx={{
+                    px: { xs: '1em', md: '1.5em' },
+                    py: '1em',
+                  }}
+                >
+                  No results found
+                </Typography>
+              </Box>
+            ) : (
+              <Box
+                display='flex'
+                flexDirection='column'
+                position='absolute'
+                width={{ xs: '90%', sm: '70%', md: '80%', lg: '60%' }}
+                sx={{
+                  backgroundColor: 'white',
+                  borderRadius: '0px 0px 20px 20px',
+                  top: '100%',
+                  maxHeight: '200px',
+                  overflowY: 'auto',
+                }}
+              >
+                {filteredResults.map((college) => (
+                  <Typography
+                    key={college.id}
+                    fontFamily='Raleway'
+                    sx={{
+                      px: { xs: '1em', md: '1.5em' },
+                      py: '1em',
+                      '&:hover': {
+                        cursor: 'pointer',
+                        backgroundColor: '#ebebeb',
+                      },
+                    }}
+                    onClick={() => {
+                      setInputValue(college.name);
+                      setShowDropdown(false);
+                      navigate(`/college/${college.name}`);
+                    }}
+                  >
+                    {college.name}
+                  </Typography>
+                ))}
+              </Box>
+            ))}
+        </Box>
       </Box>
     </Box>
   );

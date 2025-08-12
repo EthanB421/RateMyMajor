@@ -100,10 +100,10 @@ export default function TermsOfServicePage() {
           </Typography>
           <Typography>
             When posting any content on RateMyCollege, it will be reviewed
-            before going live on the website. Content must be Safe For Work
-            (SFW) and any content that is deemed innapropriate will be removed.
-            Users retain ownership of their content but grant RateMyMajor a
-            license to display, reproduce, and distribute it.
+            accordingly. Content must be Safe For Work (SFW) and any content
+            that is deemed innapropriate will be removed. Users retain ownership
+            of their content but grant RateMyMajor a license to display,
+            reproduce, and distribute it.
           </Typography>
         </Box>
 
