@@ -1,6 +1,6 @@
 import { Box, TextField, Typography, InputAdornment } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import heroImage from '../images/heroSearchbar.avif';
 
@@ -9,27 +9,31 @@ export default function Searchbar() {
   const [searchResults, setSearchResults] = useState([]);
   const [showDropdown, setShowDropdown] = useState(false);
   const [error, setError] = useState('');
+  const containerRef = useRef(null);
   const navigate = useNavigate();
 
   const handleInputChange = (event) => {
     setInputValue(event.target.value);
   };
 
-  // TODO: Eventually add verification that the route exists, if not send them to a 404 page
-  const handleNavigation = () => {
-    if (inputValue.trim()) {
-      navigate(`/college/${inputValue}`);
+  // In charge of listening for clicks outside of the dropdown menu
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(event.target)
+      ) {
+        setShowDropdown(false);
+      }
     }
-  };
 
-  const handleShowDropdownTrue = () => {
-    setShowDropdown(true);
-  };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
-  const handleShowDropdownFalse = () => {
-    setShowDropdown(false);
-  };
-
+  // In charge of grabbing the colleges from the backend for the dropdown
   useEffect(() => {
     const fetchSearchResults = async () => {
       try {
@@ -52,6 +56,7 @@ export default function Searchbar() {
     fetchSearchResults();
   }, []);
 
+  // In charge of filtering results from the api call
   const filteredResults = searchResults.filter((college) =>
     college.name.toLowerCase().includes(inputValue.toLowerCase())
   );
@@ -82,7 +87,7 @@ export default function Searchbar() {
         justifyContent='center'
         sx={{
           px: '2',
-          // mt: { xs: '-1em', sm: '-10em', md: '-12em', lg: '-14em' },
+          mt: { xs: '-1em', sm: '-10em', md: '-12em', lg: '-14em' },
         }}
       >
         <Typography
@@ -99,17 +104,19 @@ export default function Searchbar() {
         <Box
           width='100%'
           display='flex'
+          position='relative'
           flexDirection='column'
-          justifyContent='center'
           alignItems='center'
           marginBottom={{ xs: '20em', sm: '10em', md: '5em', lg: '5em' }}
+          ref={containerRef}
         >
           <TextField
             // slotprops.input.sx is necessary here to directly edit the input (TextField in this case)
             slotProps={{
               input: {
                 sx: {
-                  borderRadius: '20px',
+                  // If showDropdown is true, remove rounded corners from bottom; else have rounded corners everywhere
+                  borderRadius: showDropdown ? '20px 20px 0 0' : '20px',
                   bgcolor: 'white',
                   // No focus outline
                   '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
@@ -139,37 +146,63 @@ export default function Searchbar() {
             placeholder='Search for a college here...'
             value={inputValue}
             onChange={handleInputChange}
-            onFocus={handleShowDropdownTrue}
-            onBlur={handleShowDropdownFalse}
+            onFocus={() => setShowDropdown(true)}
           />
 
-          {showDropdown === false ? (
-            <Typography></Typography>
-          ) : (
-            <Box
-              display='flex'
-              flexDirection='column'
-              width={{ xs: '90%', sm: '70%', md: '80%', lg: '60%' }}
-              sx={{
-                backgroundColor: 'white',
-                borderRadius: '0px 0px 8px 8px',
-              }}
-            >
-              {filteredResults.map((college) => (
-                <Typography
-                  key={college.id}
-                  sx={{}}
-                  onClick={() => {
-                    setInputValue(college.name);
-                    setShowDropdown(false);
-                    navigate(`/college/${college.name}`);
-                  }}
-                >
-                  {college.name}
-                </Typography>
-              ))}
-            </Box>
-          )}
+          {showDropdown &&
+            (filteredResults.length === 0 ? (
+              <Box
+                display='flex'
+                flexDirection='column'
+                position='absolute'
+                width={{ xs: '90%', sm: '70%', md: '80%', lg: '60%' }}
+                sx={{
+                  backgroundColor: 'white',
+                  borderRadius: '0px 0px 8px 8px',
+                  top: '100%',
+                  maxHeight: '200px',
+                  overflowY: 'auto',
+                }}
+              >
+                <Typography>No results found</Typography>
+              </Box>
+            ) : (
+              <Box
+                display='flex'
+                flexDirection='column'
+                position='absolute'
+                width={{ xs: '90%', sm: '70%', md: '80%', lg: '60%' }}
+                sx={{
+                  backgroundColor: 'white',
+                  borderRadius: '0px 0px 8px 8px',
+                  top: '100%',
+                  maxHeight: '200px',
+                  overflowY: 'auto',
+                }}
+              >
+                {filteredResults.map((college) => (
+                  <Typography
+                    key={college.id}
+                    fontFamily='Raleway'
+                    sx={{
+                      px: '.5em',
+                      py: '.5em',
+                      '&:hover': {
+                        cursor: 'pointer',
+                        backgroundColor: '#ebebeb',
+                      },
+                    }}
+                    onClick={() => {
+                      setInputValue(college.name);
+                      setShowDropdown(false);
+                      navigate(`/college/${college.name}`);
+                    }}
+                  >
+                    {college.name}
+                  </Typography>
+                ))}
+              </Box>
+            ))}
         </Box>
       </Box>
     </Box>
