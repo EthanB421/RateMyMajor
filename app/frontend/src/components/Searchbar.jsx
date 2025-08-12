@@ -158,13 +158,21 @@ export default function Searchbar() {
                 width={{ xs: '90%', sm: '70%', md: '80%', lg: '60%' }}
                 sx={{
                   backgroundColor: 'white',
-                  borderRadius: '0px 0px 8px 8px',
+                  borderRadius: '0px 0px 20px 20px',
                   top: '100%',
                   maxHeight: '200px',
                   overflowY: 'auto',
                 }}
               >
-                <Typography>No results found</Typography>
+                <Typography
+                  fontFamily='Raleway'
+                  sx={{
+                    px: { xs: '1em', md: '1.5em' },
+                    py: '1em',
+                  }}
+                >
+                  No results found
+                </Typography>
               </Box>
             ) : (
               <Box
@@ -174,7 +182,7 @@ export default function Searchbar() {
                 width={{ xs: '90%', sm: '70%', md: '80%', lg: '60%' }}
                 sx={{
                   backgroundColor: 'white',
-                  borderRadius: '0px 0px 8px 8px',
+                  borderRadius: '0px 0px 20px 20px',
                   top: '100%',
                   maxHeight: '200px',
                   overflowY: 'auto',
@@ -185,8 +193,8 @@ export default function Searchbar() {
                     key={college.id}
                     fontFamily='Raleway'
                     sx={{
-                      px: '.5em',
-                      py: '.5em',
+                      px: { xs: '1em', md: '1.5em' },
+                      py: '1em',
                       '&:hover': {
                         cursor: 'pointer',
                         backgroundColor: '#ebebeb',
