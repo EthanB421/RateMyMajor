@@ -33,15 +33,22 @@ const RepaymentGauge = ({ data }) => {
 
   return (
     <Box sx={{ mt: -2.5 }}>
+      {/* 3 Year Plan Row */}
+      <Typography
+        variant="h6"
+        sx={{
+          fontFamily: 'Bebas Neue, sans-serif',
+          fontWeight: 600,
+          mb: 1,
+          textAlign: 'center',
+        }}
+      >
+        3 Year Plan
+      </Typography>
       <Grid container spacing={1}>
-        {gauges.map((g, index) => (
-          <Grid size={{ xs: 4, sm: 4 }} key={index}>
-            <Box
-              display='flex'
-              flexDirection='column'
-              justifyContent='center'
-              alignItems='center'
-            >
+        {gauges.slice(0, 3).map((g, index) => (
+          <Grid item xs={4} key={index}>
+            <Box display="flex" flexDirection="column" alignItems="center">
               <Gauge
                 width={120}
                 height={120}
@@ -58,8 +65,8 @@ const RepaymentGauge = ({ data }) => {
                 }}
               />
               <Typography
-                variant='body2'
-                textAlign='center'
+                variant="body2"
+                textAlign="center"
                 mt={1}
                 sx={{
                   fontFamily: 'Bebas Neue, sans-serif',
@@ -67,7 +74,56 @@ const RepaymentGauge = ({ data }) => {
                   fontSize: '1.2rem',
                 }}
               >
-                {g.label} <br />
+                {g.label}
+              </Typography>
+            </Box>
+          </Grid>
+        ))}
+      </Grid>
+
+      {/* 5 Year Plan Row */}
+      <Typography
+        variant="h6"
+        sx={{
+          fontFamily: 'Bebas Neue, sans-serif',
+          fontWeight: 600,
+          mt: 3,
+          mb: 1,
+          textAlign: 'center',
+        }}
+      >
+        5 Year Plan
+      </Typography>
+      <Grid container spacing={1}>
+        {gauges.slice(3).map((g, index) => (
+          <Grid item xs={4} key={index}>
+            <Box display="flex" flexDirection="column" alignItems="center">
+              <Gauge
+                width={120}
+                height={120}
+                value={g.value}
+                valueMin={0}
+                valueMax={100}
+                startAngle={-90}
+                endAngle={90}
+                text={`${g.value.toFixed()}%`}
+                sx={{
+                  fontFamily: 'Bebas Neue, sans-serif',
+                  fontWeight: 600,
+                  fontSize: '1.5rem',
+                }}
+              />
+              <Typography
+                variant="body2"
+                textAlign="center"
+                mt={1}
+                sx={{
+                  fontFamily: 'Bebas Neue, sans-serif',
+                  fontWeight: 300,
+                  fontSize: '1.2rem',
+                }}
+              >
+                {g.label}
               </Typography>
             </Box>
           </Grid>

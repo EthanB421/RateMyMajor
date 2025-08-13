@@ -31,10 +31,10 @@ export default function SpecificCollegePage() {
   const [chartLoading, setChartLoading] = useState(true);
   const [error, setError] = useState('');
   const chartTitles = [
-    'Earnings Over Time',
+    'Average Salary After Graduating',
     'Cost Breakdown',
     'Demographics',
-    'Repayment Rates',
+    'Repayment Rates By Family Income',
   ];
   const [chartPage, setChartPage] = useState(1);
   const charts = [
