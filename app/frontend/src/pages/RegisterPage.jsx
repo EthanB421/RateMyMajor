@@ -147,7 +147,9 @@ export default function RegisterPage() {
           }}
         >
           <Typography
-            variant='h4'
+            variant='h3'
+            fontFamily='Bebas Neue'
+            fontStyle='italic'
             sx={{ textAlign: { xs: 'center', md: 'left' } }}
           >
             Let's get started.
