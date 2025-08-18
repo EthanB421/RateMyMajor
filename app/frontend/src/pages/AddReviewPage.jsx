@@ -20,11 +20,11 @@ export default function AddReviewPage() {
   const [error, setError] = useState('');
   const ratings = [1, 2, 3, 4, 5];
 
-  // todo
-  const fetchCollegeName = async () => {};
-
   const updateContent = (e) => {
     setContent(e.target.value);
+    if (error && e.target.value.length >= 30) {
+      setError('');
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -152,7 +152,16 @@ export default function AddReviewPage() {
               rows={7}
               value={content}
               onChange={updateContent}
+              error={!!error}
+              helperText={error}
               placeholder='What did you enjoy/dislike about your college?'
+              slotProps={{
+                formHelperText: {
+                  sx: {
+                    margin: 0,
+                  },
+                },
+              }}
               sx={{
                 '& .MuiOutlinedInput-root': {
                   '& fieldset': {
