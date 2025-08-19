@@ -21,6 +21,14 @@ export default function AddReviewPage() {
 
   const categories = [
     { id: 'overall', label: 'Overall' },
+    { id: 'location', label: 'Location' },
+    { id: 'classrooms', label: 'Classrooms' },
+    { id: 'sports', label: 'Sports' },
+    { id: 'food', label: 'Food' },
+    { id: 'safety', label: 'Safety' },
+    { id: 'community', label: 'Community' },
+    { id: 'opportunities', label: 'Opportunities' },
+    { id: 'faculty', label: 'Faculty' },
     { id: 'gym', label: 'Gym' },
     { id: 'happiness', label: 'Happiness' },
   ];
@@ -130,7 +138,7 @@ export default function AddReviewPage() {
                     }
                     xSmall='.5em'
                     rSmall='1em'
-                    mMed='1.25em'
+                    mMed='.5em'
                   />
                 </Box>
               ))}
