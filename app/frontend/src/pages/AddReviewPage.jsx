@@ -10,15 +10,16 @@ import {
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
+import RatingBar from '../components/RatingBar';
 
 export default function AddReviewPage() {
   const navigate = useNavigate();
-  const [clickIndex, setClickIndex] = useState(null);
   const { collegeId } = useParams();
   const [content, setContent] = useState('');
   const [college, setCollege] = useState('[college here]');
   const [error, setError] = useState('');
-  const ratings = [1, 2, 3, 4, 5];
+
+  const [ratings, setRatings] = useState({});
 
   const updateContent = (e) => {
     setContent(e.target.value);
@@ -33,7 +34,7 @@ export default function AddReviewPage() {
     const token = localStorage.getItem('authToken');
     const payload = {
       collegeId: parseInt(collegeId), // or keep as string if your backend expects that
-      rating: clickIndex + 1, // assuming rating is based on index
+      rating: ratings, // assuming rating is based on index
       content: content,
     };
 
@@ -111,29 +112,42 @@ export default function AddReviewPage() {
           >
             <Typography variant='h5'>Rating</Typography>
             <Box>
-              <Grid sx={{ border: '1px solid black' }} container spacing={0}>
-                {ratings.map((rating, index) => (
-                  <Grid
-                    key={index}
-                    size='grow'
-                    onClick={() =>
-                      setClickIndex(clickIndex === index ? null : index)
-                    }
-                    sx={{
-                      p: { xs: '.5em', sm: '1em', md: '1.5em' },
-                      backgroundColor:
-                        clickIndex !== null && index <= clickIndex
-                          ? '#757ce8' // highlighted color
-                          : '#ffffff', // default color
-                      transition: 'background-color 0.3s ease',
-                      borderRight:
-                        index < ratings.length - 1 ? '1px solid black' : 'none', // only between items
-                    }}
-                  >
-                    <Typography textAlign='center'>{rating}</Typography>
-                  </Grid>
-                ))}
-              </Grid>
+              <RatingBar
+                id='main'
+                ratings={[1, 2, 3, 4, 5]}
+                xSmall='.5em'
+                rSmall='1em'
+                mMed='1.5em'
+                onChange={(value) =>
+                  setRatings((prev) => ({ ...prev, main: value }))
+                }
+              />
+              <Box
+                sx={{
+                  display: 'flex',
+                }}
+              >
+                <RatingBar
+                  id='gym'
+                  ratings={[1, 2, 3, 4, 5]}
+                  xSmall='.5em'
+                  rSmall='.75em'
+                  mMed='.5em'
+                  onChange={(value) =>
+                    setRatings((prev) => ({ ...prev, sub1: value }))
+                  }
+                />
+                <RatingBar
+                  id='community'
+                  ratings={[1, 2, 3, 4, 5]}
+                  xSmall='.5em'
+                  rSmall='.75em'
+                  mMed='.5em'
+                  onChange={(value) =>
+                    setRatings((prev) => ({ ...prev, sub2: value }))
+                  }
+                />
+              </Box>
             </Box>
           </Box>
 
