@@ -25,4 +25,22 @@ public class ReviewController : ControllerBase
 
         return Ok(new { message = result.Message });
     }
+        [Authorize]
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteReview(int id)
+        {
+            //gets used id
+            var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+
+            if (userId == null)
+                return Unauthorized();
+
+            var result = await _reviewService.DeleteReviewAsync(id, userId);
+
+            if (!result.Succeeded)
+                return BadRequest(result.Message);
+
+            return Ok(new { message = result.Message });
+        }
+
 }

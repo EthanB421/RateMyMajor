@@ -17,6 +17,34 @@ namespace RateMyMajor.Models
 
         [Range(1, 5)]
         public int Rating { get; set; }
+        [Range(1, 5)]
+        public int Location { get; set; }
+
+        [Range(1, 5)]
+        public int Gym { get; set; }
+
+        [Range(1, 5)]
+        public int Classrooms { get; set; }
+
+        [Range(1, 5)]
+        public int Sports { get; set; }
+
+        [Range(1, 5)]
+        public int Food { get; set; }
+
+        [Range(1, 5)]
+        public int Happiness { get; set; }
+
+        [Range(1, 5)]
+        public int Safety { get; set; }
+
+        [Range(1, 5)]
+        public int Community { get; set; }
+        [Range(1, 5)]
+        public int Opportunities { get; set; }
+        [Range(1, 5)]
+        public int Faculty { get; set; }
+
 
         [DisplayName("College")]
         public int CollegeId { get; set; }

@@ -15,6 +15,9 @@ import SearchIcon from '@mui/icons-material/Search';
 import patrickImage from '../images/patrick404.jpg';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import CircularProgress from '@mui/material/CircularProgress';
+import { motion, AnimatePresence } from 'framer-motion';
+
 
 export default function CollegePage() {
   const navigate = useNavigate();
@@ -52,8 +55,23 @@ export default function CollegePage() {
     fetchColleges();
   }, []);
 
-  if (loading) return <Typography>Loading...</Typography>;
-  if (error) return <Typography color='error'>{error}</Typography>;
+  if (loading) {
+    return (
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1, rotate: 360 }}
+        transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <CircularProgress size={70} />
+      </motion.div>
+    );
+  }  if (error) return <Typography color='error'>{error}</Typography>;
   if (!colleges) return <Typography>No college found.</Typography>;
 
   const filteredColleges = colleges.filter((college) =>
