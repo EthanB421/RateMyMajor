@@ -19,6 +19,11 @@ export default function AddReviewPage() {
   const [college, setCollege] = useState('[college here]');
   const [error, setError] = useState('');
 
+  const categories = [
+    { id: 'overall', label: 'Overall' },
+    { id: 'gym', label: 'Gym' },
+    { id: 'happiness', label: 'Happiness' },
+  ];
   const [ratings, setRatings] = useState({});
 
   const updateContent = (e) => {
@@ -112,42 +117,23 @@ export default function AddReviewPage() {
           >
             <Typography variant='h5'>Rating</Typography>
             <Box>
-              <RatingBar
-                id='main'
-                ratings={[1, 2, 3, 4, 5]}
-                xSmall='.5em'
-                rSmall='1em'
-                mMed='1.5em'
-                onChange={(value) =>
-                  setRatings((prev) => ({ ...prev, main: value }))
-                }
-              />
-              <Box
-                sx={{
-                  display: 'flex',
-                }}
-              >
-                <RatingBar
-                  id='gym'
-                  ratings={[1, 2, 3, 4, 5]}
-                  xSmall='.5em'
-                  rSmall='.75em'
-                  mMed='.5em'
-                  onChange={(value) =>
-                    setRatings((prev) => ({ ...prev, sub1: value }))
-                  }
-                />
-                <RatingBar
-                  id='community'
-                  ratings={[1, 2, 3, 4, 5]}
-                  xSmall='.5em'
-                  rSmall='.75em'
-                  mMed='.5em'
-                  onChange={(value) =>
-                    setRatings((prev) => ({ ...prev, sub2: value }))
-                  }
-                />
-              </Box>
+              {categories.map((category) => (
+                <Box
+                  key={category.id}
+                  sx={{ display: 'flex', flexDirection: 'column', gap: '.5em' }}
+                >
+                  <Typography variant='h5'>{category.label}</Typography>
+                  <RatingBar
+                    ratings={[1, 2, 3, 4, 5]}
+                    onChange={(value) =>
+                      setRatings((prev) => ({ ...prev, [category.id]: value }))
+                    }
+                    xSmall='.5em'
+                    rSmall='1em'
+                    mMed='1.25em'
+                  />
+                </Box>
+              ))}
             </Box>
           </Box>
 
