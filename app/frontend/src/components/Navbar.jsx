@@ -47,14 +47,11 @@ export default function Navbar() {
         Navbar Content
         - Store in list for ease of use in drawer/navbar content through mapping
 
-        TODO:
-        - update content with actual links and navigation names, simply placeholder content
-
   */
   const navItems = user
     ? [
         { text: 'Colleges', path: '/college' },
-        { text: 'Reviews', path: '/review' },
+        { text: 'My Reviews', path: '/review' },
       ]
     : [
         { text: 'Colleges', path: '/college' },
@@ -67,8 +64,14 @@ export default function Navbar() {
         - Pulls from navItems list to display buttons that lead to their respective links
   */
   const drawer = (
-    <Box sx={{ width: 250 }} role='presentation' onClick={handleDrawerToggle}>
-      <Typography variant='h5' p='15px'>
+    <Box sx={{ width: 200 }} role='presentation' onClick={handleDrawerToggle}>
+      <Typography
+        fontFamily='Bebas Neue'
+        fontStyle='italic'
+        variant='h4'
+        textAlign='center'
+        p='.5em'
+      >
         Navigation
       </Typography>
       <Divider />
@@ -80,15 +83,17 @@ export default function Navbar() {
             text-decoration='none'
             component='a'
             onClick={() => navigate(`${item.path}`)}
-            sx={{
-              '&:hover': {
-                cursor: 'pointer',
-              },
-            }}
           >
             <ListItemText primary={item.text} />
           </ListItem>
         ))}
+        {user ? (
+          <ListItem button text-decoration='none' onClick={handleLogout}>
+            <ListItemText primary='Sign Out' />
+          </ListItem>
+        ) : (
+          []
+        )}
       </List>
     </Box>
   );
@@ -119,7 +124,6 @@ export default function Navbar() {
         </Button>
       ))}
 
-      {/* Display hello message if logged in */}
       {user ? (
         <Button
           color='inherit'

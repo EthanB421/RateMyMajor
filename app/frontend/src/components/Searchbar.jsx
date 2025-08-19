@@ -1,4 +1,10 @@
-import { Box, TextField, Typography, InputAdornment } from '@mui/material';
+import {
+  Box,
+  Button,
+  TextField,
+  Typography,
+  InputAdornment,
+} from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -173,6 +179,29 @@ export default function Searchbar() {
                 >
                   No results found
                 </Typography>
+                {/* Add school and view all schools section */}
+                <Box
+                  display='flex'
+                  justifyContent='space-evenly'
+                  alignItems='center'
+                >
+                  <Button
+                    fullWidth
+                    onClick={() => {
+                      navigate(`/`);
+                    }}
+                  >
+                    Add your college
+                  </Button>
+                  <Button
+                    fullWidth
+                    onClick={() => {
+                      navigate('/college');
+                    }}
+                  >
+                    View all colleges
+                  </Button>
+                </Box>
               </Box>
             ) : (
               <Box
@@ -209,6 +238,29 @@ export default function Searchbar() {
                     {college.name}
                   </Typography>
                 ))}
+                {/* Add school and view all schools section */}
+                <Box
+                  display='flex'
+                  justifyContent='space-evenly'
+                  alignItems='center'
+                >
+                  <Button
+                    fullWidth
+                    onClick={() => {
+                      navigate(`/`);
+                    }}
+                  >
+                    Add your college
+                  </Button>
+                  <Button
+                    fullWidth
+                    onClick={() => {
+                      navigate('/college');
+                    }}
+                  >
+                    View all colleges
+                  </Button>
+                </Box>
               </Box>
             ))}
         </Box>
