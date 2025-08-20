@@ -42,8 +42,10 @@ export default function RatingBar({
                 ? '#757ce8' // highlighted color
                 : '#ffffff', // default color
             transition: 'background-color 0.3s ease',
+            width: '100%',
             borderRight:
               index < ratings.length - 1 ? '1px solid #a9a9a9ed' : 'none', // only between items
+            cursor: 'pointer',
           }}
         >
           <Typography textAlign='center'>{rating}</Typography>
