@@ -139,10 +139,12 @@ export default function LoginPage() {
           }}
         >
           <Typography
-            variant='h4'
+            variant='h3'
+            fontFamily='Bebas Neue'
+            fontStyle='italic'
             sx={{ textAlign: { xs: 'center', md: 'left' } }}
           >
-            Sign in to your account
+            Sign in to your account.
           </Typography>
           {/* Textfield container */}
           <Box
