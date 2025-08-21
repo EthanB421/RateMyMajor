@@ -47,6 +47,14 @@ export default function AddReviewPage() {
     }
   };
 
+  const handleNext = () => {
+    setPage(page + 1);
+  };
+
+  const handlePrev = () => {
+    setPage(page - 1);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -288,16 +296,36 @@ export default function AddReviewPage() {
             )}
           </Box>
 
-          <Pagination
-            count={3}
-            page={page}
-            onChange={(e, value) => setPage(value)}
-          ></Pagination>
-
           {/* Submit button */}
-          <Button type='submit' variant='contained'>
-            Submit
-          </Button>
+          <Box>
+            {page === 1 && (
+              <Button onClick={handleNext} variant='contained'>
+                Next
+              </Button>
+            )}
+
+            {page === 2 && (
+              <Box>
+                <Button variant='contained' onClick={handlePrev}>
+                  Back
+                </Button>
+                <Button variant='contained' onClick={handleNext}>
+                  Next
+                </Button>
+              </Box>
+            )}
+
+            {page === 3 && (
+              <Box>
+                <Button variant='contained' onClick={handlePrev}>
+                  Back
+                </Button>
+                <Button variant='contained' type='submit'>
+                  Submit
+                </Button>
+              </Box>
+            )}
+          </Box>
         </Box>
       </Paper>
     </Container>
