@@ -46,6 +46,18 @@ const CostChart = ({ data }) => {
           label: 'Category',
         },
       ]}
+      yAxis={[
+        {
+          valueFormatter: (value) => {
+            if (value >= 1_000_000) {
+              return `$${(value / 1_000_000).toFixed(1)}M`;
+            } else if (value >= 1_000) {
+              return `$${(value / 1_000).toFixed(0)}K`;
+            }
+            return `$${value}`;
+          },
+        },
+      ]}
       series={[
         {
           data: costData.map((item) => item.value),

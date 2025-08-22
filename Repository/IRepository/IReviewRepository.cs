@@ -7,6 +7,8 @@ namespace RateMyMajor.Repository.IRepository
         void Update(Review obj);
         Task AddAsync(Review review);
         Task<List<Review>> GetReviewsByCollegeIdAsync(int collegeId);
+        Task<Review> GetByIdAsync(int id);
+        Task<List<Review>> GetAllAsync();
 
     }
 }

@@ -8,6 +8,8 @@ import { format, parseISO } from 'date-fns';
 import CollegeEarningsChart from '../components/CollegeEarningsChart';
 import DemographicChart from '../components/DemographicChart';
 import { motion, AnimatePresence } from 'framer-motion';
+import CircularProgress from '@mui/material/CircularProgress';
+
 
 import {
   Container,
@@ -31,10 +33,10 @@ export default function SpecificCollegePage() {
   const [chartLoading, setChartLoading] = useState(true);
   const [error, setError] = useState('');
   const chartTitles = [
-    'Earnings Over Time',
+    'Average Salary After Graduating',
     'Cost Breakdown',
     'Demographics',
-    'Repayment Rates',
+    'Repayment Rates By Family Income',
   ];
   const [chartPage, setChartPage] = useState(1);
   const charts = [
@@ -137,7 +139,23 @@ export default function SpecificCollegePage() {
     fetchCollege();
   }, [specificCollege]);
 
-  if (loading) return <Typography>Loading...</Typography>;
+  if (loading || chartLoading) {
+    return (
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1, rotate: 360 }}
+        transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <CircularProgress size={70} />
+      </motion.div>
+    );
+  }
   if (error) return <Typography color='error'>{error}</Typography>;
   if (!college) return <Typography>No college found.</Typography>;
 
@@ -452,6 +470,21 @@ export default function SpecificCollegePage() {
                   </Box>
                 </Box>
               </Box>
+              Extra ratings
+                  <Box>
+                    <Typography variant='h6'>
+                      Location: {college.locationRating}
+                    </Typography>
+                    <Typography variant='h6'>Gym: {college.gymRating}</Typography>
+                    <Typography variant='h6'>Classrooms: {college.classroomsRating}</Typography>
+                    <Typography variant='h6'>Sports: {college.sportsRating}</Typography>
+                    <Typography variant='h6'>Food: {college.foodRating}</Typography>
+                    <Typography variant='h6'>Happiness: {college.happinessRating}</Typography>
+                    <Typography variant='h6'>Safety: {college.safetyRating}</Typography>
+                    <Typography variant='h6'>Community: {college.communityRating}</Typography>
+                    <Typography variant='h6'>Opportunities: {college.opportunitiesRating}</Typography>
+                    <Typography variant='h6'>Faculty: {college.facultyRating}</Typography>
+                  </Box>
               {/* Description block */}
               <Box
                 sx={{

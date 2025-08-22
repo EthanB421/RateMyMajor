@@ -12,6 +12,7 @@ namespace RateMyMajor.Repository.IRepository
         void Remove(T entity);
         void RemoveRange(IEnumerable<T> entity);
         Task<T?> GetAsync(Expression<Func<T, bool>> filter, string? includeProperties = null);
+        Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>>? filter = null, string? includeProperties = null);
 
 
     }

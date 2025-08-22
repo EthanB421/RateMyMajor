@@ -18,7 +18,7 @@ namespace RateMyMajor.Repository
             this.dbSet = _db.Set<T>();
             _db.Review.Include(u => u.College);
         }
-        
+
         public void Add(T entity)
         {
             dbSet.Add(entity);
@@ -30,7 +30,7 @@ namespace RateMyMajor.Repository
             query = query.Where(filter);
             if (!string.IsNullOrEmpty(includeProperties))
             {
-                foreach(var includeProp in includeProperties.Split(new char[] { ','}, StringSplitOptions.RemoveEmptyEntries))
+                foreach (var includeProp in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
                 {
                     query = query.Include(includeProp);
                 }
@@ -43,12 +43,12 @@ namespace RateMyMajor.Repository
             IQueryable<T> query = dbSet;
             if (!string.IsNullOrEmpty(includeProperties))
             {
-                foreach(var includeProp in includeProperties.Split(new char[] { ','}, StringSplitOptions.RemoveEmptyEntries))
+                foreach (var includeProp in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
                 {
                     query = query.Include(includeProp);
                 }
             }
-            return query.ToList();        
+            return query.ToList();
         }
 
         public void Remove(T entity)
@@ -75,5 +75,25 @@ namespace RateMyMajor.Repository
         {
             dbSet.RemoveRange(entity);
         }
+        public async Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>>? filter = null, string? includeProperties = null)
+            {
+                IQueryable<T> query = dbSet;
+
+                if (filter != null)
+                {
+                    query = query.Where(filter);
+                }
+
+                if (!string.IsNullOrEmpty(includeProperties))
+                {
+                    foreach (var includeProp in includeProperties.Split(',', StringSplitOptions.RemoveEmptyEntries))
+                    {
+                        query = query.Include(includeProp);
+                    }
+                }
+
+                return await query.ToListAsync();
+            }
+
     }
 }
