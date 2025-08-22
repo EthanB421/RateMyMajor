@@ -183,6 +183,7 @@ export default function AddReviewPage() {
                       </Typography>
                       <RatingBar
                         ratings={[1, 2, 3, 4, 5]}
+                        value={rating[category.id]}
                         onChange={(value) =>
                           setRatings((prev) => ({
                             ...prev,
@@ -222,6 +223,7 @@ export default function AddReviewPage() {
                       </Typography>
                       <RatingBar
                         ratings={[1, 2, 3, 4, 5]}
+                        value={rating[category.id]}
                         onChange={(value) =>
                           setRatings((prev) => ({
                             ...prev,
@@ -257,6 +259,7 @@ export default function AddReviewPage() {
                 </Typography>
                 <RatingBar
                   ratings={[1, 2, 3, 4, 5]}
+                  value={rating.rating}
                   onChange={(value) =>
                     setRatings((prev) => ({
                       ...prev,
