@@ -7,7 +7,8 @@ namespace RateMyMajor.Repository
 {
     public class ReviewRepository : Repository<Review>, IReviewRepository
     {
-        private ApplicationDbContext _db;
+        private readonly ApplicationDbContext _db;
+
         public ReviewRepository(ApplicationDbContext db) : base(db)
         {
             _db = db;
@@ -20,20 +21,24 @@ namespace RateMyMajor.Repository
 
         public async Task<Review> GetByIdAsync(int id)
         {
-            return await _db.Review.FindAsync(id);
+            return await _db.Review.FirstOrDefaultAsync(r => r.Id == id);
         }
+
+        public async Task<List<Review>> GetAllAsync()
+        {
+            return await _db.Review.ToListAsync();
+        }
+
         public async Task AddAsync(Review review)
         {
             await _db.Review.AddAsync(review);
         }
-            
-        public async Task<List<Review>> GetReviewsByCollegeIdAsync(int majorId)
+
+        public async Task<List<Review>> GetReviewsByCollegeIdAsync(int collegeId)
         {
             return await _db.Review
-                .Where(r => r.CollegeId == majorId)
+                .Where(r => r.CollegeId == collegeId)
                 .ToListAsync();
         }
-
-        
     }
 }

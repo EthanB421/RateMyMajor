@@ -16,7 +16,6 @@ import RatingBar from '../components/RatingBar';
 export default function AddReviewPage() {
   const navigate = useNavigate();
   const { collegeId } = useParams();
-  const [content, setContent] = useState('');
   const [error, setError] = useState('');
   const [page, setPage] = useState(1);
 
@@ -38,51 +37,79 @@ export default function AddReviewPage() {
 
   const overallRating = [{ id: 'overall', label: 'Overall' }];
 
-  const [ratings, setRatings] = useState({});
-
+    const [rating, setRatings] = useState({
+      rating: 0,
+      content: "",
+      location: 0,
+      gym: 0,
+      classrooms: 0,
+      sports: 0,
+      food: 0,
+      happiness: 0,
+      safety: 0,
+      community: 0,
+      opportunities: 0,
+      faculty: 0,
+    });
   const updateContent = (e) => {
-    setContent(e.target.value);
-    if (error && e.target.value.length >= 30) {
+    setRatings((prev) => ({
+      ...prev,
+      content: e.target.value,
+    }));
+    if (error && e.target.value.length >= 300) {
       setError('');
     }
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
 
-    const token = localStorage.getItem('authToken');
-    const payload = {
-      collegeId: parseInt(collegeId), // or keep as string if your backend expects that
-      rating: ratings, // assuming rating is based on index
-      content: content,
-    };
+ const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    if (validateReview()) {
-      try {
-        const response = await fetch('http://localhost:5123/api/review/add', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify(payload),
-        });
+  const token = localStorage.getItem('authToken');
 
-        if (!response.ok) {
-          const errorData = await response.text();
-          throw new Error(errorData);
-        }
-
-        navigate('/');
-      } catch (error) {
-        console.error('Submit error:', error.message);
-      }
-    }
+  const payload = {
+    collegeId: parseInt(collegeId, 10), // from useParams
+    rating: rating.rating,
+    content: rating.content,
+    location: rating.location,
+    gym: rating.gym,
+    classrooms: rating.classrooms,
+    sports: rating.sports,
+    food: rating.food,
+    happiness: rating.happiness,
+    safety: rating.safety,
+    community: rating.community,
+    opportunities: rating.opportunities,
+    faculty: rating.faculty,
   };
+
+  if (validateReview()) {
+    try {
+      const response = await fetch("http://localhost:5123/api/review/add", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.text();
+        throw new Error(errorData);
+      }
+
+      navigate("/");
+    } catch (error) {
+      console.error("Submit error:", error.message);
+    }
+  }
+};
+
 
   const validateReview = () => {
     let isValid = true;
-    if (content.length < 300) {
+    if (rating.content.length < 300) {
       setError('Message is not long enough!');
       isValid = false;
     }
@@ -233,7 +260,7 @@ export default function AddReviewPage() {
                   onChange={(value) =>
                     setRatings((prev) => ({
                       ...prev,
-                      [overallRating[0].id]: value,
+                      rating: value,
                     }))
                   }
                   xSmall='.3em'
@@ -250,8 +277,8 @@ export default function AddReviewPage() {
                 <TextField
                   multiline
                   rows={7}
-                  value={content}
-                  onChange={updateContent}
+                  value={rating.content}
+                  onChange={updateContent}                 
                   error={!!error}
                   helperText={error}
                   placeholder='What did you enjoy/dislike about your college?'
@@ -282,7 +309,7 @@ export default function AddReviewPage() {
                     textAlign: 'right',
                   }}
                 >
-                  {content.length} / 300 character minimum
+                  {rating.content.length} / 300 character minimum
                 </Typography>
               </Box>
             )}

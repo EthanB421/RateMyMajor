@@ -89,7 +89,7 @@ public class ReviewService : IReviewService
 
         return (true, "Review added successfully.");
     }
-        public async Task<(bool Succeeded, string Message)> DeleteReviewAsync(int reviewId, string userId)
+    public async Task<(bool Succeeded, string Message)> DeleteReviewAsync(int reviewId, string userId)
     {
         var review = await _unitOfWork.Review.GetByIdAsync(reviewId);
 
@@ -105,5 +105,15 @@ public class ReviewService : IReviewService
 
         return (true, "Review deleted successfully");
     }
+
+    public async Task<IEnumerable<Review>> GetUserReviewsAsync(ClaimsPrincipal user)
+{
+    var userId = user?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+    if (string.IsNullOrEmpty(userId))
+        return Enumerable.Empty<Review>();
+
+    return await _unitOfWork.Review.GetAllAsync(r => r.UserId == userId, includeProperties: "College");
+}
+
 }
 
