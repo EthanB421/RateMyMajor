@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import { format, parseISO } from 'date-fns';
 import CollegeEarningsChart from '../components/CollegeEarningsChart';
 import DemographicChart from '../components/DemographicChart';
+import ExtraRatings from '../components/ExtraRatings';
 import { motion, AnimatePresence } from 'framer-motion';
 import CircularProgress from '@mui/material/CircularProgress';
 
@@ -471,20 +472,7 @@ export default function SpecificCollegePage() {
                 </Box>
               </Box>
               Extra ratings
-                  <Box>
-                    <Typography variant='h6'>
-                      Location: {college.locationRating}
-                    </Typography>
-                    <Typography variant='h6'>Gym: {college.gymRating}</Typography>
-                    <Typography variant='h6'>Classrooms: {college.classroomsRating}</Typography>
-                    <Typography variant='h6'>Sports: {college.sportsRating}</Typography>
-                    <Typography variant='h6'>Food: {college.foodRating}</Typography>
-                    <Typography variant='h6'>Happiness: {college.happinessRating}</Typography>
-                    <Typography variant='h6'>Safety: {college.safetyRating}</Typography>
-                    <Typography variant='h6'>Community: {college.communityRating}</Typography>
-                    <Typography variant='h6'>Opportunities: {college.opportunitiesRating}</Typography>
-                    <Typography variant='h6'>Faculty: {college.facultyRating}</Typography>
-                  </Box>
+              <ExtraRatings data={college} />
               {/* Description block */}
               <Box
                 sx={{
