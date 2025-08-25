@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import {
   Box,
   Typography,
@@ -9,6 +11,8 @@ import {
   Button,
   Pagination,
 } from '@mui/material';
+import { format, parseISO } from 'date-fns';
+
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import RatingBar from '../components/RatingBar';
@@ -37,20 +41,26 @@ export default function AddReviewPage() {
 
   const overallRating = [{ id: 'overall', label: 'Overall' }];
 
-    const [rating, setRatings] = useState({
-      rating: 0,
-      content: "",
-      location: 0,
-      gym: 0,
-      classrooms: 0,
-      sports: 0,
-      food: 0,
-      happiness: 0,
-      safety: 0,
-      community: 0,
-      opportunities: 0,
-      faculty: 0,
-    });
+  const [rating, setRatings] = useState({
+    rating: 0,
+    content: '',
+    location: 0,
+    gym: 0,
+    classrooms: 0,
+    sports: 0,
+    food: 0,
+    happiness: 0,
+    safety: 0,
+    community: 0,
+    opportunities: 0,
+    faculty: 0,
+  });
+
+  const DateComponent = ({ rawDate }) => {
+    const dateObj = parseISO(rawDate);
+    const formatted = format(dateObj, 'MMMM d, yyyy');
+    return <Typography>{formatted}</Typography>;
+  };
   const updateContent = (e) => {
     setRatings((prev) => ({
       ...prev,
@@ -61,51 +71,57 @@ export default function AddReviewPage() {
     }
   };
 
-
- const handleSubmit = async (e) => {
-  e.preventDefault();
-
-  const token = localStorage.getItem('authToken');
-
-  const payload = {
-    collegeId: parseInt(collegeId, 10), // from useParams
-    rating: rating.rating,
-    content: rating.content,
-    location: rating.location,
-    gym: rating.gym,
-    classrooms: rating.classrooms,
-    sports: rating.sports,
-    food: rating.food,
-    happiness: rating.happiness,
-    safety: rating.safety,
-    community: rating.community,
-    opportunities: rating.opportunities,
-    faculty: rating.faculty,
+  const handleNext = () => {
+    setPage(page + 1);
   };
 
-  if (validateReview()) {
-    try {
-      const response = await fetch("http://localhost:5123/api/review/add", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(payload),
-      });
+  const handlePrev = () => {
+    setPage(page - 1);
+  };
 
-      if (!response.ok) {
-        const errorData = await response.text();
-        throw new Error(errorData);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const token = localStorage.getItem('authToken');
+
+    const payload = {
+      collegeId: parseInt(collegeId, 10), // from useParams
+      rating: rating.rating,
+      content: rating.content,
+      location: rating.location,
+      gym: rating.gym,
+      classrooms: rating.classrooms,
+      sports: rating.sports,
+      food: rating.food,
+      happiness: rating.happiness,
+      safety: rating.safety,
+      community: rating.community,
+      opportunities: rating.opportunities,
+      faculty: rating.faculty,
+    };
+
+    if (validateReview()) {
+      try {
+        const response = await fetch('http://localhost:5123/api/review/add', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(payload),
+        });
+
+        if (!response.ok) {
+          const errorData = await response.text();
+          throw new Error(errorData);
+        }
+
+        navigate('/');
+      } catch (error) {
+        console.error('Submit error:', error.message);
       }
-
-      navigate("/");
-    } catch (error) {
-      console.error("Submit error:", error.message);
     }
-  }
-};
-
+  };
 
   const validateReview = () => {
     let isValid = true;
@@ -183,6 +199,7 @@ export default function AddReviewPage() {
                       </Typography>
                       <RatingBar
                         ratings={[1, 2, 3, 4, 5]}
+                        value={ratings[category.id] || null}
                         onChange={(value) =>
                           setRatings((prev) => ({
                             ...prev,
@@ -222,6 +239,7 @@ export default function AddReviewPage() {
                       </Typography>
                       <RatingBar
                         ratings={[1, 2, 3, 4, 5]}
+                        value={ratings[category.id] || null}
                         onChange={(value) =>
                           setRatings((prev) => ({
                             ...prev,
@@ -257,6 +275,7 @@ export default function AddReviewPage() {
                 </Typography>
                 <RatingBar
                   ratings={[1, 2, 3, 4, 5]}
+                  value={ratings[overallRating[0].id] || null}
                   onChange={(value) =>
                     setRatings((prev) => ({
                       ...prev,
@@ -278,7 +297,7 @@ export default function AddReviewPage() {
                   multiline
                   rows={7}
                   value={rating.content}
-                  onChange={updateContent}                 
+                  onChange={updateContent}
                   error={!!error}
                   helperText={error}
                   placeholder='What did you enjoy/dislike about your college?'
@@ -313,18 +332,156 @@ export default function AddReviewPage() {
                 </Typography>
               </Box>
             )}
+
+            {/* Page 3 */}
+            {page === 3 && (
+              <Box
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  width: '100%',
+                  gap: '.5em',
+                }}
+              >
+                <Typography
+                  variant='h5'
+                  fontFamily='Bebas Neue'
+                  fontStyle='italic'
+                >
+                  Preview
+                </Typography>
+                <Box>
+                  {/* Start of Card Formatting */}
+                  <Paper
+                    sx={{
+                      mb: '1.5em',
+                      p: '2em',
+                      borderRadius: '15px',
+                      backgroundColor: '#f7f7f7ed',
+                    }}
+                    elevation={1}
+                  >
+                    {/* Top Row */}
+                    <Box
+                      display='flex'
+                      justifyContent='space-between'
+                      alignItems='center'
+                      mb='1.5em'
+                      flexWrap='wrap'
+                    >
+                      {/* Rating Badge */}
+                      <Box
+                        sx={{
+                          backgroundColor: '#84F8C3',
+                          // review.rating >= 4
+                          //   ? '#84F8C3'
+                          //   : review.rating >= 2
+                          //   ? '#FFF26A'
+                          //   : '#FF9999',
+                          px: '1em',
+                          py: '.5em',
+                          borderRadius: '8px',
+                          minWidth: '50px',
+                          textAlign: 'center',
+                        }}
+                      >
+                        <Typography fontWeight='bold' fontSize='1.5rem'>
+                          {ratings[overallRating[0].id] || 0}
+                        </Typography>
+                      </Box>
+                      {/* Date / Vote Container */}
+
+                      <Box
+                        display='flex'
+                        flexDirection='column'
+                        justifyContent='center'
+                        alignItems='center'
+                        gap='.5em'
+                      >
+                        <DateComponent rawDate='2025-08-09' />
+
+                        {/* Voting */}
+                        <Box display='flex' alignItems='center'>
+                          <ArrowUpwardIcon
+                            sx={{
+                              transition: 'transform 0.3s ease',
+                              '&:hover': {
+                                transform: 'scale(1.3)',
+                                cursor: 'pointer',
+                              },
+                              color: 'green',
+                            }}
+                          />
+                          <Typography
+                            sx={{
+                              width: '2.5em',
+                              textAlign: 'center',
+                              fontVariantNumeric: 'tabular-nums',
+                            }}
+                          >
+                            1
+                          </Typography>
+                          <ArrowDownwardIcon
+                            sx={{
+                              transition: 'transform 0.3s ease',
+                              '&:hover': {
+                                transform: 'scale(1.3)',
+                                cursor: 'pointer',
+                              },
+                              color: 'red',
+                            }}
+                          />
+                        </Box>
+                      </Box>
+                    </Box>
+
+                    {/* Review Content */}
+                    <Typography
+                      variant='body1'
+                      sx={{
+                        lineHeight: 1.6,
+                        whiteSpace: 'normal',
+                        wordBreak: 'break-word',
+                      }}
+                    >
+                      {content}
+                    </Typography>
+                  </Paper>
+                </Box>
+              </Box>
+            )}
           </Box>
 
-          <Pagination
-            count={3}
-            page={page}
-            onChange={(e, value) => setPage(value)}
-          ></Pagination>
-
           {/* Submit button */}
-          <Button type='submit' variant='contained'>
-            Submit
-          </Button>
+          <Box>
+            {page === 1 && (
+              <Button onClick={handleNext} variant='contained'>
+                Next
+              </Button>
+            )}
+
+            {page === 2 && (
+              <Box display='flex' gap='1em'>
+                <Button variant='contained' onClick={handlePrev}>
+                  Back
+                </Button>
+                <Button variant='contained' onClick={handleNext}>
+                  Next
+                </Button>
+              </Box>
+            )}
+
+            {page === 3 && (
+              <Box display='flex' gap='1em'>
+                <Button variant='contained' onClick={handlePrev}>
+                  Back
+                </Button>
+                <Button variant='contained' type='submit'>
+                  Submit
+                </Button>
+              </Box>
+            )}
+          </Box>
         </Box>
       </Paper>
     </Container>

@@ -10,6 +10,7 @@ import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
 import TermsOfServicePage from './pages/TermsOfServicePage';
+import MyReviewsPage from './pages/MyReviewsPage';
 import ScrollTop from './components/ScrollTop';
 import './styles/index.css';
 import { createTheme, ThemeProvider } from '@mui/material';
@@ -57,6 +58,7 @@ function App() {
               <Route path='privacy-policy' element={<PrivacyPolicyPage />} />
               <Route path='terms-of-service' element={<TermsOfServicePage />} />
               <Route path='college/add-review' element={<AddReviewPage />} />
+              <Route path='/my-reviews' element={<MyReviewsPage />} />
             </Routes>
           </div>
           <Footer />
