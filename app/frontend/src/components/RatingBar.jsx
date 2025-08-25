@@ -3,8 +3,8 @@ import { useState, useEffect } from 'react';
 
 export default function RatingBar({
   ratings = [],
-  onChange,
   value,
+  onChange,
   xSmall,
   rSmall,
   mMed,
@@ -16,7 +16,7 @@ export default function RatingBar({
       setClickIndex(null);
     } else {
       const idx = ratings.indexOf(value);
-      setClickIndex(idx !== -1 ? idx : null);
+      setClickIndex(idx >= 0 ? idx : null);
     }
   }, [value, ratings]);
 

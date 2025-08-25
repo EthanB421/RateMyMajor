@@ -51,7 +51,7 @@ export default function Navbar() {
   const navItems = user
     ? [
         { text: 'Colleges', path: '/college' },
-        { text: 'My Reviews', path: '/review' },
+        { text: 'My Reviews', path: '/my-reviews' },
       ]
     : [
         { text: 'Colleges', path: '/college' },
