@@ -199,7 +199,7 @@ export default function AddReviewPage() {
                       </Typography>
                       <RatingBar
                         ratings={[1, 2, 3, 4, 5]}
-                        value={ratings[category.id] || null}
+                        value={rating[category.id] || null}
                         onChange={(value) =>
                           setRatings((prev) => ({
                             ...prev,
@@ -239,7 +239,7 @@ export default function AddReviewPage() {
                       </Typography>
                       <RatingBar
                         ratings={[1, 2, 3, 4, 5]}
-                        value={ratings[category.id] || null}
+                        value={rating[category.id] || null}
                         onChange={(value) =>
                           setRatings((prev) => ({
                             ...prev,
@@ -275,7 +275,7 @@ export default function AddReviewPage() {
                 </Typography>
                 <RatingBar
                   ratings={[1, 2, 3, 4, 5]}
-                  value={ratings[overallRating[0].id] || null}
+                  value={rating.rating || null}
                   onChange={(value) =>
                     setRatings((prev) => ({
                       ...prev,
@@ -386,7 +386,7 @@ export default function AddReviewPage() {
                         }}
                       >
                         <Typography fontWeight='bold' fontSize='1.5rem'>
-                          {ratings[overallRating[0].id] || 0}
+                          {rating.rating || 0}
                         </Typography>
                       </Box>
                       {/* Date / Vote Container */}
@@ -444,7 +444,7 @@ export default function AddReviewPage() {
                         wordBreak: 'break-word',
                       }}
                     >
-                      {content}
+                      {rating.content}
                     </Typography>
                   </Paper>
                 </Box>
