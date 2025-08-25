@@ -11,7 +11,6 @@ import ExtraRatings from '../components/ExtraRatings';
 import { motion, AnimatePresence } from 'framer-motion';
 import CircularProgress from '@mui/material/CircularProgress';
 
-
 import {
   Container,
   Box,
@@ -145,12 +144,12 @@ export default function SpecificCollegePage() {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1, rotate: 360 }}
-        transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+        transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
         style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "100vh",
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: '100vh',
         }}
       >
         <CircularProgress size={70} />
