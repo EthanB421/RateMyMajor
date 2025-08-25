@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import {
   Box,
   Typography,
@@ -9,6 +11,8 @@ import {
   Button,
   Pagination,
 } from '@mui/material';
+import { format, parseISO } from 'date-fns';
+
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import RatingBar from '../components/RatingBar';
@@ -39,6 +43,12 @@ export default function AddReviewPage() {
   const overallRating = [{ id: 'overall', label: 'Overall' }];
 
   const [ratings, setRatings] = useState({});
+
+  const DateComponent = ({ rawDate }) => {
+    const dateObj = parseISO(rawDate);
+    const formatted = format(dateObj, 'MMMM d, yyyy');
+    return <Typography>{formatted}</Typography>;
+  };
 
   const updateContent = (e) => {
     setContent(e.target.value);
@@ -313,52 +323,106 @@ export default function AddReviewPage() {
                   fontFamily='Bebas Neue'
                   fontStyle='italic'
                 >
-                  {overallRating[0].label}
+                  Preview
                 </Typography>
-                <Typography
-                  variant='h5'
-                  fontFamily='Bebas Neue'
-                  fontStyle='italic'
-                >
-                  Review
-                </Typography>
-                <TextField
-                  multiline
-                  rows={7}
-                  value={content}
-                  onChange={updateContent}
-                  error={!!error}
-                  helperText={error}
-                  placeholder='What did you enjoy/dislike about your college?'
-                  slotProps={{
-                    formHelperText: {
-                      sx: {
-                        margin: 0,
-                      },
-                    },
-                  }}
-                  sx={{
-                    '& .MuiOutlinedInput-root': {
-                      '& fieldset': {
-                        borderColor: '#ccc',
-                      },
-                      '&:hover fieldset': {
-                        borderColor: '#ccc',
-                      },
-                      '&.Mui-focused fieldset': {
-                        borderColor: '#ccc',
-                      },
-                    },
-                  }}
-                />
-                <Typography
-                  sx={{
-                    color: 'gray',
-                    textAlign: 'right',
-                  }}
-                >
-                  {content.length} / 300 character minimum
-                </Typography>
+                <Box>
+                  {/* Start of Card Formatting */}
+                  <Paper
+                    sx={{
+                      mb: '1.5em',
+                      p: '2em',
+                      borderRadius: '15px',
+                      backgroundColor: '#f7f7f7ed',
+                    }}
+                    elevation={1}
+                  >
+                    {/* Top Row */}
+                    <Box
+                      display='flex'
+                      justifyContent='space-between'
+                      alignItems='center'
+                      mb='1.5em'
+                      flexWrap='wrap'
+                    >
+                      {/* Rating Badge */}
+                      <Box
+                        sx={{
+                          backgroundColor: '#84F8C3',
+                          // review.rating >= 4
+                          //   ? '#84F8C3'
+                          //   : review.rating >= 2
+                          //   ? '#FFF26A'
+                          //   : '#FF9999',
+                          px: '1em',
+                          py: '.5em',
+                          borderRadius: '8px',
+                          minWidth: '50px',
+                          textAlign: 'center',
+                        }}
+                      >
+                        <Typography fontWeight='bold' fontSize='1.5rem'>
+                          {ratings[overallRating[0].id] || 0}
+                        </Typography>
+                      </Box>
+                      {/* Date / Vote Container */}
+
+                      <Box
+                        display='flex'
+                        flexDirection='column'
+                        justifyContent='center'
+                        alignItems='center'
+                        gap='.5em'
+                      >
+                        <DateComponent rawDate='2025-08-09' />
+
+                        {/* Voting */}
+                        <Box display='flex' alignItems='center'>
+                          <ArrowUpwardIcon
+                            sx={{
+                              transition: 'transform 0.3s ease',
+                              '&:hover': {
+                                transform: 'scale(1.3)',
+                                cursor: 'pointer',
+                              },
+                              color: 'green',
+                            }}
+                          />
+                          <Typography
+                            sx={{
+                              width: '2.5em',
+                              textAlign: 'center',
+                              fontVariantNumeric: 'tabular-nums',
+                            }}
+                          >
+                            1
+                          </Typography>
+                          <ArrowDownwardIcon
+                            sx={{
+                              transition: 'transform 0.3s ease',
+                              '&:hover': {
+                                transform: 'scale(1.3)',
+                                cursor: 'pointer',
+                              },
+                              color: 'red',
+                            }}
+                          />
+                        </Box>
+                      </Box>
+                    </Box>
+
+                    {/* Review Content */}
+                    <Typography
+                      variant='body1'
+                      sx={{
+                        lineHeight: 1.6,
+                        whiteSpace: 'normal',
+                        wordBreak: 'break-word',
+                      }}
+                    >
+                      {content}
+                    </Typography>
+                  </Paper>
+                </Box>
               </Box>
             )}
           </Box>
@@ -372,7 +436,7 @@ export default function AddReviewPage() {
             )}
 
             {page === 2 && (
-              <Box>
+              <Box display='flex' gap='1em'>
                 <Button variant='contained' onClick={handlePrev}>
                   Back
                 </Button>
@@ -383,7 +447,7 @@ export default function AddReviewPage() {
             )}
 
             {page === 3 && (
-              <Box>
+              <Box display='flex' gap='1em'>
                 <Button variant='contained' onClick={handlePrev}>
                   Back
                 </Button>
