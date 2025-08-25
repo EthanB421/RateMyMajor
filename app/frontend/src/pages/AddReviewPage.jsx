@@ -164,6 +164,7 @@ export default function AddReviewPage() {
                       </Typography>
                       <RatingBar
                         ratings={[1, 2, 3, 4, 5]}
+                        value={ratings[category.id] || null}
                         onChange={(value) =>
                           setRatings((prev) => ({
                             ...prev,
@@ -203,6 +204,7 @@ export default function AddReviewPage() {
                       </Typography>
                       <RatingBar
                         ratings={[1, 2, 3, 4, 5]}
+                        value={ratings[category.id] || null}
                         onChange={(value) =>
                           setRatings((prev) => ({
                             ...prev,
@@ -238,6 +240,7 @@ export default function AddReviewPage() {
                 </Typography>
                 <RatingBar
                   ratings={[1, 2, 3, 4, 5]}
+                  value={ratings[overallRating[0].id] || null}
                   onChange={(value) =>
                     setRatings((prev) => ({
                       ...prev,
@@ -248,6 +251,70 @@ export default function AddReviewPage() {
                   rSmall='.4em'
                   mMed='.5em'
                 ></RatingBar>
+                <Typography
+                  variant='h5'
+                  fontFamily='Bebas Neue'
+                  fontStyle='italic'
+                >
+                  Review
+                </Typography>
+                <TextField
+                  multiline
+                  rows={7}
+                  value={content}
+                  onChange={updateContent}
+                  error={!!error}
+                  helperText={error}
+                  placeholder='What did you enjoy/dislike about your college?'
+                  slotProps={{
+                    formHelperText: {
+                      sx: {
+                        margin: 0,
+                      },
+                    },
+                  }}
+                  sx={{
+                    '& .MuiOutlinedInput-root': {
+                      '& fieldset': {
+                        borderColor: '#ccc',
+                      },
+                      '&:hover fieldset': {
+                        borderColor: '#ccc',
+                      },
+                      '&.Mui-focused fieldset': {
+                        borderColor: '#ccc',
+                      },
+                    },
+                  }}
+                />
+                <Typography
+                  sx={{
+                    color: 'gray',
+                    textAlign: 'right',
+                  }}
+                >
+                  {content.length} / 300 character minimum
+                </Typography>
+              </Box>
+            )}
+
+            {/* Page 3 */}
+            {page === 3 && (
+              <Box
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  width: '100%',
+                  gap: '.5em',
+                }}
+              >
+                <Typography
+                  variant='h5'
+                  fontFamily='Bebas Neue'
+                  fontStyle='italic'
+                >
+                  {overallRating[0].label}
+                </Typography>
                 <Typography
                   variant='h5'
                   fontFamily='Bebas Neue'

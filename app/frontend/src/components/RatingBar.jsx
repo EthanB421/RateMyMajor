@@ -1,14 +1,24 @@
 import { Grid, Typography } from '@mui/material';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export default function RatingBar({
   ratings = [],
+  value,
   onChange,
   xSmall,
   rSmall,
   mMed,
 }) {
   const [clickIndex, setClickIndex] = useState(null);
+
+  useEffect(() => {
+    if (value == null) {
+      setClickIndex(null);
+    } else {
+      const idx = ratings.indexOf(value);
+      setClickIndex(idx >= 0 ? idx : null);
+    }
+  }, [value, ratings]);
 
   const handleClick = (index) => {
     const newIndex = clickIndex === index ? null : index;
