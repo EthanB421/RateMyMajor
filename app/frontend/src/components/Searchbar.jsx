@@ -8,7 +8,7 @@ import {
 import SearchIcon from '@mui/icons-material/Search';
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import heroImage from '../images/heroSearchbar.avif';
+import landingPic from '../images/landingPic.jpg';
 
 export default function Searchbar() {
   const [inputValue, setInputValue] = useState('');
@@ -72,7 +72,7 @@ export default function Searchbar() {
       sx={{
         backgroundImage: `
     linear-gradient(135deg, rgba(255, 255, 255, 0.6), rgba(0, 0, 0, 0.3)),
-    url(${heroImage})
+    url(${landingPic})
   `,
         backgroundSize: 'cover',
         backgroundPosition: 'center 0%',
