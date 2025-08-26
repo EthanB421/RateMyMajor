@@ -209,7 +209,7 @@ export default function LandingPage() {
                 </Typography>
                 <Box
                   component='img'
-                  src='src/images/careerPath.png'
+                  src='src/images/careerPaths.png'
                   alt='Test Image'
                   sx={{
                     height: 'auto',
