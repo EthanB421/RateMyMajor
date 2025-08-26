@@ -1,4 +1,4 @@
-import { Typography, Box, Paper, Container } from '@mui/material';
+import { Typography, Box, Paper, Container, Button } from '@mui/material';
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -39,6 +39,28 @@ export default function MyReviewsPage() {
 
     fetchReviews();
   }, []);
+
+  const handleDelete = async (reviewId) => {
+    try {
+      const token = localStorage.getItem('authToken');
+
+      const response = await fetch(
+        `http://localhost:5123/api/review/${reviewId}`,
+        {
+          method: 'DELETE',
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (!response.ok) {
+        throw new Error(`Delete failed with status: ${response.status}`);
+      }
+      setReviews((prev) => prev.filter((r) => r.id !== reviewId));
+    } catch (err) {
+      console.error('API error:', err);
+    }
+  };
 
   if (loading) {
     return (
@@ -87,16 +109,42 @@ export default function MyReviewsPage() {
           ) : (
             reviews.map((review) => (
               <Paper
-                key={review.id} // <-- adjust depending on your review schema
-                sx={{ p: 2, mb: 2 }}
+                key={review.id}
+                sx={{
+                  p: 2,
+                  mb: 2,
+                  whiteSpace: 'pre-wrap',
+                  wordBreak: 'break-word',
+                }}
               >
-                <Typography variant='h6'>{review.title}</Typography>
-                <Typography variant='body2' color='text.secondary'>
-                  {review.content}
-                </Typography>
-                <Typography variant='caption' display='block'>
-                  {new Date(review.createdAt).toLocaleDateString()}
-                </Typography>
+                <Box
+                  display='flex'
+                  flexDirection='row'
+                  justifyContent='space-between'
+                  alignItems='center'
+                  gap='1em'
+                >
+                  <Box
+                    display='flex'
+                    flexDirection='column'
+                    width='85%'
+                    gap='1em'
+                  >
+                    <Typography variant='body1' fontFamily='Raleway'>
+                      {review.content}
+                    </Typography>
+                    <Typography variant='body2' display='block'>
+                      {new Date(review.createdAt).toLocaleDateString()}
+                    </Typography>
+                  </Box>
+                  <Button
+                    variant='contained'
+                    sx={{ width: '15%', height: '3em' }}
+                    onClick={() => handleDelete(review.id)}
+                  >
+                    Delete
+                  </Button>
+                </Box>
               </Paper>
             ))
           )}
