@@ -18,7 +18,7 @@ import { useParams } from 'react-router-dom';
 import RatingBar from '../components/RatingBar';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
-
+import ReviewCardExtraRatings from '../components/ReviewCardExtraRatings';
 
 export default function AddReviewPage() {
   const navigate = useNavigate();
@@ -27,7 +27,6 @@ export default function AddReviewPage() {
   const [page, setPage] = useState(1);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
-
 
   const columnOneCategories = [
     { id: 'location', label: 'Location' },
@@ -63,34 +62,35 @@ export default function AddReviewPage() {
   });
 
   const validatePage = () => {
-  if (page === 1) {
-    // Check if all columnOneCategories and columnTwoCategories are filled
-    const allFilled = [...columnOneCategories, ...columnTwoCategories].every(
-      (c) => rating[c.id] > 0
-    );
-    if (!allFilled) {
-      setSnackbarMessage('Please fill out all category ratings before continuing.');
-      setSnackbarOpen(true);
-      return false;
+    if (page === 1) {
+      // Check if all columnOneCategories and columnTwoCategories are filled
+      const allFilled = [...columnOneCategories, ...columnTwoCategories].every(
+        (c) => rating[c.id] > 0
+      );
+      if (!allFilled) {
+        setSnackbarMessage(
+          'Please fill out all category ratings before continuing.'
+        );
+        setSnackbarOpen(true);
+        return false;
+      }
     }
-  }
 
-  if (page === 2) {
-    if (rating.rating === 0) {
-      setSnackbarMessage('Please provide an overall rating.');
-      setSnackbarOpen(true);
-      return false;
+    if (page === 2) {
+      if (rating.rating === 0) {
+        setSnackbarMessage('Please provide an overall rating.');
+        setSnackbarOpen(true);
+        return false;
+      }
+      if (rating.content.length < 300) {
+        setSnackbarMessage('Your review must be at least 300 characters.');
+        setSnackbarOpen(true);
+        return false;
+      }
     }
-    if (rating.content.length < 300) {
-      setSnackbarMessage('Your review must be at least 300 characters.');
-      setSnackbarOpen(true);
-      return false;
-    }
-  }
 
-  return true;
-};
-
+    return true;
+  };
 
   const DateComponent = ({ rawDate }) => {
     const dateObj = parseISO(rawDate);
@@ -108,7 +108,7 @@ export default function AddReviewPage() {
   };
 
   const handleNext = () => {
-      if (!validatePage()) return;
+    if (!validatePage()) return;
     setPage(page + 1);
   };
 
@@ -483,6 +483,9 @@ export default function AddReviewPage() {
                     >
                       {rating.content}
                     </Typography>
+
+                    {/* Extra Ratings Preview */}
+                    <ReviewCardExtraRatings data={rating} />
                   </Paper>
                 </Box>
               </Box>
@@ -522,20 +525,19 @@ export default function AddReviewPage() {
         </Box>
       </Paper>
       <Snackbar
-      open={snackbarOpen}
-      autoHideDuration={3000}
-      onClose={() => setSnackbarOpen(false)}
-      anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-    >
-      <MuiAlert
+        open={snackbarOpen}
+        autoHideDuration={3000}
         onClose={() => setSnackbarOpen(false)}
-        severity="error"
-        sx={{ width: '100%' }}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
       >
-        {snackbarMessage}
-      </MuiAlert>
-    </Snackbar>
-
+        <MuiAlert
+          onClose={() => setSnackbarOpen(false)}
+          severity='error'
+          sx={{ width: '100%' }}
+        >
+          {snackbarMessage}
+        </MuiAlert>
+      </Snackbar>
     </Container>
   );
 }
