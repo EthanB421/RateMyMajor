@@ -127,6 +127,7 @@ const ExtraRatings = ({ data }) => {
         fontStyle='italic'
         fontFamily='Bebas Neue'
         variant='h4'
+        mb='.5em'
       >
         General Ratings
       </Typography>
@@ -156,12 +157,11 @@ const ExtraRatings = ({ data }) => {
               </Box>
 
               <Typography
-                variant='body1'
+                variant='h5'
+                fontFamily='Bebas Neue'
                 sx={{
                   flex: 1,
-                  fontWeight: 400,
                   color: '#333',
-                  fontSize: '16px',
                 }}
               >
                 {rating.label}
