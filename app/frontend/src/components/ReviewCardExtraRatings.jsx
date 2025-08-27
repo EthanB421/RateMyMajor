@@ -135,7 +135,7 @@ const ReviewCardExtraRatings = ({ data }) => {
 
       <Grid container spacing={1}>
         {availableRatings.map((rating, index) => (
-          <Grid size={6} key={index}>
+          <Grid size={{ xs: 12, md: 6 }} key={index}>
             <Box
               sx={{
                 display: 'flex',
