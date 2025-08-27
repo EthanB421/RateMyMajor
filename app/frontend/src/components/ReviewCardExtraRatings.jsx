@@ -14,7 +14,7 @@ import {
   Stairs,
 } from '@mui/icons-material';
 
-const ExtraRatings = ({ data }) => {
+const ReviewCardExtraRatings = ({ data }) => {
   // Safely get rating value or return null if undefined
   const getRatingValue = (rating) => {
     return rating != null ? Number(rating) : null;
@@ -60,52 +60,52 @@ const ExtraRatings = ({ data }) => {
     {
       icon: <EmojiPeople />,
       label: 'Faculty',
-      value: getRatingValue(data?.facultyRating), // Note: you might want to change this to a facilities rating if you have one
+      value: getRatingValue(data?.faculty), // Note: you might want to change this to a facilities rating if you have one
     },
     {
       icon: <LocationOn />,
       label: 'Location',
-      value: getRatingValue(data?.locationRating),
+      value: getRatingValue(data?.location),
     },
     {
       icon: <FitnessCenter />,
       label: 'Gym',
-      value: getRatingValue(data?.gymRating),
+      value: getRatingValue(data?.gym),
     },
     {
       icon: <School />,
       label: 'Classrooms',
-      value: getRatingValue(data?.classroomsRating),
+      value: getRatingValue(data?.classrooms),
     },
     {
       icon: <SentimentSatisfied />,
       label: 'Happiness',
-      value: getRatingValue(data?.happinessRating),
+      value: getRatingValue(data?.happiness),
     },
     {
       icon: <Restaurant />,
       label: 'Food',
-      value: getRatingValue(data?.foodRating),
+      value: getRatingValue(data?.food),
     },
     {
       icon: <Stairs />,
       label: 'Opportunities',
-      value: getRatingValue(data?.opportunitiesRating),
+      value: getRatingValue(data?.opportunities),
     },
     {
       icon: <SportsFootball />,
       label: 'Sports',
-      value: getRatingValue(data?.sportsRating),
+      value: getRatingValue(data?.sports),
     },
     {
       icon: <Security />,
       label: 'Safety',
-      value: getRatingValue(data?.safetyRating),
+      value: getRatingValue(data?.safety),
     },
     {
       icon: <Groups />,
       label: 'Community',
-      value: getRatingValue(data?.communityRating),
+      value: getRatingValue(data?.community),
     },
   ];
 
@@ -121,15 +121,16 @@ const ExtraRatings = ({ data }) => {
   }
 
   return (
-    <Box sx={{ p: '1em', maxWidth: 600 }}>
+    <Box sx={{ p: '1em' }}>
       <Typography
         textAlign='center'
         fontStyle='italic'
         fontFamily='Bebas Neue'
         variant='h4'
         mb='.5em'
+        fontSize={{ xs: '1.5rem', md: '2rem' }}
       >
-        General Ratings
+        Personal Ratings
       </Typography>
 
       <Grid container spacing={1}>
@@ -138,34 +139,34 @@ const ExtraRatings = ({ data }) => {
             <Box
               sx={{
                 display: 'flex',
-                justifyContent: 'center',
+                justifyContent: { xs: 'space-between', md: 'space-between' },
                 alignItems: 'center',
-                gap: '1em',
               }}
             >
               <Box
                 sx={{
                   display: 'flex',
                   alignItems: 'center',
-                  justifyContent: 'center',
+                  justifyContent: 'start',
                   width: 24,
                   height: 24,
                   color: '#333',
+                  gap: '1em',
                 }}
               >
                 {rating.icon}
+                <Typography
+                  variant='h5'
+                  fontFamily='Bebas Neue'
+                  sx={{
+                    flex: 1,
+                    color: '#333',
+                    fontSize: { xs: '1.2rem', sm: '1.4rem', md: '1.7rem' },
+                  }}
+                >
+                  {rating.label}
+                </Typography>
               </Box>
-
-              <Typography
-                variant='h5'
-                fontFamily='Bebas Neue'
-                sx={{
-                  flex: 1,
-                  color: '#333',
-                }}
-              >
-                {rating.label}
-              </Typography>
 
               <Box
                 sx={{
@@ -173,8 +174,8 @@ const ExtraRatings = ({ data }) => {
                   color: rating.value != null ? '#333' : '#666',
                   fontWeight: 'bold',
                   fontSize: '18px',
-                  px: 2,
-                  py: 0.5,
+                  px: { xs: '1', md: '2' },
+                  py: { xs: '0', md: '0.5' },
                   borderRadius: 1,
                   minWidth: 50,
                   textAlign: 'center',
@@ -190,4 +191,4 @@ const ExtraRatings = ({ data }) => {
   );
 };
 
-export default ExtraRatings;
+export default ReviewCardExtraRatings;
