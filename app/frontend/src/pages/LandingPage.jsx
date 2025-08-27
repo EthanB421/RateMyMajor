@@ -213,7 +213,7 @@ export default function LandingPage() {
                   alt='Test Image'
                   sx={{
                     height: 'auto',
-                    width: { xs: '50%', sm: '40%', md: '75%' },
+                    width: { xs: '50%', sm: '40%', md: '80%' },
                     maxWidth: '100%',
                     order: { xs: 1, md: 2 },
                   }}

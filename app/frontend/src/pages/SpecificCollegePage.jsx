@@ -34,9 +34,9 @@ export default function SpecificCollegePage() {
   const [error, setError] = useState('');
   const chartTitles = [
     'Average Salary After Graduating',
-    'Cost Breakdown',
-    'Demographics',
-    'Repayment Rates By Family Income',
+    'Cost Breakdown Per Year',
+    'Student Demographics',
+    'Percentage Of Debts Paid Per Income Level',
   ];
   const [chartPage, setChartPage] = useState(1);
   const charts = [
@@ -221,29 +221,20 @@ export default function SpecificCollegePage() {
                 >
                   {college.name}
                 </Typography>
-                <Box>
-                  <LinearProgress
-                    variant='determinate'
-                    value={college.wouldRecommend}
-                    sx={{
-                      height: '1em',
-                      borderRadius: '15px',
-                      mb: '1em',
-                      p: '1em',
-                    }}
+                <Box
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}
+                >
+                  <StyledRating
+                    name='college-rating'
+                    defaultValue={college.rating}
+                    readOnly
+                    size='large'
                   />
-                  <Typography
-                    variant='body2'
-                    textAlign='center'
-                    sx={{
-                      fontFamily: 'Bebas Neue, sans-serif',
-                      fontWeight: 100,
-                      fontSize: '1.3rem',
-                    }}
-                  >
-                    {college.wouldRecommend}% of reviewers rated this college 3
-                    or higher.
-                  </Typography>
 
                   {/* Chart Container */}
                   <Box
