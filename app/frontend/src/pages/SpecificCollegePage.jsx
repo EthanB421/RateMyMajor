@@ -8,6 +8,7 @@ import { format, parseISO } from 'date-fns';
 import CollegeEarningsChart from '../components/CollegeEarningsChart';
 import DemographicChart from '../components/DemographicChart';
 import ExtraRatings from '../components/ExtraRatings';
+import ReviewCardExtraRatings from '../components/ReviewCardExtraRatings';
 import { motion, AnimatePresence } from 'framer-motion';
 import CircularProgress from '@mui/material/CircularProgress';
 
@@ -130,6 +131,7 @@ export default function SpecificCollegePage() {
 
         const data = await response.json();
         console.log('Fetched college data:', data);
+        console.log('Review data: ', data.reviews);
 
         setCollege(data);
       } catch (err) {
@@ -678,6 +680,9 @@ export default function SpecificCollegePage() {
                     >
                       {review.content}
                     </Typography>
+
+                    {/* Review Card Extra Ratings */}
+                    <ReviewCardExtraRatings data={review} />
                   </Paper>
                 ))
               )}
