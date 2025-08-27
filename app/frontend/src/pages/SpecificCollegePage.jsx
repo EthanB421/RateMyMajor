@@ -245,309 +245,315 @@ export default function SpecificCollegePage() {
                     or higher.
                   </Typography>
 
-                  {/* College stats container */}
+                  {/* Chart Container */}
                   <Box
                     sx={{
                       display: 'flex',
-                      flexDirection: 'row',
-                      justifyContent: 'space-evenly',
+                      flexDirection: 'column',
+                      width: '100%',
                       alignItems: 'center',
-                      mt: { xs: '1em', md: '3em' },
-                      mb: { xs: ' 1em', md: 0 },
+                      justifyContent: 'center',
+                      mt: '1.5em',
                     }}
                   >
-                    <Box
+                    <Paper
+                      elevation={3}
                       sx={{
                         display: 'flex',
                         flexDirection: 'column',
+                        width: '100%',
+                        borderRadius: '15px',
+                        maxWidth: '650px',
+                        mx: 'auto',
+                        height: '500px',
                         alignItems: 'center',
+                        justifyContent: 'center',
+                        p: 2,
+                        gap: '1.5em',
                       }}
                     >
                       <Typography
                         sx={{
-                          fontFamily: 'Bebas Neue, sans-serif',
-                          fontWeight: 600,
-                          fontSize: {
-                            xs: '1rem',
-                            sm: '1.4rem',
-                            md: '1.3rem',
+                          textAlign: {
+                            xs: 'center',
+                            md: 'center',
                           },
-                          borderBottom: '3px solid #4357b2',
                         }}
+                        variant='h5'
                       >
-                        {' '}
-                        Average Price Per Year{' '}
+                        {chartTitles[chartPage - 1]}
                       </Typography>
-                      <Typography
-                        sx={{
-                          fontFamily: 'Bebas Neue, sans-serif',
-                          fontWeight: 600,
-                          textAlign: 'center',
+                      <AnimatePresence mode='wait'>
+                        <motion.div
+                          key={chartPage}
+                          variants={chartVariants}
+                          initial='initial'
+                          animate='animate'
+                          exit='exit'
+                          transition={{ duration: 0.4 }}
+                          style={{
+                            height: '300px',
+                            width: '500px',
+                          }}
+                        >
+                          {charts[chartPage - 1]}
+                        </motion.div>
+                      </AnimatePresence>
 
-                          fontSize: {
-                            xs: '1rem',
-                            sm: '1.4rem',
-                            md: '1.3rem',
-                          },
-                        }}
-                      >
-                        $
-                        {collegeChartData?.[
-                          'latest.cost.attendance.academic_year'
-                        ]?.toLocaleString() || 'N/A'}
-                      </Typography>
-                      <Typography
+                      <Pagination
+                        count={charts.length}
+                        page={chartPage}
+                        onChange={(e, value) => setChartPage(value)}
                         sx={{
-                          fontFamily: 'Bebas Neue, sans-serif',
-                          fontWeight: 600,
-                          textAlign: 'center',
-                          fontSize: {
-                            xs: '1rem',
-                            sm: '1.4rem',
-                            md: '1.3rem',
-                          },
-                          borderBottom: '3px solid #4357b2',
+                          display: 'flex',
+                          justifyContent: 'center',
                         }}
-                      >
-                        {' '}
-                        In-State Tuition Fees{' '}
-                      </Typography>
-                      <Typography
-                        sx={{
-                          fontFamily: 'Bebas Neue, sans-serif',
-                          fontWeight: 600,
-                          textAlign: 'center',
-
-                          fontSize: {
-                            xs: '1rem',
-                            sm: '1.4rem',
-                            md: '1.3rem',
-                          },
-                        }}
-                      >
-                        $
-                        {collegeChartData?.[
-                          'latest.cost.tuition.in_state'
-                        ]?.toLocaleString() || 'N/A'}
-                      </Typography>
-                      <Typography
-                        sx={{
-                          fontFamily: 'Bebas Neue, sans-serif',
-                          fontWeight: 600,
-                          textAlign: 'center',
-
-                          fontSize: {
-                            xs: '1rem',
-                            sm: '1.4rem',
-                            md: '1.3rem',
-                          },
-                          borderBottom: '3px solid #4357b2',
-                        }}
-                      >
-                        {' '}
-                        Out-Of-State Tutition Fees{' '}
-                      </Typography>
-                      <Typography
-                        sx={{
-                          fontFamily: 'Bebas Neue, sans-serif',
-                          fontWeight: 600,
-                          textAlign: 'center',
-
-                          fontSize: {
-                            xs: '1rem',
-                            sm: '1.4rem',
-                            md: '1.3rem',
-                          },
-                        }}
-                      >
-                        $
-                        {collegeChartData?.[
-                          'latest.cost.tuition.out_of_state'
-                        ]?.toLocaleString() || 'N/A'}
-                      </Typography>
-                    </Box>
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                      }}
-                    >
-                      <Typography
-                        sx={{
-                          fontFamily: 'Bebas Neue, sans-serif',
-                          fontWeight: 600,
-                          fontSize: {
-                            xs: '1rem',
-                            sm: '1.4rem',
-                            md: '1.3rem',
-                          },
-                          borderBottom: '3px solid #4357b2',
-                        }}
-                      >
-                        {' '}
-                        Admission Rate{' '}
-                      </Typography>
-                      <Typography
-                        sx={{
-                          fontFamily: 'Bebas Neue, sans-serif',
-                          fontWeight: 600,
-                          fontSize: {
-                            xs: '1rem',
-                            sm: '1.4rem',
-                            md: '1.3rem',
-                          },
-                        }}
-                      >
-                        {collegeChartData?.[
-                          'latest.admissions.admission_rate_suppressed.overall'
-                        ]?.toLocaleString('en-US', { style: 'percent' }) ||
-                          'N/A'}
-                      </Typography>
-                      <Typography
-                        sx={{
-                          fontFamily: 'Bebas Neue, sans-serif',
-                          fontWeight: 600,
-                          fontSize: {
-                            xs: '1rem',
-                            sm: '1.4rem',
-                            md: '1.3rem',
-                          },
-                          borderBottom: '3px solid #4357b2',
-                          textAlign: 'center',
-                        }}
-                      >
-                        {' '}
-                        Federal Loan Recievement Rate{' '}
-                      </Typography>
-                      <Typography
-                        sx={{
-                          fontFamily: 'Bebas Neue, sans-serif',
-                          fontWeight: 600,
-                          fontSize: {
-                            xs: '1rem',
-                            sm: '1.4rem',
-                            md: '1.3rem',
-                          },
-                        }}
-                      >
-                        {collegeChartData?.[
-                          'latest.aid.federal_loan_rate'
-                        ]?.toLocaleString('en-US', { style: 'percent' }) ||
-                          'N/A'}
-                      </Typography>
-                      <Typography
-                        sx={{
-                          fontFamily: 'Bebas Neue, sans-serif',
-                          fontWeight: 600,
-                          fontSize: {
-                            xs: '1rem',
-                            sm: '1.4rem',
-                            md: '1.3rem',
-                          },
-                          borderBottom: '3px solid #4357b2',
-                        }}
-                      >
-                        {' '}
-                        Total Undergrad Enrollment{' '}
-                      </Typography>
-                      <Typography
-                        sx={{
-                          fontFamily: 'Bebas Neue, sans-serif',
-                          fontWeight: 600,
-                          fontSize: {
-                            xs: '1rem',
-                            sm: '1.4rem',
-                            md: '1.3rem',
-                          },
-                        }}
-                      >
-                        {collegeChartData?.[
-                          'latest.student.size'
-                        ]?.toLocaleString() || 'N/A'}
-                      </Typography>
-                    </Box>{' '}
+                      />
+                    </Paper>
                   </Box>
                 </Box>
               </Box>
-              Extra ratings
-              <ExtraRatings data={college} />
-              {/* Description block */}
-              <Box
-                sx={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  width: '100%',
-                  gap: '2em',
-                }}
-              ></Box>
             </Box>
-
-            {/* Chart Container */}
             <Box
               sx={{
                 display: 'flex',
-                flexDirection: 'column',
                 width: '100%',
+                flexDirection: 'column',
+                justifyContent: 'space-evenly',
                 alignItems: 'center',
-                justifyContent: 'center',
-                gap: '2em',
               }}
             >
-              <Paper
-                elevation={3}
+              <ExtraRatings data={college} />
+              {/* College stats container */}
+              <Typography
+                textAlign='center'
+                fontStyle='italic'
+                fontFamily='Bebas Neue'
+                variant='h4'
+              >
+                General Information
+              </Typography>
+              <Box
                 sx={{
                   display: 'flex',
-                  flexDirection: 'column',
-                  width: '100%',
-                  borderRadius: '15px',
-                  maxWidth: '650px',
-                  mx: 'auto',
-                  height: '500px',
+                  flexDirection: 'row',
+                  gap: '3em',
                   alignItems: 'center',
-                  justifyContent: 'center',
-                  p: 3,
-                  gap: '1.5em',
+                  // mt: { xs: '1em', md: '3em' },
+                  // mb: { xs: ' 1em', md: 0 },
                 }}
               >
-                <Typography
-                  sx={{
-                    textAlign: {
-                      xs: 'center',
-                      md: 'center',
-                    },
-                  }}
-                  variant='h5'
-                >
-                  {chartTitles[chartPage - 1]}
-                </Typography>
-                <AnimatePresence mode='wait'>
-                  <motion.div
-                    key={chartPage}
-                    variants={chartVariants}
-                    initial='initial'
-                    animate='animate'
-                    exit='exit'
-                    transition={{ duration: 0.4 }}
-                    style={{
-                      height: '300px',
-                      width: '500px',
-                    }}
-                  >
-                    {charts[chartPage - 1]}
-                  </motion.div>
-                </AnimatePresence>
-
-                <Pagination
-                  count={charts.length}
-                  page={chartPage}
-                  onChange={(e, value) => setChartPage(value)}
+                <Box
                   sx={{
                     display: 'flex',
-                    justifyContent: 'center',
+                    flexDirection: 'column',
+                    alignItems: 'center',
                   }}
-                />
-              </Paper>
+                >
+                  <Typography
+                    sx={{
+                      fontFamily: 'Bebas Neue, sans-serif',
+                      fontWeight: 600,
+                      fontSize: {
+                        xs: '1rem',
+                        sm: '1.4rem',
+                        md: '1.3rem',
+                      },
+                      borderBottom: '3px solid #4357b2',
+                    }}
+                  >
+                    {' '}
+                    Average Price Per Year{' '}
+                  </Typography>
+                  <Typography
+                    sx={{
+                      fontFamily: 'Bebas Neue, sans-serif',
+                      fontWeight: 600,
+                      textAlign: 'center',
+
+                      fontSize: {
+                        xs: '1rem',
+                        sm: '1.4rem',
+                        md: '1.3rem',
+                      },
+                    }}
+                  >
+                    $
+                    {collegeChartData?.[
+                      'latest.cost.attendance.academic_year'
+                    ]?.toLocaleString() || 'N/A'}
+                  </Typography>
+                  <Typography
+                    sx={{
+                      fontFamily: 'Bebas Neue, sans-serif',
+                      fontWeight: 600,
+                      textAlign: 'center',
+                      fontSize: {
+                        xs: '1rem',
+                        sm: '1.4rem',
+                        md: '1.3rem',
+                      },
+                      borderBottom: '3px solid #4357b2',
+                    }}
+                  >
+                    {' '}
+                    In-State Tuition Fees{' '}
+                  </Typography>
+                  <Typography
+                    sx={{
+                      fontFamily: 'Bebas Neue, sans-serif',
+                      fontWeight: 600,
+                      textAlign: 'center',
+
+                      fontSize: {
+                        xs: '1rem',
+                        sm: '1.4rem',
+                        md: '1.3rem',
+                      },
+                    }}
+                  >
+                    $
+                    {collegeChartData?.[
+                      'latest.cost.tuition.in_state'
+                    ]?.toLocaleString() || 'N/A'}
+                  </Typography>
+                  <Typography
+                    sx={{
+                      fontFamily: 'Bebas Neue, sans-serif',
+                      fontWeight: 600,
+                      textAlign: 'center',
+
+                      fontSize: {
+                        xs: '1rem',
+                        sm: '1.4rem',
+                        md: '1.3rem',
+                      },
+                      borderBottom: '3px solid #4357b2',
+                    }}
+                  >
+                    {' '}
+                    Out-Of-State Tutition Fees{' '}
+                  </Typography>
+                  <Typography
+                    sx={{
+                      fontFamily: 'Bebas Neue, sans-serif',
+                      fontWeight: 600,
+                      textAlign: 'center',
+
+                      fontSize: {
+                        xs: '1rem',
+                        sm: '1.4rem',
+                        md: '1.3rem',
+                      },
+                    }}
+                  >
+                    $
+                    {collegeChartData?.[
+                      'latest.cost.tuition.out_of_state'
+                    ]?.toLocaleString() || 'N/A'}
+                  </Typography>
+                </Box>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                  }}
+                >
+                  <Typography
+                    sx={{
+                      fontFamily: 'Bebas Neue, sans-serif',
+                      fontWeight: 600,
+                      fontSize: {
+                        xs: '1rem',
+                        sm: '1.4rem',
+                        md: '1.3rem',
+                      },
+                      borderBottom: '3px solid #4357b2',
+                    }}
+                  >
+                    {' '}
+                    Admission Rate{' '}
+                  </Typography>
+                  <Typography
+                    sx={{
+                      fontFamily: 'Bebas Neue, sans-serif',
+                      fontWeight: 600,
+                      fontSize: {
+                        xs: '1rem',
+                        sm: '1.4rem',
+                        md: '1.3rem',
+                      },
+                    }}
+                  >
+                    {collegeChartData?.[
+                      'latest.admissions.admission_rate_suppressed.overall'
+                    ]?.toLocaleString('en-US', { style: 'percent' }) || 'N/A'}
+                  </Typography>
+                  <Typography
+                    sx={{
+                      fontFamily: 'Bebas Neue, sans-serif',
+                      fontWeight: 600,
+                      fontSize: {
+                        xs: '1rem',
+                        sm: '1.4rem',
+                        md: '1.3rem',
+                      },
+                      borderBottom: '3px solid #4357b2',
+                      textAlign: 'center',
+                    }}
+                  >
+                    {' '}
+                    Federal Loan Recievement Rate{' '}
+                  </Typography>
+                  <Typography
+                    sx={{
+                      fontFamily: 'Bebas Neue, sans-serif',
+                      fontWeight: 600,
+                      fontSize: {
+                        xs: '1rem',
+                        sm: '1.4rem',
+                        md: '1.3rem',
+                      },
+                    }}
+                  >
+                    {collegeChartData?.[
+                      'latest.aid.federal_loan_rate'
+                    ]?.toLocaleString('en-US', { style: 'percent' }) || 'N/A'}
+                  </Typography>
+                  <Typography
+                    sx={{
+                      fontFamily: 'Bebas Neue, sans-serif',
+                      fontWeight: 600,
+                      fontSize: {
+                        xs: '1rem',
+                        sm: '1.4rem',
+                        md: '1.3rem',
+                      },
+                      borderBottom: '3px solid #4357b2',
+                    }}
+                  >
+                    {' '}
+                    Total Undergrad Enrollment{' '}
+                  </Typography>
+                  <Typography
+                    sx={{
+                      fontFamily: 'Bebas Neue, sans-serif',
+                      fontWeight: 600,
+                      fontSize: {
+                        xs: '1rem',
+                        sm: '1.4rem',
+                        md: '1.3rem',
+                      },
+                    }}
+                  >
+                    {collegeChartData?.[
+                      'latest.student.size'
+                    ]?.toLocaleString() || 'N/A'}
+                  </Typography>
+                </Box>{' '}
+              </Box>
+              {/* Add a review button */}
               <Button
                 component={Link}
                 to={`/college/add-review/${college.id}`}
