@@ -2,6 +2,7 @@ import { Typography, Box, Paper, Container, Button } from '@mui/material';
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import CircularProgress from '@mui/material/CircularProgress';
+import ReviewCardExtraRatings from '../components/ReviewCardExtraRatings';
 
 export default function MyReviewsPage() {
   const [reviews, setReviews] = useState(null);
@@ -83,7 +84,7 @@ export default function MyReviewsPage() {
   if (!reviews) return <Typography>No reviews found.</Typography>;
 
   return (
-    <Container maxWidth='md'>
+    <Container maxWidth='lg'>
       <Paper
         sx={{
           display: 'flex',
@@ -111,15 +112,15 @@ export default function MyReviewsPage() {
               <Paper
                 key={review.id}
                 sx={{
-                  p: 2,
-                  mb: 2,
+                  p: '2em',
+                  mb: '1em',
                   whiteSpace: 'pre-wrap',
                   wordBreak: 'break-word',
                 }}
               >
                 <Box
                   display='flex'
-                  flexDirection='row'
+                  flexDirection='column'
                   justifyContent='space-between'
                   alignItems='center'
                   gap='1em'
@@ -136,7 +137,9 @@ export default function MyReviewsPage() {
                     <Typography variant='body2' display='block'>
                       {new Date(review.createdAt).toLocaleDateString()}
                     </Typography>
+                    <ReviewCardExtraRatings data={review} />
                   </Box>
+
                   <Button
                     variant='contained'
                     sx={{ width: '15%', height: '3em' }}
