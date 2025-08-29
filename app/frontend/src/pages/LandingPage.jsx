@@ -23,9 +23,10 @@ export default function LandingPage() {
   const [currentImage, setCurrentImage] = useState(0);
 
   const imageList = [
-    'src/images/landingTest.png',
-    'src/images/landingTest2.png',
-    'src/images/landingTest3.png',
+    'src/images/costChart.png',
+    'src/images/demographics.png',
+    'src/images/earningsChart.png',
+    'src/images/repaymentGauge.png',
   ];
 
   useEffect(() => {
@@ -66,7 +67,7 @@ export default function LandingPage() {
       <Searchbar />
 
       {/* Preview section */}
-      <Container disableGutters maxWidth='xl' sx={{ p: '3em' }}>
+      <Container disableGutters maxWidth='xl' sx={{ p: '3em',}}>
         <Box
           sx={{
             display: 'flex',
@@ -213,7 +214,7 @@ export default function LandingPage() {
                   alt='Test Image'
                   sx={{
                     height: 'auto',
-                    width: { xs: '50%', sm: '40%', md: '80%' },
+                    width: { xs: '50%', sm: '40%', md: '75%' },
                     maxWidth: '100%',
                     order: { xs: 1, md: 2 },
                   }}

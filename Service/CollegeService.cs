@@ -51,6 +51,7 @@ public class CollegeService : ICollegeService
         if (college == null)
             return null;
 
+        college.Reviews = college.Reviews.OrderByDescending(r => r.CreatedAt).ToList();
         var reviewIds = college.Reviews.Select(r => r.Id).ToList();
 
         var voteSums = await _unitOfWork.Vote.GetVoteSumByReviewAsync(reviewIds);

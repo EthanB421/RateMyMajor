@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState, useEffect } from 'react';
 
 const AuthContext = createContext();
 
@@ -19,6 +19,14 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem('authToken');
     setUser(null);
   };
+    useEffect(() => {
+    const interval = setInterval(() => {
+      const token = localStorage.getItem("authToken");
+      if (!token && user) logout(); // auto-clear user if token disappears
+    },[]); //check every hour
+
+    return () => clearInterval(interval);
+  }, [user]);
 
   return (
     <AuthContext.Provider value={{ user, login, logout }}>
