@@ -2,7 +2,7 @@ import { Typography, Box, Paper, Container, Button } from '@mui/material';
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import CircularProgress from '@mui/material/CircularProgress';
-import ReviewCardExtraRatings from '../components/ReviewCardExtraRatings';
+import AnotherReviewCardRating from '../components/AnotherReviewCardRating';
 
 export default function MyReviewsPage() {
   const [reviews, setReviews] = useState(null);
@@ -137,7 +137,7 @@ export default function MyReviewsPage() {
                     <Typography variant='body2' display='block'>
                       {new Date(review.createdAt).toLocaleDateString()}
                     </Typography>
-                    <ReviewCardExtraRatings data={review} />
+                    <AnotherReviewCardRating data={review} />
                   </Box>
 
                   <Button

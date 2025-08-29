@@ -188,14 +188,6 @@ export default function Searchbar() {
                   <Button
                     fullWidth
                     onClick={() => {
-                      navigate(`/`);
-                    }}
-                  >
-                    Add your college
-                  </Button>
-                  <Button
-                    fullWidth
-                    onClick={() => {
                       navigate('/college');
                     }}
                   >
@@ -244,14 +236,6 @@ export default function Searchbar() {
                   justifyContent='space-evenly'
                   alignItems='center'
                 >
-                  <Button
-                    fullWidth
-                    onClick={() => {
-                      navigate(`/`);
-                    }}
-                  >
-                    Add your college
-                  </Button>
                   <Button
                     fullWidth
                     onClick={() => {
