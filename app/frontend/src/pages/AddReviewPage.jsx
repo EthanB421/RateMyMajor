@@ -63,7 +63,7 @@ export default function AddReviewPage() {
 
   const validatePage = () => {
     if (page === 1) {
-      // Check if all columnOneCategories and columnTwoCategories are filled
+      //Check if all columnOneCategories and columnTwoCategories are filled
       const allFilled = [...columnOneCategories, ...columnTwoCategories].every(
         (c) => rating[c.id] > 0
       );

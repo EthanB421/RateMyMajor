@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Typography, Grid } from '@mui/material';
+import { Box, Typography, Grid, useMediaQuery, useTheme } from '@mui/material';
 import {
   LocationOn,
   Restaurant,
@@ -13,17 +13,20 @@ import {
   SportsFootball,
   Stairs,
 } from '@mui/icons-material';
+import LinearProgress from '@mui/material/LinearProgress';
+
 
 const ReviewCardExtraRatings = ({ data }) => {
   // Safely get rating value or return null if undefined
   const getRatingValue = (rating) => {
     return rating != null ? Number(rating) : null;
   };
+  const isSmallScreen = useMediaQuery('(max-width:1200px) and (max-height:1128px)');
+
 
   const getRatingColor = (rating) => {
-    if (rating == null) return '#e0e0e0'; // Gray for undefined ratings
+    if (rating == null) return '#e0e0e0'; 
 
-    // Convert rating to a scale for color calculation
     const normalizedRating = Math.max(0, Math.min(5, rating)) / 5;
 
     // Color stops similar to the image - mint green for high ratings
@@ -166,8 +169,8 @@ const ReviewCardExtraRatings = ({ data }) => {
                   {rating.label}
                 </Typography>
               </Box>
-
-              <Box
+              {isSmallScreen ? (
+                 <Box
                 sx={{
                   backgroundColor: getRatingColor(rating.value),
                   color: rating.value != null ? '#333' : '#666',
@@ -181,7 +184,32 @@ const ReviewCardExtraRatings = ({ data }) => {
                 }}
               >
                 {rating.value != null ? rating.value.toFixed(1) : 'N/A'}
+              </Box> 
+              ) : (
+                                  <Box display="flex" alignItems="center" gap={2} sx={{ minWidth: 300}}>
+                <LinearProgress
+                  variant="determinate"
+                  value={rating.value ? (rating.value / 5) * 100 : 0}
+                  sx={{
+                    flexGrow: 1, // makes bar take remaining width
+                    height: 12,
+                    borderRadius: 1,
+                    backgroundColor: "#f7f7f7ed",
+                    "& .MuiLinearProgress-bar": {
+                      borderRadius: 1,
+                      backgroundColor: getRatingColor(rating.value),
+                    },
+                  }}
+                />
+                <Typography
+                  variant="h5"
+                  sx={{ minWidth: 40, textAlign: "right", fontWeight: "bold" }}
+                >
+                  {rating.value?.toFixed(1) ?? "0.0"}
+                </Typography>
               </Box>
+
+              )}
             </Box>
           </Grid>
         ))}
