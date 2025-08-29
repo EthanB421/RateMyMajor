@@ -15,6 +15,7 @@ import ScrollTop from './components/ScrollTop';
 import './styles/index.css';
 import { createTheme, ThemeProvider } from '@mui/material';
 import { AuthProvider } from './pages/AuthContext';
+import { useEffect } from 'react';
 
 const theme = createTheme({
   palette: {
@@ -34,6 +35,31 @@ const theme = createTheme({
 });
 
 function App() {
+    useEffect(() => {
+    let activityTimeout;
+
+    const resetTimer = () => {
+      clearTimeout(activityTimeout);
+
+      //Token will expire in 30 min from now
+      activityTimeout = setTimeout(() => {
+        localStorage.removeItem("authToken");
+      }, 60 * 60 * 1000); // hour
+    };
+
+    ["mousemove", "keydown", "scroll", "click"].forEach((event) =>
+      window.addEventListener(event, resetTimer)
+    );
+
+    resetTimer(); // Start timer on page load
+
+    return () => {
+      ["mousemove", "keydown", "scroll", "click"].forEach((event) =>
+        window.removeEventListener(event, resetTimer)
+      );
+      clearTimeout(activityTimeout);
+    };
+  }, []);
   return (
     <BrowserRouter>
       <ScrollTop />
@@ -57,7 +83,7 @@ function App() {
               />
               <Route path='privacy-policy' element={<PrivacyPolicyPage />} />
               <Route path='terms-of-service' element={<TermsOfServicePage />} />
-              <Route path='college/add-review' element={<AddReviewPage />} />
+              <Route path='college/add-review' ewelllement={<AddReviewPage />} />
               <Route path='/my-reviews' element={<MyReviewsPage />} />
             </Routes>
           </div>

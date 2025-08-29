@@ -11,6 +11,9 @@ import ExtraRatings from '../components/ExtraRatings';
 import ReviewCardExtraRatings from '../components/ReviewCardExtraRatings';
 import { motion, AnimatePresence } from 'framer-motion';
 import CircularProgress from '@mui/material/CircularProgress';
+import { Snackbar, Alert } from '@mui/material';
+import { useAuth } from '../pages/AuthContext'; // Make sure you have your AuthContext
+
 
 import {
   Container,
@@ -33,6 +36,9 @@ export default function SpecificCollegePage() {
   const [loading, setLoading] = useState(true);
   const [chartLoading, setChartLoading] = useState(true);
   const [error, setError] = useState('');
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const {user} = useAuth();
+  const [userVotes, setUserVotes] = useState({});
   const chartTitles = [
     'Average Salary After Graduating',
     'Cost Breakdown Per Year',
@@ -51,6 +57,9 @@ export default function SpecificCollegePage() {
     animate: { opacity: 1, y: 0 },
     exit: { opacity: 0, y: -20 },
   };
+  
+
+
 
   const StyledRating = styled(Rating)({
     '& .MuiRating-iconFilled': {
@@ -61,7 +70,6 @@ export default function SpecificCollegePage() {
     },
   });
 
-  const [userVotes, setUserVotes] = useState({});
 
   useEffect(() => {
     if (!college || !college.federalSchoolCode) return;
@@ -92,6 +100,10 @@ export default function SpecificCollegePage() {
   }, [college]);
 
   const handleVote = async (reviewId, value) => {
+    if (!user) {
+      setSnackbarOpen(true);
+      return;
+    }
     try {
       const response = await fetch(`http://localhost:5123/api/votes`, {
         method: 'POST',
@@ -540,7 +552,7 @@ export default function SpecificCollegePage() {
               </Box>
               {/* Add a review button */}
               <Button
-                component={Link}
+                component={user ? Link : 'button'}
                 to={`/college/add-review/${college.id}`}
                 fullWidth
                 // color='secondary'
@@ -549,6 +561,9 @@ export default function SpecificCollegePage() {
                   borderRadius: '15px',
                   p: '.5em',
                   mt: '2em',
+                }}
+                onClick={() => {
+                  if (!user) setSnackbarOpen(true);
                 }}
               >
                 Add a review
@@ -690,6 +705,20 @@ export default function SpecificCollegePage() {
           </Box>
         </Box>
       </Paper>
+            <Snackbar
+      open={snackbarOpen}
+      autoHideDuration={3000}
+      onClose={() => setSnackbarOpen(false)}
+      anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+    >
+      <Alert
+        onClose={() => setSnackbarOpen(false)}
+        severity="error"
+        sx={{ width: '100%' }}
+      >
+        You must be signed in to use this feature!
+      </Alert>
+    </Snackbar>
     </Container>
   );
 }
