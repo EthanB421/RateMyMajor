@@ -18,7 +18,7 @@ import { useParams } from 'react-router-dom';
 import RatingBar from '../components/RatingBar';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
-import ReviewCardExtraRatings from '../components/ReviewCardExtraRatings';
+import AnotherReviewCardRating from '../components/AnotherReviewCardRating';
 
 export default function AddReviewPage() {
   const navigate = useNavigate();
@@ -485,7 +485,7 @@ export default function AddReviewPage() {
                     </Typography>
 
                     {/* Extra Ratings Preview */}
-                    <ReviewCardExtraRatings data={rating} />
+                    <AnotherReviewCardRating data={rating} />
                   </Paper>
                 </Box>
               </Box>

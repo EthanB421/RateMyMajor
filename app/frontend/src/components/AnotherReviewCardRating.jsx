@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Typography, Grid, useMediaQuery, useTheme } from '@mui/material';
+import { Box, Typography, Grid } from '@mui/material';
 import {
   LocationOn,
   Restaurant,
@@ -13,20 +13,17 @@ import {
   SportsFootball,
   Stairs,
 } from '@mui/icons-material';
-import LinearProgress from '@mui/material/LinearProgress';
 
-const ReviewCardExtraRatings = ({ data }) => {
+const AnotherReviewCardRating = ({ data }) => {
   // Safely get rating value or return null if undefined
   const getRatingValue = (rating) => {
     return rating != null ? Number(rating) : null;
   };
-  const isSmallScreen = useMediaQuery(
-    '(max-width:1200px) and (max-height:1128px)'
-  );
 
   const getRatingColor = (rating) => {
-    if (rating == null) return '#e0e0e0';
+    if (rating == null) return '#e0e0e0'; // Gray for undefined ratings
 
+    // Convert rating to a scale for color calculation
     const normalizedRating = Math.max(0, Math.min(5, rating)) / 5;
 
     // Color stops similar to the image - mint green for high ratings
@@ -169,55 +166,22 @@ const ReviewCardExtraRatings = ({ data }) => {
                   {rating.label}
                 </Typography>
               </Box>
-              {isSmallScreen ? (
-                <Box
-                  sx={{
-                    backgroundColor: getRatingColor(rating.value),
-                    color: rating.value != null ? '#333' : '#666',
-                    fontWeight: 'bold',
-                    fontSize: '18px',
-                    px: { xs: '1', md: '2' },
-                    py: { xs: '0', md: '0.5' },
-                    borderRadius: 1,
-                    minWidth: 50,
-                    textAlign: 'center',
-                  }}
-                >
-                  {rating.value != null ? rating.value.toFixed(1) : 'N/A'}
-                </Box>
-              ) : (
-                <Box
-                  display='flex'
-                  alignItems='center'
-                  gap={2}
-                  sx={{ minWidth: 300 }}
-                >
-                  <LinearProgress
-                    variant='determinate'
-                    value={rating.value ? (rating.value / 5) * 100 : 0}
-                    sx={{
-                      flexGrow: 1, // makes bar take remaining width
-                      height: 12,
-                      borderRadius: 1,
-                      backgroundColor: '#f7f7f7ed',
-                      '& .MuiLinearProgress-bar': {
-                        borderRadius: 1,
-                        backgroundColor: getRatingColor(rating.value),
-                      },
-                    }}
-                  />
-                  <Typography
-                    variant='h5'
-                    sx={{
-                      minWidth: 40,
-                      textAlign: 'right',
-                      fontWeight: 'bold',
-                    }}
-                  >
-                    {rating.value?.toFixed(1) ?? '0.0'}
-                  </Typography>
-                </Box>
-              )}
+
+              <Box
+                sx={{
+                  backgroundColor: getRatingColor(rating.value),
+                  color: rating.value != null ? '#333' : '#666',
+                  fontWeight: 'bold',
+                  fontSize: '18px',
+                  px: { xs: '1', md: '2' },
+                  py: { xs: '0', md: '0.5' },
+                  borderRadius: 1,
+                  minWidth: 50,
+                  textAlign: 'center',
+                }}
+              >
+                {rating.value != null ? rating.value.toFixed(1) : 'N/A'}
+              </Box>
             </Box>
           </Grid>
         ))}
@@ -226,4 +190,4 @@ const ReviewCardExtraRatings = ({ data }) => {
   );
 };
 
-export default ReviewCardExtraRatings;
+export default AnotherReviewCardRating;
