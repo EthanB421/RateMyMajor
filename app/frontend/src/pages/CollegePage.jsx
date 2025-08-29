@@ -18,7 +18,6 @@ import { useState, useEffect } from 'react';
 import CircularProgress from '@mui/material/CircularProgress';
 import { motion, AnimatePresence } from 'framer-motion';
 
-
 export default function CollegePage() {
   const navigate = useNavigate();
   const [colleges, setColleges] = useState([]);
@@ -60,18 +59,19 @@ export default function CollegePage() {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1, rotate: 360 }}
-        transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+        transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
         style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "100vh",
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: '100vh',
         }}
       >
         <CircularProgress size={70} />
       </motion.div>
     );
-  }  if (error) return <Typography color='error'>{error}</Typography>;
+  }
+  if (error) return <Typography color='error'>{error}</Typography>;
   if (!colleges) return <Typography>No college found.</Typography>;
 
   const filteredColleges = colleges.filter((college) =>
@@ -215,18 +215,8 @@ export default function CollegePage() {
           variant='body1'
           sx={{ fontFamily: 'Raleway, Bebas Neue' }}
         >
-          Don't see your college? Add it{' '}
-          <Link
-            onClick={() => navigate('/')}
-            sx={{
-              '&:hover': {
-                cursor: 'pointer',
-              },
-            }}
-          >
-            here
-          </Link>
-          .
+          Don't see your college? Send us an email at{' '}
+          <Link>support@ratemycollege.com</Link>.
         </Typography>
       </Paper>
     </Container>

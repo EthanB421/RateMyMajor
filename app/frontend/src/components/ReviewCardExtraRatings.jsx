@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Typography, Grid, useMediaQuery, useTheme } from '@mui/material';
+import { Box, Typography, Grid, useMediaQuery } from '@mui/material';
 import {
   LocationOn,
   Restaurant,
