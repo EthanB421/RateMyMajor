@@ -19,6 +19,8 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function CollegePage() {
+  const API_BASE_URL = import.meta.env.VITE_API_URL;
+
   const navigate = useNavigate();
   const [colleges, setColleges] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -34,9 +36,7 @@ export default function CollegePage() {
   useEffect(() => {
     const fetchColleges = async () => {
       try {
-        const response = await fetch(
-          'http://localhost:5123/api/College/GetColleges'
-        );
+        const response = await fetch(`${API_BASE_URL}/api/College/GetColleges`);
 
         if (!response.ok) {
           throw new Error(`Status: ${response.status}`);

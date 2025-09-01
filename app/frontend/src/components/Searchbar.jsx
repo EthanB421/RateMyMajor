@@ -11,6 +11,8 @@ import { useNavigate } from 'react-router-dom';
 import landingPic from '../images/landingPic.jpg';
 
 export default function Searchbar() {
+  const API_BASE_URL = import.meta.env.VITE_API_URL;
+
   const [inputValue, setInputValue] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [showDropdown, setShowDropdown] = useState(false);
@@ -43,9 +45,7 @@ export default function Searchbar() {
   useEffect(() => {
     const fetchSearchResults = async () => {
       try {
-        const response = await fetch(
-          'http://localhost:5123/api/College/GetColleges'
-        );
+        const response = await fetch(`${API_BASE_URL}/api/College/GetColleges`);
 
         if (!response.ok) {
           throw new Error(`Status: ${response.status}`);

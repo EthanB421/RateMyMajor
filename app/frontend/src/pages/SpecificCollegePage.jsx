@@ -29,6 +29,8 @@ import RepaymentGauge from '../components/RepaymentGauge';
 import CostChart from '../components/CostChart';
 
 export default function SpecificCollegePage() {
+  const API_BASE_URL = import.meta.env.VITE_API_URL;
+
   const { specificCollege } = useParams(); // COLLEGE NAME FROM URL
   const [college, setCollege] = useState(null); // COLLEGE DATA FROM BACKEND
   const [collegeChartData, setCollegeChartData] = useState(null); // COLLEGE DATA FROM COLLEGE SCORECARD API
@@ -72,7 +74,7 @@ export default function SpecificCollegePage() {
     const fetchChartData = async () => {
       try {
         const response = await fetch(
-          `http://localhost:5123/api/CollegeScorecard/${college.federalSchoolCode}`
+          `${API_BASE_URL}/api/CollegeScorecard/${college.federalSchoolCode}`
         );
 
         if (!response.ok) {
@@ -100,7 +102,7 @@ export default function SpecificCollegePage() {
       return;
     }
     try {
-      const response = await fetch(`http://localhost:5123/api/votes`, {
+      const response = await fetch(`${API_BASE_URL}/api/votes`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -127,7 +129,7 @@ export default function SpecificCollegePage() {
     const fetchCollege = async () => {
       try {
         const response = await fetch(
-          `http://localhost:5123/api/college/search?keyword=${encodeURIComponent(
+          `${API_BASE_URL}/api/college/search?keyword=${encodeURIComponent(
             specificCollege.trim()
           )}`
         );

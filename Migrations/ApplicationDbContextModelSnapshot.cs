@@ -97,7 +97,7 @@ namespace RateMyMajor.Migrations
                         {
                             Id = "1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "ed2a5da4-6726-410c-b9fa-d215dfb20c4c",
+                            ConcurrencyStamp = "9d5856da-e650-4cfc-b573-2a382fcd1b46",
                             Email = "fugazy@gmail.com",
                             EmailConfirmed = true,
                             FirstName = "Ethan",
@@ -107,7 +107,7 @@ namespace RateMyMajor.Migrations
                             NormalizedUserName = "ETHANBAUTISTA",
                             PasswordHash = "hashed-password-here",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "3522f5fe-dc80-4c67-8d85-52a2fdd9f6af",
+                            SecurityStamp = "bebfa240-fed3-415e-9524-e88022bae671",
                             TwoFactorEnabled = false,
                             UserName = "ethanbautista"
                         });
@@ -246,7 +246,7 @@ namespace RateMyMajor.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("RateMyMajor.Models.Major", b =>
+            modelBuilder.Entity("RateMyMajor.Models.College", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -254,42 +254,1855 @@ namespace RateMyMajor.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<double>("ClassroomsRating")
+                        .HasColumnType("float");
+
+                    b.Property<double>("CommunityRating")
+                        .HasColumnType("float");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("FacultyRating")
+                        .HasColumnType("float");
+
+                    b.Property<string>("FederalSchoolCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("FoodRating")
+                        .HasColumnType("float");
+
+                    b.Property<double>("GymRating")
+                        .HasColumnType("float");
+
+                    b.Property<double>("HappinessRating")
+                        .HasColumnType("float");
+
+                    b.Property<double>("LocationRating")
+                        .HasColumnType("float");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Rating")
-                        .HasColumnType("int");
+                    b.Property<double>("OpportunitiesRating")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Rating")
+                        .HasColumnType("float");
+
+                    b.Property<double>("SafetyRating")
+                        .HasColumnType("float");
+
+                    b.Property<double>("SportsRating")
+                        .HasColumnType("float");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Major");
+                    b.ToTable("College");
 
                     b.HasData(
                         new
                         {
                             Id = 1,
-                            Description = "Its cooked",
-                            Name = "Computer Science",
-                            Rating = 1
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Public flagship research university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "001312",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "University of California, Berkeley (UC Berkeley)",
+                            OpportunitiesRating = 0.0,
+                            Rating = 5.0,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
                         },
                         new
                         {
                             Id = 2,
-                            Description = "You must be smart",
-                            Name = "Neuroscience",
-                            Rating = 1
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Public flagship research university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "001315",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "University of California, Los Angeles (UCLA)",
+                            OpportunitiesRating = 0.0,
+                            Rating = 5.0,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
                         },
                         new
                         {
                             Id = 3,
-                            Description = "Job market is always good",
-                            Name = "Nursing",
-                            Rating = 1
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Public flagship research university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "001317",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "University of California, San Diego (UCSD)",
+                            OpportunitiesRating = 0.0,
+                            Rating = 5.0,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 4,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Public research university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "001314",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "University of California, Irvine (UCI)",
+                            OpportunitiesRating = 0.0,
+                            Rating = 5.0,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 5,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Public research university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "001313",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "University of California, Davis (UC Davis)",
+                            OpportunitiesRating = 0.0,
+                            Rating = 4.5,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 6,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Public research university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "001320",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "University of California, Santa Barbara (UCSB)",
+                            OpportunitiesRating = 0.0,
+                            Rating = 4.5,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 7,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Public research university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "001321",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "University of California, Santa Cruz (UCSC)",
+                            OpportunitiesRating = 0.0,
+                            Rating = 4.5,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 8,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Public research university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "001316",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "University of California, Riverside (UCR)",
+                            OpportunitiesRating = 0.0,
+                            Rating = 4.0,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 9,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Public research university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "041271",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "University of California, Merced (UC Merced)",
+                            OpportunitiesRating = 0.0,
+                            Rating = 4.0,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 10,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Public polytechnic university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "001141",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "California Polytechnic State University, San Luis Obispo (Cal Poly SLO)",
+                            OpportunitiesRating = 0.0,
+                            Rating = 5.0,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 11,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Public research university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "001151",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "California State University, San Diego (SDSU)",
+                            OpportunitiesRating = 0.0,
+                            Rating = 4.5,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 12,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Public research university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "001139",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "California State University, Long Beach (CSULB)",
+                            OpportunitiesRating = 0.0,
+                            Rating = 4.5,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 13,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Public polytechnic university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "001144",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "California State Polytechnic University, Pomona (Cal Poly Pomona)",
+                            OpportunitiesRating = 0.0,
+                            Rating = 4.0,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 14,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Public research university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "001137",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "California State University, Fullerton (CSUF)",
+                            OpportunitiesRating = 0.0,
+                            Rating = 4.0,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 15,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Public research university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "001140",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "California State University, Los Angeles (CSULA)",
+                            OpportunitiesRating = 0.0,
+                            Rating = 4.0,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 16,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Public research university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "001153",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "California State University, Northridge (CSUN)",
+                            OpportunitiesRating = 0.0,
+                            Rating = 4.0,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 17,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Public research university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "001142",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "California State University, San Bernardino (CSUSB)",
+                            OpportunitiesRating = 0.0,
+                            Rating = 4.0,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 18,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Public research university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "007993",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "California State University, Bakersfield (CSUB)",
+                            OpportunitiesRating = 0.0,
+                            Rating = 4.0,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 19,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Public research university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "039803",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "California State University, Channel Islands (CSUCI)",
+                            OpportunitiesRating = 0.0,
+                            Rating = 4.0,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 20,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Public research university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "001141",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "California State University, Dominguez Hills (CSUDH)",
+                            OpportunitiesRating = 0.0,
+                            Rating = 4.0,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 21,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Public research university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "030113",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "California State University, San Marcos (CSUSM)",
+                            OpportunitiesRating = 0.0,
+                            Rating = 4.0,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 22,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Public research university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "001157",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "California State University, Stanislaus (CSU Stanislaus)",
+                            OpportunitiesRating = 0.0,
+                            Rating = 4.0,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 23,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Public research university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "001150",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "California State University, Sacramento (Sac State)",
+                            OpportunitiesRating = 0.0,
+                            Rating = 4.0,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 24,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Private research university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "002140",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "Massachusetts Institute of Technology (MIT)",
+                            OpportunitiesRating = 0.0,
+                            Rating = 5.0,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 25,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Private Ivy League research university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "002151",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "Harvard University",
+                            OpportunitiesRating = 0.0,
+                            Rating = 5.0,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 26,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Private research university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "001305",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "Stanford University",
+                            OpportunitiesRating = 0.0,
+                            Rating = 5.0,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 27,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Private STEM-focused university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "001134",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "California Institute of Technology (Caltech)",
+                            OpportunitiesRating = 0.0,
+                            Rating = 5.0,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 28,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Private Ivy League university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "002178",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "Princeton University",
+                            OpportunitiesRating = 0.0,
+                            Rating = 5.0,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 29,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Private Ivy League university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "001426",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "Yale University",
+                            OpportunitiesRating = 0.0,
+                            Rating = 5.0,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 30,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Private research university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "001724",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "University of Chicago",
+                            OpportunitiesRating = 0.0,
+                            Rating = 5.0,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 31,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Private Ivy League research university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "003422",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "University of Pennsylvania",
+                            OpportunitiesRating = 0.0,
+                            Rating = 5.0,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 32,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Private Ivy League research university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "002751",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "Columbia University",
+                            OpportunitiesRating = 0.0,
+                            Rating = 5.0,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 33,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Private research university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "002156",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "Johns Hopkins University",
+                            OpportunitiesRating = 0.0,
+                            Rating = 5.0,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 34,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Private Ivy League research university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "002488",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "Cornell University",
+                            OpportunitiesRating = 0.0,
+                            Rating = 5.0,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 35,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Private Ivy League university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "003013",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "Brown University",
+                            OpportunitiesRating = 0.0,
+                            Rating = 5.0,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 36,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Private Ivy League university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "002428",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "Dartmouth College",
+                            OpportunitiesRating = 0.0,
+                            Rating = 5.0,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 37,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Private research university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "002920",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "Duke University",
+                            OpportunitiesRating = 0.0,
+                            Rating = 5.0,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 38,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Private research university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "001857",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "Northwestern University",
+                            OpportunitiesRating = 0.0,
+                            Rating = 5.0,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 39,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Private research university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "002770",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "New York University (NYU)",
+                            OpportunitiesRating = 0.0,
+                            Rating = 5.0,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 40,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Public research flagship university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "002325",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "University of Michigan (Ann Arbor)",
+                            OpportunitiesRating = 0.0,
+                            Rating = 5.0,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 41,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Public research university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "003751",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "University of Virginia (UVA)",
+                            OpportunitiesRating = 0.0,
+                            Rating = 4.5,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 42,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Public STEM-focused research university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "001312",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "Georgia Institute of Technology (Georgia Tech)",
+                            OpportunitiesRating = 0.0,
+                            Rating = 4.5,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 43,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Public flagship research university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "002975",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "University of North Carolina at Chapel Hill (UNC)",
+                            OpportunitiesRating = 0.0,
+                            Rating = 4.5,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 44,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Public research university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "003824",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "University of Washington (Seattle)",
+                            OpportunitiesRating = 0.0,
+                            Rating = 4.5,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 45,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Public flagship research university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "003658",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "University of Texas at Austin",
+                            OpportunitiesRating = 0.0,
+                            Rating = 4.5,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 46,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Public flagship research university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "003697",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "University of Wisconsin–Madison",
+                            OpportunitiesRating = 0.0,
+                            Rating = 4.5,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 47,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Public flagship research university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "001135",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "University of Florida",
+                            OpportunitiesRating = 0.0,
+                            Rating = 4.5,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 48,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Public research university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "001799",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "University of Illinois at Urbana–Champaign (UIUC)",
+                            OpportunitiesRating = 0.0,
+                            Rating = 4.5,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 49,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Public flagship research university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "001885",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "University of Georgia (UGA)",
+                            OpportunitiesRating = 0.0,
+                            Rating = 4.5,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 50,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Public research university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "001489",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "Purdue University, West Lafayette",
+                            OpportunitiesRating = 0.0,
+                            Rating = 4.5,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 51,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Private research university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "003726",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "Rice University",
+                            OpportunitiesRating = 0.0,
+                            Rating = 4.5,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 52,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Private research university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "002223",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "Tufts University",
+                            OpportunitiesRating = 0.0,
+                            Rating = 4.5,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 53,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Private research university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "002717",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "University of Rochester",
+                            OpportunitiesRating = 0.0,
+                            Rating = 4.5,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 54,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Private research university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "001985",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "Vanderbilt University",
+                            OpportunitiesRating = 0.0,
+                            Rating = 4.5,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 55,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Private research university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "002335",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "Washington University in St. Louis (WashU)",
+                            OpportunitiesRating = 0.0,
+                            Rating = 4.5,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 56,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Private research university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "001997",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "Emory University",
+                            OpportunitiesRating = 0.0,
+                            Rating = 4.5,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 57,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Public research university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "003153",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "University of Pittsburgh",
+                            OpportunitiesRating = 0.0,
+                            Rating = 4.5,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 58,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Private research university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "001328",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "University of Southern California (USC)",
+                            OpportunitiesRating = 0.0,
+                            Rating = 4.5,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 59,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Private research university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "002135",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "Boston University",
+                            OpportunitiesRating = 0.0,
+                            Rating = 4.5,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 60,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Private Jesuit research university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "002203",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "Boston College",
+                            OpportunitiesRating = 0.0,
+                            Rating = 4.5,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 61,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Private Jesuit research university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "001444",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "Georgetown University",
+                            OpportunitiesRating = 0.0,
+                            Rating = 4.5,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 62,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Private research university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "001997",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "University of Miami",
+                            OpportunitiesRating = 0.0,
+                            Rating = 4.5,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 63,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Private Catholic research university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "001706",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "University of Notre Dame",
+                            OpportunitiesRating = 0.0,
+                            Rating = 4.5,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 64,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Public flagship university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "001737",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "Indiana University Bloomington",
+                            OpportunitiesRating = 0.0,
+                            Rating = 4.5,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 65,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Public research university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "002328",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "Michigan State University",
+                            OpportunitiesRating = 0.0,
+                            Rating = 4.5,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 66,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Public flagship research university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "003484",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "Ohio State University (Columbus)",
+                            OpportunitiesRating = 0.0,
+                            Rating = 4.5,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 67,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Private research university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "001784",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "Case Western Reserve University",
+                            OpportunitiesRating = 0.0,
+                            Rating = 4.5,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 68,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Private Jesuit research university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "002203",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "Boston College",
+                            OpportunitiesRating = 0.0,
+                            Rating = 4.5,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 69,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Private research university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "003726",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "Rice University",
+                            OpportunitiesRating = 0.0,
+                            Rating = 4.5,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 70,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Private research university known for computer science and engineering",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "003242",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "Carnegie Mellon University",
+                            OpportunitiesRating = 0.0,
+                            Rating = 5.0,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 71,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Public flagship research university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "003329",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "Pennsylvania State University (Penn State)",
+                            OpportunitiesRating = 0.0,
+                            Rating = 4.5,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 72,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Public flagship research university of New Jersey",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "002629",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "Rutgers University–New Brunswick",
+                            OpportunitiesRating = 0.0,
+                            Rating = 4.5,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 73,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Public flagship research university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "002103",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "University of Maryland, College Park",
+                            OpportunitiesRating = 0.0,
+                            Rating = 4.5,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 74,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Public flagship research university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "003632",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "Texas A&M University",
+                            OpportunitiesRating = 0.0,
+                            Rating = 4.5,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 75,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Public flagship research university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "003969",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "University of Minnesota, Twin Cities",
+                            OpportunitiesRating = 0.0,
+                            Rating = 4.5,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 76,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Public research university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "001083",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "University of Arizona",
+                            OpportunitiesRating = 0.0,
+                            Rating = 4.0,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 77,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Public research university known for innovation",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "001081",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "Arizona State University (ASU)",
+                            OpportunitiesRating = 0.0,
+                            Rating = 4.0,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 78,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Public research university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "001370",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "University of Colorado Boulder",
+                            OpportunitiesRating = 0.0,
+                            Rating = 4.0,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 79,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Public research university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "003223",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "University of Oregon",
+                            OpportunitiesRating = 0.0,
+                            Rating = 4.0,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 80,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Public research university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "003675",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "University of Utah",
+                            OpportunitiesRating = 0.0,
+                            Rating = 4.0,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 81,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Public flagship research university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "001892",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "University of Iowa",
+                            OpportunitiesRating = 0.0,
+                            Rating = 4.0,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 82,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Public flagship research university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "001417",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "University of Connecticut (UConn)",
+                            OpportunitiesRating = 0.0,
+                            Rating = 4.0,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 83,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Public flagship research university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "001431",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "University of Delaware",
+                            OpportunitiesRating = 0.0,
+                            Rating = 4.0,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 84,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Public flagship research university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "003530",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "University of Tennessee, Knoxville",
+                            OpportunitiesRating = 0.0,
+                            Rating = 4.0,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 85,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Public flagship research university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "001948",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "University of Kansas",
+                            OpportunitiesRating = 0.0,
+                            Rating = 4.0,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 86,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Public flagship research university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "002516",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "University of Missouri (Mizzou)",
+                            OpportunitiesRating = 0.0,
+                            Rating = 4.0,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 87,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Public flagship research university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "003184",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "University of Oklahoma",
+                            OpportunitiesRating = 0.0,
+                            Rating = 4.0,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 88,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Public flagship research university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "002565",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "University of Nebraska–Lincoln",
+                            OpportunitiesRating = 0.0,
+                            Rating = 4.0,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 89,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Public flagship research university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "001989",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "University of Kentucky",
+                            OpportunitiesRating = 0.0,
+                            Rating = 4.0,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 90,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Public flagship research university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "003670",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "University of South Carolina",
+                            OpportunitiesRating = 0.0,
+                            Rating = 4.0,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 91,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Public flagship research university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "001190",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "University of Alabama",
+                            OpportunitiesRating = 0.0,
+                            Rating = 4.0,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 92,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Public research university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "002662",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "University of Mississippi (Ole Miss)",
+                            OpportunitiesRating = 0.0,
+                            Rating = 4.0,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 93,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Public flagship research university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "002108",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "Louisiana State University (LSU)",
+                            OpportunitiesRating = 0.0,
+                            Rating = 4.0,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 94,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Public flagship research university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "002556",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "University of New Mexico",
+                            OpportunitiesRating = 0.0,
+                            Rating = 4.0,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 95,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Public research university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "002535",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "University of Nevada, Reno",
+                            OpportunitiesRating = 0.0,
+                            Rating = 4.0,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 96,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Public flagship research university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "001265",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "University of Hawaii at Manoa",
+                            OpportunitiesRating = 0.0,
+                            Rating = 4.0,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 97,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Public research university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "002148",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "University of Alaska Fairbanks",
+                            OpportunitiesRating = 0.0,
+                            Rating = 4.0,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 98,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Public flagship research university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "001136",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "Florida State University",
+                            OpportunitiesRating = 0.0,
+                            Rating = 4.0,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 99,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Public research university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "001537",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "University of Central Florida (UCF)",
+                            OpportunitiesRating = 0.0,
+                            Rating = 4.0,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
+                        },
+                        new
+                        {
+                            Id = 100,
+                            ClassroomsRating = 0.0,
+                            CommunityRating = 0.0,
+                            Description = "Public research university",
+                            FacultyRating = 0.0,
+                            FederalSchoolCode = "001419",
+                            FoodRating = 0.0,
+                            GymRating = 0.0,
+                            HappinessRating = 0.0,
+                            LocationRating = 0.0,
+                            Name = "University of Cincinnati",
+                            OpportunitiesRating = 0.0,
+                            Rating = 4.0,
+                            SafetyRating = 0.0,
+                            SportsRating = 0.0
                         });
                 });
 
@@ -301,19 +2114,61 @@ namespace RateMyMajor.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("Classrooms")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CollegeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Community")
+                        .HasColumnType("int");
+
                     b.Property<string>("Content")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("MajorId")
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Faculty")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Food")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Gym")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Happiness")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Location")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Opportunities")
                         .HasColumnType("int");
 
                     b.Property<int>("Rating")
                         .HasColumnType("int");
 
+                    b.Property<int>("Safety")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Sports")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("VoteScore")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("MajorId");
+                    b.HasIndex("CollegeId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Review");
 
@@ -321,59 +2176,249 @@ namespace RateMyMajor.Migrations
                         new
                         {
                             Id = 1,
+                            Classrooms = 2,
+                            CollegeId = 1,
+                            Community = 2,
                             Content = "Challenging but rewarding.",
-                            MajorId = 1,
-                            Rating = 5
+                            CreatedAt = new DateTime(2025, 8, 25, 22, 54, 19, 890, DateTimeKind.Utc).AddTicks(5180),
+                            Faculty = 4,
+                            Food = 2,
+                            Gym = 4,
+                            Happiness = 5,
+                            Location = 3,
+                            Opportunities = 3,
+                            Rating = 5,
+                            Safety = 5,
+                            Sports = 4,
+                            UserId = "1",
+                            VoteScore = 0
                         },
                         new
                         {
                             Id = 2,
+                            Classrooms = 1,
+                            CollegeId = 1,
+                            Community = 2,
                             Content = "A lot of math and theory.",
-                            MajorId = 1,
-                            Rating = 4
+                            CreatedAt = new DateTime(2025, 8, 25, 22, 54, 19, 890, DateTimeKind.Utc).AddTicks(5200),
+                            Faculty = 4,
+                            Food = 2,
+                            Gym = 4,
+                            Happiness = 5,
+                            Location = 3,
+                            Opportunities = 3,
+                            Rating = 4,
+                            Safety = 5,
+                            Sports = 4,
+                            UserId = "1",
+                            VoteScore = 0
                         },
                         new
                         {
                             Id = 3,
+                            Classrooms = 3,
+                            CollegeId = 1,
+                            Community = 2,
                             Content = "Man this major stinks",
-                            MajorId = 1,
-                            Rating = 4
+                            CreatedAt = new DateTime(2025, 8, 25, 22, 54, 19, 890, DateTimeKind.Utc).AddTicks(5200),
+                            Faculty = 4,
+                            Food = 2,
+                            Gym = 4,
+                            Happiness = 5,
+                            Location = 3,
+                            Opportunities = 3,
+                            Rating = 4,
+                            Safety = 5,
+                            Sports = 4,
+                            UserId = "1",
+                            VoteScore = 0
                         },
                         new
                         {
                             Id = 4,
+                            Classrooms = 2,
+                            CollegeId = 2,
+                            Community = 2,
                             Content = "Very hands-on and practical.",
-                            MajorId = 2,
-                            Rating = 5
+                            CreatedAt = new DateTime(2025, 8, 25, 22, 54, 19, 890, DateTimeKind.Utc).AddTicks(5200),
+                            Faculty = 4,
+                            Food = 2,
+                            Gym = 4,
+                            Happiness = 5,
+                            Location = 3,
+                            Opportunities = 3,
+                            Rating = 5,
+                            Safety = 5,
+                            Sports = 4,
+                            UserId = "1",
+                            VoteScore = 0
                         },
                         new
                         {
                             Id = 5,
+                            Classrooms = 2,
+                            CollegeId = 2,
+                            Community = 3,
                             Content = "Brain power!",
-                            MajorId = 2,
-                            Rating = 5
+                            CreatedAt = new DateTime(2025, 8, 25, 22, 54, 19, 890, DateTimeKind.Utc).AddTicks(5200),
+                            Faculty = 4,
+                            Food = 5,
+                            Gym = 4,
+                            Happiness = 5,
+                            Location = 3,
+                            Opportunities = 3,
+                            Rating = 5,
+                            Safety = 5,
+                            Sports = 2,
+                            UserId = "1",
+                            VoteScore = 0
                         },
                         new
                         {
                             Id = 6,
+                            Classrooms = 2,
+                            CollegeId = 3,
+                            Community = 2,
                             Content = "A lot of butt wiping",
-                            MajorId = 3,
-                            Rating = 5
+                            CreatedAt = new DateTime(2025, 8, 25, 22, 54, 19, 890, DateTimeKind.Utc).AddTicks(5210),
+                            Faculty = 4,
+                            Food = 4,
+                            Gym = 4,
+                            Happiness = 5,
+                            Location = 3,
+                            Opportunities = 3,
+                            Rating = 5,
+                            Safety = 5,
+                            Sports = 4,
+                            UserId = "1",
+                            VoteScore = 0
                         },
                         new
                         {
                             Id = 7,
+                            Classrooms = 4,
+                            CollegeId = 3,
+                            Community = 2,
                             Content = "THis is really hard",
-                            MajorId = 3,
-                            Rating = 2
+                            CreatedAt = new DateTime(2025, 8, 25, 22, 54, 19, 890, DateTimeKind.Utc).AddTicks(5210),
+                            Faculty = 4,
+                            Food = 2,
+                            Gym = 4,
+                            Happiness = 5,
+                            Location = 3,
+                            Opportunities = 3,
+                            Rating = 2,
+                            Safety = 4,
+                            Sports = 4,
+                            UserId = "1",
+                            VoteScore = 0
                         },
                         new
                         {
                             Id = 8,
+                            Classrooms = 2,
+                            CollegeId = 3,
+                            Community = 2,
                             Content = "I love nursing",
-                            MajorId = 3,
-                            Rating = 5
+                            CreatedAt = new DateTime(2025, 8, 25, 22, 54, 19, 890, DateTimeKind.Utc).AddTicks(5210),
+                            Faculty = 4,
+                            Food = 2,
+                            Gym = 4,
+                            Happiness = 5,
+                            Location = 3,
+                            Opportunities = 3,
+                            Rating = 5,
+                            Safety = 5,
+                            Sports = 4,
+                            UserId = "1",
+                            VoteScore = 0
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Classrooms = 1,
+                            CollegeId = 3,
+                            Community = 2,
+                            Content = "I HATE nursing",
+                            CreatedAt = new DateTime(2025, 8, 25, 22, 54, 19, 890, DateTimeKind.Utc).AddTicks(5210),
+                            Faculty = 4,
+                            Food = 3,
+                            Gym = 4,
+                            Happiness = 5,
+                            Location = 3,
+                            Opportunities = 3,
+                            Rating = 1,
+                            Safety = 2,
+                            Sports = 4,
+                            UserId = "1",
+                            VoteScore = 0
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Classrooms = 2,
+                            CollegeId = 3,
+                            Community = 2,
+                            Content = "I wanna do nursing",
+                            CreatedAt = new DateTime(2025, 8, 25, 22, 54, 19, 890, DateTimeKind.Utc).AddTicks(5210),
+                            Faculty = 4,
+                            Food = 3,
+                            Gym = 4,
+                            Happiness = 3,
+                            Location = 3,
+                            Opportunities = 3,
+                            Rating = 4,
+                            Safety = 5,
+                            Sports = 4,
+                            UserId = "1",
+                            VoteScore = 0
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Classrooms = 4,
+                            CollegeId = 3,
+                            Community = 2,
+                            Content = "Please please please nursing",
+                            CreatedAt = new DateTime(2025, 8, 25, 22, 54, 19, 890, DateTimeKind.Utc).AddTicks(5220),
+                            Faculty = 4,
+                            Food = 2,
+                            Gym = 4,
+                            Happiness = 5,
+                            Location = 3,
+                            Opportunities = 3,
+                            Rating = 3,
+                            Safety = 5,
+                            Sports = 2,
+                            UserId = "1",
+                            VoteScore = 0
                         });
+                });
+
+            modelBuilder.Entity("RateMyMajor.Models.Vote", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ReviewId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("Value")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ReviewId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Votes");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -429,16 +2474,41 @@ namespace RateMyMajor.Migrations
 
             modelBuilder.Entity("RateMyMajor.Models.Review", b =>
                 {
-                    b.HasOne("RateMyMajor.Models.Major", "Major")
+                    b.HasOne("RateMyMajor.Models.College", "College")
                         .WithMany("Reviews")
-                        .HasForeignKey("MajorId")
+                        .HasForeignKey("CollegeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Major");
+                    b.HasOne("ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("College");
+
+                    b.Navigation("User");
                 });
 
-            modelBuilder.Entity("RateMyMajor.Models.Major", b =>
+            modelBuilder.Entity("RateMyMajor.Models.Vote", b =>
+                {
+                    b.HasOne("RateMyMajor.Models.Review", "Review")
+                        .WithMany()
+                        .HasForeignKey("ReviewId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("Review");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("RateMyMajor.Models.College", b =>
                 {
                     b.Navigation("Reviews");
                 });

@@ -21,6 +21,8 @@ import MuiAlert from '@mui/material/Alert';
 import AnotherReviewCardRating from '../components/AnotherReviewCardRating';
 
 export default function AddReviewPage() {
+  const API_BASE_URL = import.meta.env.VITE_API_URL;
+
   const navigate = useNavigate();
   const { collegeId } = useParams();
 
@@ -142,7 +144,7 @@ export default function AddReviewPage() {
 
     if (validateReview()) {
       try {
-        const response = await fetch('http://localhost:5123/api/review/add', {
+        const response = await fetch(`${API_BASE_URL}/api/review/add`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

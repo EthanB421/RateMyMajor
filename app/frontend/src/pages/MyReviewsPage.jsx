@@ -5,6 +5,8 @@ import CircularProgress from '@mui/material/CircularProgress';
 import AnotherReviewCardRating from '../components/AnotherReviewCardRating';
 
 export default function MyReviewsPage() {
+  const API_BASE_URL = import.meta.env.VITE_API_URL;
+
   const [reviews, setReviews] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -14,14 +16,11 @@ export default function MyReviewsPage() {
       try {
         const token = localStorage.getItem('authToken');
 
-        const response = await fetch(
-          'http://localhost:5123/api/review/my-reviews',
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const response = await fetch(`${API_BASE_URL}/api/review/my-reviews`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
         if (!response.ok) {
           throw new Error(`Status: ${response.status}`);
@@ -45,15 +44,12 @@ export default function MyReviewsPage() {
     try {
       const token = localStorage.getItem('authToken');
 
-      const response = await fetch(
-        `http://localhost:5123/api/review/${reviewId}`,
-        {
-          method: 'DELETE',
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await fetch(`${API_BASE_URL}/api/review/${reviewId}`, {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       if (!response.ok) {
         throw new Error(`Delete failed with status: ${response.status}`);
       }

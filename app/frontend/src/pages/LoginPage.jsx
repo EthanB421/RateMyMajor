@@ -16,6 +16,8 @@ import { useState, useEffect } from 'react';
 import { useAuth } from './AuthContext';
 
 export default function LoginPage() {
+  const API_BASE_URL = import.meta.env.VITE_API_URL;
+
   const navigate = useNavigate();
   const location = useLocation();
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -66,7 +68,7 @@ export default function LoginPage() {
 
     if (validateLogin()) {
       try {
-        const response = await fetch('http://localhost:5123/api/auth/login', {
+        const response = await fetch(`${API_BASE_URL}/api/auth/login`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
