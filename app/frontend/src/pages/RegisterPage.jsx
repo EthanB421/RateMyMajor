@@ -23,6 +23,7 @@ import { useState } from 'react';
 
 export default function RegisterPage() {
   const navigate = useNavigate();
+  const API_URL = import.meta.env.VITE_API_URL;
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -60,7 +61,7 @@ export default function RegisterPage() {
     if (validateLogin()) {
       try {
         const response = await fetch(
-          'http://localhost:5123/api/auth/register',
+          `${API_URL}/api/auth/register`,
           {
             method: 'POST',
             headers: {

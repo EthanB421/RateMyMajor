@@ -17,6 +17,8 @@ export default function Searchbar() {
   const [error, setError] = useState('');
   const containerRef = useRef(null);
   const navigate = useNavigate();
+  const API_URL = import.meta.env.VITE_API_URL;
+
 
   const handleInputChange = (event) => {
     setInputValue(event.target.value);
@@ -44,7 +46,7 @@ export default function Searchbar() {
     const fetchSearchResults = async () => {
       try {
         const response = await fetch(
-          'http://localhost:5123/api/College/GetColleges'
+          `${API_URL}/College/GetColleges`
         );
 
         if (!response.ok) {

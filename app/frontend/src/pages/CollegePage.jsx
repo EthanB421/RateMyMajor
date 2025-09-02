@@ -25,6 +25,8 @@ export default function CollegePage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
+  const API_URL = import.meta.env.VITE_API_URL;
+
 
   const StyledRating = styled(Rating)({
     '& .MuiRating-iconFilled': {
@@ -35,8 +37,10 @@ export default function CollegePage() {
   useEffect(() => {
     const fetchColleges = async () => {
       try {
+        console.log("ENV API_URL:", import.meta.env.VITE_API_URL);
+
         const response = await fetch(
-          'http://localhost:5123/api/College/GetColleges'
+          `${API_URL}/api/College/GetColleges`
         );
 
         if (!response.ok) {

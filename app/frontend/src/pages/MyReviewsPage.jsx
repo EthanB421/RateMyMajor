@@ -8,6 +8,8 @@ export default function MyReviewsPage() {
   const [reviews, setReviews] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const API_URL = import.meta.env.VITE_API_URL;
+
 
   useEffect(() => {
     const fetchReviews = async () => {
@@ -15,7 +17,7 @@ export default function MyReviewsPage() {
         const token = localStorage.getItem('authToken');
 
         const response = await fetch(
-          'http://localhost:5123/api/review/my-reviews',
+          `${API_URL}/api/review/my-reviews`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -46,7 +48,7 @@ export default function MyReviewsPage() {
       const token = localStorage.getItem('authToken');
 
       const response = await fetch(
-        `http://localhost:5123/api/review/${reviewId}`,
+        `${API_URL}/api/review/${reviewId}`,
         {
           method: 'DELETE',
           headers: {
