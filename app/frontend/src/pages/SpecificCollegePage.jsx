@@ -14,7 +14,6 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { Snackbar, Alert } from '@mui/material';
 import { useAuth } from '../pages/AuthContext'; // Make sure you have your AuthContext
 
-
 import {
   Container,
   Box,
@@ -37,7 +36,7 @@ export default function SpecificCollegePage() {
   const [chartLoading, setChartLoading] = useState(true);
   const [error, setError] = useState('');
   const [snackbarOpen, setSnackbarOpen] = useState(false);
-  const {user} = useAuth();
+  const { user } = useAuth();
   const [userVotes, setUserVotes] = useState({});
   const API_URL = import.meta.env.VITE_API_URL;
 
@@ -59,9 +58,6 @@ export default function SpecificCollegePage() {
     animate: { opacity: 1, y: 0 },
     exit: { opacity: 0, y: -20 },
   };
-  
-
-
 
   const StyledRating = styled(Rating)({
     '& .MuiRating-iconFilled': {
@@ -71,7 +67,6 @@ export default function SpecificCollegePage() {
       fontSize: '3.5rem',
     },
   });
-
 
   useEffect(() => {
     if (!college || !college.federalSchoolCode) return;
@@ -555,7 +550,9 @@ export default function SpecificCollegePage() {
               {/* Add a review button */}
               <Button
                 component={user ? Link : 'button'}
-                to={`/college/add-review/${college.id}`}
+                to={`/college/add-review/${
+                  college.id
+                }?name=${encodeURIComponent(college.name)}`}
                 fullWidth
                 // color='secondary'
                 variant='contained'
@@ -707,20 +704,20 @@ export default function SpecificCollegePage() {
           </Box>
         </Box>
       </Paper>
-            <Snackbar
-      open={snackbarOpen}
-      autoHideDuration={3000}
-      onClose={() => setSnackbarOpen(false)}
-      anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-    >
-      <Alert
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={3000}
         onClose={() => setSnackbarOpen(false)}
-        severity="error"
-        sx={{ width: '100%' }}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
       >
-        You must be signed in to use this feature!
-      </Alert>
-    </Snackbar>
+        <Alert
+          onClose={() => setSnackbarOpen(false)}
+          severity='error'
+          sx={{ width: '100%' }}
+        >
+          You must be signed in to use this feature!
+        </Alert>
+      </Snackbar>
     </Container>
   );
 }

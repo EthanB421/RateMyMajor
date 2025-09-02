@@ -18,15 +18,18 @@ import { useParams } from 'react-router-dom';
 import RatingBar from '../components/RatingBar';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
-import ReviewCardExtraRatings from '../components/ReviewCardExtraRatings';
+import AnotherReviewCardRating from '../components/AnotherReviewCardRating';
 
 export default function AddReviewPage() {
   const navigate = useNavigate();
   const { collegeId } = useParams();
+
   const [error, setError] = useState('');
   const [page, setPage] = useState(1);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
+  const query = new URLSearchParams(window.location.search);
+  const collegeName = query.get('name');
   const API_URL = import.meta.env.VITE_API_URL;
 
 
@@ -155,7 +158,7 @@ export default function AddReviewPage() {
           throw new Error(errorData);
         }
 
-        navigate('/');
+        navigate(`/college/${collegeName}`);
       } catch (error) {
         console.error('Submit error:', error.message);
       }
@@ -487,7 +490,7 @@ export default function AddReviewPage() {
                     </Typography>
 
                     {/* Extra Ratings Preview */}
-                    <ReviewCardExtraRatings data={rating} />
+                    <AnotherReviewCardRating data={rating} />
                   </Paper>
                 </Box>
               </Box>

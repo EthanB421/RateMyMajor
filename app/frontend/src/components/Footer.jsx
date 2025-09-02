@@ -102,7 +102,7 @@ export default function Footer() {
             Colleges
           </Link>
           <Link
-            onClick={() => navigate('/')}
+            onClick={() => navigate('/my-reviews')}
             variant='subtitle1'
             underline='none'
             sx={{
@@ -114,25 +114,10 @@ export default function Footer() {
               },
             }}
           >
-            Reviews
+            My Reviews
           </Link>{' '}
-          <Typography
-            onClick={() => navigate('/')}
-            variant='subtitle1'
-            underline='none'
-            sx={{
-              fontSize: { xs: '1rem', sm: '1rem', md: '1.3rem' },
-              color: 'white',
-              flexGrow: 1,
-              '&:hover': {
-                cursor: 'pointer',
-              },
-            }}
-          >
-            Account
-          </Typography>{' '}
           <Link
-            onClick={() => navigate('/')}
+            onClick={() => navigate('/terms-of-service')}
             variant='subtitle1'
             underline='none'
             sx={{
@@ -151,10 +136,3 @@ export default function Footer() {
     </AppBar>
   );
 }
-
-//   <Typography variant='subtitle2' align='center'>
-//     RateMyCollege
-//   </Typography>
-//   <Typography variant='body2' align='center'>
-//     © Copyright 2025 RateMyCollege
-//   </Typography>
