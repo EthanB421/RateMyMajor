@@ -14,13 +14,6 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 
-/*
-  *****************IMPORTANT*****************
-    - Need to include feedback when user doesn't have a password that meets the standards
-    
-    - Seems like backend has checks for duplicate users, incorrect passwords, etc.
-*/
-
 export default function RegisterPage() {
   const navigate = useNavigate();
   const API_URL = import.meta.env.VITE_API_URL;
@@ -40,6 +33,13 @@ export default function RegisterPage() {
     confirmPassword: '',
   });
 
+  // Snackbar state
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    message: '',
+    severity: 'error' // 'error', 'warning', 'info', 'success'
+  });
+
   // Captures new input value from textfields and updates formData
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -55,6 +55,7 @@ export default function RegisterPage() {
       });
     }
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -85,42 +86,84 @@ export default function RegisterPage() {
         navigate('/login', { state: { showRegisterSnackbar: true } });
       } catch (error) {
         console.error('Account creation error:', error);
-        alert(`Account Creation Failed: ${error.message}`);
-      }
-      if (validateLogin() == false) {
-        return;
+        setSnackbar({
+          open: true,
+          message: `Account Creation Failed: ${error.message}`,
+          severity: 'error'
+        });
       }
     }
   };
 
-  // Simple validation for login
+  // Enhanced password validation
+  const validatePassword = (password) => {
+    const hasUppercase = /[A-Z]/.test(password);
+    const hasNonAlphanumeric = /[^a-zA-Z0-9]/.test(password);
+    const hasMinLength = password.length >= 6;
+
+    if (!hasMinLength) {
+      return { isValid: false, message: 'Password must be at least 6 characters long' };
+    }
+
+    if (!hasUppercase && !hasNonAlphanumeric) {
+      return { 
+        isValid: false, 
+        message: 'Password must contain at least one uppercase letter AND one special character (!@#$%^&*)'
+      };
+    }
+
+    return { isValid: true, message: '' };
+  };
+
+  // Enhanced validation for login
   const validateLogin = () => {
     let isValid = true;
-    const newErrors = { email: '', password: '', confirmPassword: '' };
+    const newErrors = { 
+      firstName: '', 
+      lastName: '', 
+      email: '', 
+      password: '', 
+      confirmPassword: '' 
+    };
 
-    /*
-            Email validation
-                - Checks for empty entry
-                - Checks that input is in email address format
-        */
+    // First name validation
+    if (!formData.firstName.trim()) {
+      newErrors.firstName = 'First name is required';
+      isValid = false;
+    }
+
+    // Last name validation
+    if (!formData.lastName.trim()) {
+      newErrors.lastName = 'Last name is required';
+      isValid = false;
+    }
+
+    // Email validation
     if (!formData.email || !/\S+@\S+\.\S+/.test(formData.email)) {
       newErrors.email = 'Email address is invalid';
       isValid = false;
     }
 
-    /*
-            Password validation
-                - Checks for empty entry
-                - Checks that password is at least 6 characters
-                - Check to see passwords are the same
-        */
-    if (!formData.password || formData.password.length < 6) {
-      newErrors.password = 'Password is invalid';
+    // Password validation with snackbar
+    if (!formData.password) {
+      newErrors.password = 'Password is required';
       isValid = false;
+    } else {
+      const passwordValidation = validatePassword(formData.password);
+      if (!passwordValidation.isValid) {
+        newErrors.password = 'Password does not meet requirements';
+        setSnackbar({
+          open: true,
+          message: passwordValidation.message,
+          severity: 'warning'
+        });
+        isValid = false;
+      }
     }
 
+    // Confirm password validation
     if (!formData.confirmPassword) {
-      newErrors.confirmPassword = 'Password is invalid';
+      newErrors.confirmPassword = 'Please confirm your password';
       isValid = false;
     } else if (formData.confirmPassword !== formData.password) {
       newErrors.confirmPassword = 'Passwords do not match';
@@ -131,135 +174,161 @@ export default function RegisterPage() {
     return isValid;
   };
 
+  // Handle snackbar close
+  const handleSnackbarClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setSnackbar({ ...snackbar, open: false });
+  };
+
   return (
-    // Main Container
-    <Container maxWidth='sm' sx={{ p: '2em' }}>
-      {/* Form container */}
-      <Paper elevation={6} sx={{ p: '2em' }}>
-        {/* Form content */}
-        <Box
-          component='form'
-          onSubmit={handleSubmit}
-          noValidate
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '1em',
-          }}
-        >
-          <Typography
-            variant='h3'
-            fontFamily='Bebas Neue'
-            fontStyle='italic'
-            sx={{ textAlign: { xs: 'center', md: 'left' } }}
-          >
-            Let's get started.
-          </Typography>
-          {/* Textfield container */}
+    <>
+      {/* Main Container */}
+      <Container maxWidth='sm' sx={{ p: '2em' }}>
+        {/* Form container */}
+        <Paper elevation={6} sx={{ p: '2em' }}>
+          {/* Form content */}
           <Box
+            component='form'
+            onSubmit={handleSubmit}
+            noValidate
             sx={{
               display: 'flex',
               flexDirection: 'column',
               gap: '1em',
             }}
           >
-            <Box sx={{ display: 'flex', gap: '1em' }}>
-              <FormControl fullWidth>
-                <FormLabel htmlFor='firstName'>First Name</FormLabel>
+            <Typography
+              variant='h3'
+              fontFamily='Bebas Neue'
+              fontStyle='italic'
+              sx={{ textAlign: { xs: 'center', md: 'left' } }}
+            >
+              Let's get started.
+            </Typography>
+            {/* Textfield container */}
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '1em',
+              }}
+            >
+              <Box sx={{ display: 'flex', gap: '1em' }}>
+                <FormControl fullWidth>
+                  <FormLabel htmlFor='firstName'>First Name</FormLabel>
+                  <TextField
+                    name='firstName'
+                    id='firstName'
+                    required
+                    placeholder='John'
+                    value={formData.firstName}
+                    onChange={handleChange}
+                    error={!!errors.firstName}
+                    helperText={errors.firstName}
+                  />
+                </FormControl>
+
+                <FormControl fullWidth>
+                  <FormLabel htmlFor='lastName'>Last Name</FormLabel>
+                  <TextField
+                    name='lastName'
+                    id='lastName'
+                    required
+                    placeholder='Doe'
+                    value={formData.lastName}
+                    onChange={handleChange}
+                    error={!!errors.lastName}
+                    helperText={errors.lastName}
+                  />
+                </FormControl>
+              </Box>
+              {/* Email field */}
+              <FormControl>
+                <FormLabel htmlFor='email'>Email</FormLabel>
                 <TextField
-                  name='firstName'
-                  id='firstName'
+                  name='email'
+                  id='email'
+                  type='email'
                   required
-                  placeholder='John'
-                  value={formData.firstName}
+                  placeholder='you@email.com'
+                  value={formData.email}
                   onChange={handleChange}
-                  error={!!errors.firstName}
-                  helperText={errors.firstName}
+                  error={!!errors.email}
+                  helperText={errors.email}
                 />
               </FormControl>
 
-              <FormControl fullWidth>
-                <FormLabel htmlFor='lastName'>Last Name</FormLabel>
+              {/* Password field */}
+              <FormControl>
+                <FormLabel htmlFor='password'>Password</FormLabel>
                 <TextField
-                  name='lastName'
-                  id='lastName'
+                  name='password'
+                  id='password'
+                  type='password'
                   required
-                  placeholder='Doe'
-                  value={formData.lastName}
+                  placeholder='••••••••••••'
+                  value={formData.password}
                   onChange={handleChange}
-                  error={!!errors.lastName}
-                  helperText={errors.lastName}
+                  error={!!errors.password}
+                  helperText={errors.password}
+                />
+              </FormControl>
+
+              {/* Confirm password field */}
+              <FormControl>
+                <FormLabel htmlFor='confirmPassword'>Confirm Password</FormLabel>
+                <TextField
+                  name='confirmPassword'
+                  id='confirmPassword'
+                  type='password'
+                  required
+                  placeholder='••••••••••••'
+                  value={formData.confirmPassword}
+                  onChange={handleChange}
+                  error={!!errors.confirmPassword}
+                  helperText={errors.confirmPassword}
                 />
               </FormControl>
             </Box>
-            {/* Email field */}
-            <FormControl>
-              <FormLabel htmlFor='email'>Email</FormLabel>
-              <TextField
-                name='email'
-                id='email'
-                type='email'
-                required
-                placeholder='you@email.com'
-                value={formData.email}
-                onChange={handleChange}
-                error={errors.email}
-                helperText={errors.email}
-              />
-            </FormControl>
 
-            {/* Password field */}
-            <FormControl>
-              <FormLabel htmlFor='password'>Password</FormLabel>
-              <TextField
-                name='password'
-                id='password'
-                type='password'
-                required
-                placeholder='••••••••••••'
-                value={formData.password}
-                onChange={handleChange}
-                error={errors.password}
-                helperText={errors.password}
-              />
-            </FormControl>
+            <Button type='submit' fullWidth variant='contained'>
+              Sign up
+            </Button>
 
-            {/* Confirm password field */}
-            <FormControl>
-              <FormLabel htmlFor='confirmPassword'>Confirm Password</FormLabel>
-              <TextField
-                name='confirmPassword'
-                id='confirmPassword'
-                type='password'
-                required
-                placeholder='••••••••••••'
-                value={formData.confirmPassword}
-                onChange={handleChange}
-                error={errors.confirmPassword}
-                helperText={errors.confirmPassword}
-              />
-            </FormControl>
+            <Typography textAlign='center'>
+              Already have an account?{' '}
+              <Link
+                onClick={() => navigate('/login')}
+                sx={{
+                  '&:hover': {
+                    cursor: 'pointer',
+                  },
+                }}
+              >
+                Sign in
+              </Link>
+            </Typography>
           </Box>
+        </Paper>
+      </Container>
 
-          <Button type='submit' fullWidth variant='contained'>
-            Sign up
-          </Button>
-
-          <Typography textAlign='center'>
-            Already have an account?{' '}
-            <Link
-              onClick={() => navigate('/login')}
-              sx={{
-                '&:hover': {
-                  cursor: 'pointer',
-                },
-              }}
-            >
-              Sign in
-            </Link>
-          </Typography>
-        </Box>
-      </Paper>
-    </Container>
+      {/* Snackbar for validation messages */}
+      <Snackbar
+        open={snackbar.open}
+        autoHideDuration={6000}
+        onClose={handleSnackbarClose}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      >
+        <Alert 
+          onClose={handleSnackbarClose} 
+          severity={snackbar.severity}
+          sx={{ width: '100%' }}
+        >
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
+    </>
   );
 }

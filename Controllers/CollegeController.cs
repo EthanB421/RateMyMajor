@@ -23,11 +23,17 @@ public class CollegeController : ControllerBase
         return majors != null ? Ok(majors) : NotFound("No majors found.");
     }
 
-[HttpGet("search")]
-public async Task<IActionResult> SearchCollege([FromQuery] string keyword)
-{
-    var major = await _collegeService.GetCollegeByKeywordAsync(keyword);
-    return major == null? NotFound("College not found.") : Ok(major);
-}
+    [HttpGet("search")]
+    public async Task<IActionResult> SearchCollege([FromQuery] string keyword)
+    {
+        var major = await _collegeService.GetCollegeByKeywordAsync(keyword);
+        return major == null ? NotFound("College not found.") : Ok(major);
+    }
+
+    [HttpGet("test")]
+    public async Task<IActionResult> test()
+    {
+        return Ok("test");
+    }
 
 }

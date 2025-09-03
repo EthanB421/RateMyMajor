@@ -154,7 +154,7 @@ export default function TermsOfServicePage() {
             RateMyCollege. You may not copy, reproduce, or distrubute without
             permission. In the event you believe RateMyCollege has infringed on
             any of your Intellectual Property, please reach out to us at{' '}
-            <Link>support@ratemycollege.com</Link> and we will respond as
+            <Link>addyourcollege@gmail.com</Link> and we will respond as
             needed.
           </Typography>
         </Box>
@@ -235,7 +235,7 @@ export default function TermsOfServicePage() {
           <Typography>
             In the event you have more questions or concerns regarding our Terms
             of Service, please reach out to us at{' '}
-            <Link>support@ratemycollege.com</Link>.
+            <Link>addyourcollege@gmail.com</Link>.
           </Typography>
         </Box>
       </Box>

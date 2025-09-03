@@ -1,15 +1,30 @@
-import { Typography, Box, Paper, Container, Button } from '@mui/material';
+import { 
+  Typography, 
+  Box, 
+  Paper, 
+  Container, 
+  Button,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions
+} from '@mui/material';
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import CircularProgress from '@mui/material/CircularProgress';
 import AnotherReviewCardRating from '../components/AnotherReviewCardRating';
 
 export default function MyReviewsPage() {
-  const [reviews, setReviews] = useState(null);
+  const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [deleteDialog, setDeleteDialog] = useState({
+    open: false,
+    reviewId: null,
+    reviewContent: ''
+  });
   const API_URL = import.meta.env.VITE_API_URL;
-
 
   useEffect(() => {
     const fetchReviews = async () => {
@@ -25,16 +40,24 @@ export default function MyReviewsPage() {
           }
         );
 
+        // Handle 404 specifically - user has no reviews
+        if (response.status === 404) {
+          setReviews([]);
+          return;
+        }
+
+        // Handle other non-ok responses
         if (!response.ok) {
           throw new Error(`Status: ${response.status}`);
         }
 
         const data = await response.json();
-        console.log('Fetched college data:', data);
+        console.log('Fetched reviews data:', data);
 
-        setReviews(data);
+        // Ensure data is an array, fallback to empty array
+        setReviews(Array.isArray(data) ? data : []);
       } catch (err) {
-        setError(`Failed to fetch college: ${err.message}`);
+        setError(`Failed to fetch reviews: ${err.message}`);
       } finally {
         setLoading(false);
       }
@@ -43,12 +66,28 @@ export default function MyReviewsPage() {
     fetchReviews();
   }, []);
 
-  const handleDelete = async (reviewId) => {
+  const handleDeleteClick = (reviewId, reviewContent) => {
+    setDeleteDialog({
+      open: true,
+      reviewId,
+      reviewContent: reviewContent.length > 100 ? reviewContent.substring(0, 100) + '...' : reviewContent
+    });
+  };
+
+  const handleDeleteCancel = () => {
+    setDeleteDialog({
+      open: false,
+      reviewId: null,
+      reviewContent: ''
+    });
+  };
+
+  const handleDeleteConfirm = async () => {
     try {
       const token = localStorage.getItem('authToken');
 
       const response = await fetch(
-        `${API_URL}/api/review/${reviewId}`,
+        `${API_URL}/api/review/${deleteDialog.reviewId}`,
         {
           method: 'DELETE',
           headers: {
@@ -56,12 +95,29 @@ export default function MyReviewsPage() {
           },
         }
       );
+      
       if (!response.ok) {
         throw new Error(`Delete failed with status: ${response.status}`);
       }
-      setReviews((prev) => prev.filter((r) => r.id !== reviewId));
+      
+      // Remove the deleted review from state
+      setReviews((prev) => prev.filter((r) => r.id !== deleteDialog.reviewId));
+      
+      // Close the dialog
+      setDeleteDialog({
+        open: false,
+        reviewId: null,
+        reviewContent: ''
+      });
     } catch (err) {
       console.error('API error:', err);
+      setError(`Failed to delete review: ${err.message}`);
+      // Close dialog even if there's an error
+      setDeleteDialog({
+        open: false,
+        reviewId: null,
+        reviewContent: ''
+      });
     }
   };
 
@@ -82,8 +138,18 @@ export default function MyReviewsPage() {
       </motion.div>
     );
   }
-  if (error) return <Typography color='error'>{error}</Typography>;
-  if (!reviews) return <Typography>No reviews found.</Typography>;
+
+  if (error) {
+    return (
+      <Container maxWidth='lg'>
+        <Paper sx={{ p: '2em', margin: '1em' }}>
+          <Typography color='error' textAlign='center'>
+            {error}
+          </Typography>
+        </Paper>
+      </Container>
+    );
+  }
 
   return (
     <Container maxWidth='lg'>
@@ -108,7 +174,14 @@ export default function MyReviewsPage() {
           </Typography>
 
           {reviews.length === 0 ? (
-            <Typography>No reviews found.</Typography>
+            <Box textAlign='center' py={4}>
+              <Typography variant='h6' color='text.secondary' gutterBottom>
+                No reviews yet
+              </Typography>
+              <Typography variant='body2' color='text.secondary'>
+                Start by reviewing a college or major you've experienced!
+              </Typography>
+            </Box>
           ) : (
             reviews.map((review) => (
               <Paper
@@ -144,8 +217,9 @@ export default function MyReviewsPage() {
 
                   <Button
                     variant='contained'
+                    color='error'
                     sx={{ width: '15%', height: '3em' }}
-                    onClick={() => handleDelete(review.id)}
+                    onClick={() => handleDeleteClick(review.id, review.content)}
                   >
                     Delete
                   </Button>
@@ -155,6 +229,33 @@ export default function MyReviewsPage() {
           )}
         </Box>
       </Paper>
+
+      {/* Delete Confirmation Dialog */}
+      <Dialog
+        open={deleteDialog.open}
+        onClose={handleDeleteCancel}
+        aria-labelledby="delete-dialog-title"
+        aria-describedby="delete-dialog-description"
+        maxWidth="sm"
+        fullWidth
+      >
+        <DialogTitle id="delete-dialog-title">
+          Confirm Delete
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="delete-dialog-description">
+            Are you sure you want to delete this review? This action cannot be undone.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleDeleteCancel} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={handleDeleteConfirm} color="error" variant="contained">
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Container>
   );
 }

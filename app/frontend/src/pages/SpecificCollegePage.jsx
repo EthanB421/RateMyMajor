@@ -317,6 +317,15 @@ export default function SpecificCollegePage() {
                     </Paper>
                   </Box>
                 </Box>
+                <Typography
+                  sx={{
+                    paddingTop: '1em',
+                    color: 'grey.500', // light grey
+                    fontSize: { xs: '0.7rem', sm: '0.8rem', md: '0.9rem', lg: '1rem' }, // responsive
+                  }}
+                >
+                  *College information cited from U.S. Department of Education
+                </Typography>
               </Box>
             </Box>
             <Box
@@ -329,7 +338,6 @@ export default function SpecificCollegePage() {
               }}
             >
               <ExtraRatings data={college} />
-
               {/* College stats container */}
               <Box
                 sx={{
@@ -571,7 +579,6 @@ export default function SpecificCollegePage() {
           </Box>
 
           <Divider sx={{ my: 3 }} />
-
           {/* Review container */}
           <Box
             sx={{

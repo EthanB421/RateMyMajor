@@ -45,8 +45,10 @@ export default function Searchbar() {
   useEffect(() => {
     const fetchSearchResults = async () => {
       try {
+        console.log('API_URL:', API_URL);
+
         const response = await fetch(
-          `${API_URL}/College/GetColleges`
+          `${API_URL}/api/College/GetColleges`
         );
 
         if (!response.ok) {

@@ -36,8 +36,6 @@ export default function CollegePage() {
   useEffect(() => {
     const fetchColleges = async () => {
       try {
-        console.log("ENV API_URL:", import.meta.env.VITE_API_URL);
-
         const response = await fetch(
           `${API_URL}/api/College/GetColleges`
         );
@@ -220,7 +218,7 @@ export default function CollegePage() {
           sx={{ fontFamily: 'Raleway, Bebas Neue' }}
         >
           Don't see your college? Send us an email at{' '}
-          <Link>support@ratemycollege.com</Link>.
+          <Link>addyourcollege@gmail.com</Link>.
         </Typography>
       </Paper>
     </Container>
