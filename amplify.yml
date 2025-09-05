@@ -1,0 +1,17 @@
+version: 1
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - cd ratemymajor/app/frontend
+        - npm install
+    build:
+      commands:
+        - npm run build
+  artifacts:
+    baseDirectory: ratemymajor/app/frontend/dist
+    files:
+      - '**/*'
+  cache:
+    paths:
+      - ratemymajor/app/frontend/node_modules/**/*
