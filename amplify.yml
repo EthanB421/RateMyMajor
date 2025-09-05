@@ -1,17 +1,18 @@
 version: 1
-frontend:
-  phases:
-    preBuild:
-      commands:
-        - cd RateMyMajor/ratemymajor/app/frontend
-        - npm ci
-    build:
-      commands:
-        - npm run build
-  artifacts:
-    baseDirectory: RateMyMajor/ratemymajor/app/frontend/dist
-    files:
-      - '**/*'
-  cache:
-    paths:
-      - RateMyMajor/ratemymajor/app/frontend/node_modules/**/*
+applications:
+  - appRoot: app/frontend   # path to your frontend folder
+    frontend:
+      phases:
+        preBuild:
+          commands:
+            - npm install
+        build:
+          commands:
+            - npm run build
+      artifacts:
+        baseDirectory: dist  # vite outputs to dist
+        files:
+          - '**/*'
+      cache:
+        paths:
+          - node_modules/**/*
