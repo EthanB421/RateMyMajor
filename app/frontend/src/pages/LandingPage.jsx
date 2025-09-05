@@ -23,10 +23,10 @@ export default function LandingPage() {
   const [currentImage, setCurrentImage] = useState(0);
 
   const imageList = [
-    'src/images/costChart.png',
-    'src/images/demographics.png',
-    'src/images/earningsChart.png',
-    'src/images/repaymentGauge.png',
+    '/images/costChart.png',
+    '/images/demographics.png',
+    '/images/earningsChart.png',
+    '/images/repaymentGauge.png',
   ];
 
   useEffect(() => {
@@ -175,7 +175,7 @@ export default function LandingPage() {
                 </Typography>
                 <Box
                   component='img'
-                  src='src/images/anonymous.png'
+                  src='/images/anonymous.png'
                   alt='Test Image'
                   sx={{
                     height: 'auto',
@@ -210,7 +210,7 @@ export default function LandingPage() {
                 </Typography>
                 <Box
                   component='img'
-                  src='src/images/careerPaths.png'
+                  src='/images/careerPaths.png'
                   alt='Test Image'
                   sx={{
                     height: 'auto',
@@ -244,7 +244,7 @@ export default function LandingPage() {
                 </Typography>
                 <Box
                   component='img'
-                  src='src/images/agreeDisagree.png'
+                  src='/images/agreeDisagree.png'
                   alt='Test Image'
                   sx={{
                     height: 'auto',
