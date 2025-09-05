@@ -30,6 +30,8 @@ export default function AddReviewPage() {
   const [snackbarMessage, setSnackbarMessage] = useState('');
   const query = new URLSearchParams(window.location.search);
   const collegeName = query.get('name');
+  const API_URL = import.meta.env.VITE_API_URL;
+
 
   const columnOneCategories = [
     { id: 'location', label: 'Location' },
@@ -142,7 +144,7 @@ export default function AddReviewPage() {
 
     if (validateReview()) {
       try {
-        const response = await fetch('http://localhost:5123/api/review/add', {
+        const response = await fetch(`${API_URL}/api/review/add`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

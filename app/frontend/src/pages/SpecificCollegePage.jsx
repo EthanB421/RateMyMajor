@@ -38,6 +38,8 @@ export default function SpecificCollegePage() {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const { user } = useAuth();
   const [userVotes, setUserVotes] = useState({});
+  const API_URL = import.meta.env.VITE_API_URL;
+
   const chartTitles = [
     'Average Salary After Graduating',
     'Cost Breakdown Per Year',
@@ -72,7 +74,7 @@ export default function SpecificCollegePage() {
     const fetchChartData = async () => {
       try {
         const response = await fetch(
-          `http://localhost:5123/api/CollegeScorecard/${college.federalSchoolCode}`
+          `${API_URL}/api/CollegeScorecard/${college.federalSchoolCode}`
         );
 
         if (!response.ok) {
@@ -100,7 +102,7 @@ export default function SpecificCollegePage() {
       return;
     }
     try {
-      const response = await fetch(`http://localhost:5123/api/votes`, {
+      const response = await fetch(`${API_URL}/api/votes`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -127,7 +129,7 @@ export default function SpecificCollegePage() {
     const fetchCollege = async () => {
       try {
         const response = await fetch(
-          `http://localhost:5123/api/college/search?keyword=${encodeURIComponent(
+          `${API_URL}/api/college/search?keyword=${encodeURIComponent(
             specificCollege.trim()
           )}`
         );
@@ -315,6 +317,15 @@ export default function SpecificCollegePage() {
                     </Paper>
                   </Box>
                 </Box>
+                <Typography
+                  sx={{
+                    paddingTop: '1em',
+                    color: 'grey.500', // light grey
+                    fontSize: { xs: '0.7rem', sm: '0.8rem', md: '0.9rem', lg: '1rem' }, // responsive
+                  }}
+                >
+                  *College information cited from U.S. Department of Education
+                </Typography>
               </Box>
             </Box>
             <Box
@@ -327,7 +338,6 @@ export default function SpecificCollegePage() {
               }}
             >
               <ExtraRatings data={college} />
-
               {/* College stats container */}
               <Box
                 sx={{
@@ -569,7 +579,6 @@ export default function SpecificCollegePage() {
           </Box>
 
           <Divider sx={{ my: 3 }} />
-
           {/* Review container */}
           <Box
             sx={{

@@ -17,6 +17,8 @@ export default function Searchbar() {
   const [error, setError] = useState('');
   const containerRef = useRef(null);
   const navigate = useNavigate();
+  const API_URL = import.meta.env.VITE_API_URL;
+
 
   const handleInputChange = (event) => {
     setInputValue(event.target.value);
@@ -43,8 +45,10 @@ export default function Searchbar() {
   useEffect(() => {
     const fetchSearchResults = async () => {
       try {
+        console.log('API_URL:', API_URL);
+
         const response = await fetch(
-          'http://localhost:5123/api/College/GetColleges'
+          `${API_URL}/api/College/GetColleges`
         );
 
         if (!response.ok) {
