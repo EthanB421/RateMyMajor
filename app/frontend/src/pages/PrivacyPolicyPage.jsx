@@ -180,7 +180,7 @@ export default function PrivacyPolicyPage() {
             This website is not meant for use by children under the age of 13.
             We do not knowingly collect personal information from children. If
             you believe your child has given us any information, please contact
-            us at <Link>support@ratemycollege.com</Link> and we will take the
+            us at <Link>addyourcollege@gmail.com</Link> and we will take the
             necessary action.
           </Typography>
         </Box>
@@ -225,7 +225,7 @@ export default function PrivacyPolicyPage() {
           <Typography>
             In the event you have more questions or concerns regarding our
             privacy policy, please reach out to us at{' '}
-            <Link>support@ratemycollege.com</Link>.
+            <Link>addyourcollege@gmail.com</Link>.
           </Typography>
         </Box>
       </Box>

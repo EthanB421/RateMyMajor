@@ -24,6 +24,8 @@ export default function CollegePage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
+  const API_URL = import.meta.env.VITE_API_URL;
+
 
   const StyledRating = styled(Rating)({
     '& .MuiRating-iconFilled': {
@@ -35,7 +37,7 @@ export default function CollegePage() {
     const fetchColleges = async () => {
       try {
         const response = await fetch(
-          'http://localhost:5123/api/College/GetColleges'
+          `${API_URL}/api/College/GetColleges`
         );
 
         if (!response.ok) {
@@ -216,7 +218,7 @@ export default function CollegePage() {
           sx={{ fontFamily: 'Raleway, Bebas Neue' }}
         >
           Don't see your college? Send us an email at{' '}
-          <Link>support@ratemycollege.com</Link>.
+          <Link>addyourcollege@gmail.com</Link>.
         </Typography>
       </Paper>
     </Container>
