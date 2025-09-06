@@ -13,6 +13,15 @@ import {
 import { useNavigate, useLocation } from 'react-router-dom';
 import Searchbar from '../components/Searchbar';
 import { useState, useEffect } from 'react';
+import costChart from '../images/costChart.png';
+import demographics from '../images/demographics.png';
+import earningsChart from '../images/earningsChart.png';
+import repaymentGauge from '../images/repaymentGauge.png';
+import agreeDisagreeImg from '../images/agreeDisagree.png';
+import careerPathsImg from '../images/careerPaths.png';
+import anonymousImg from '../images/anonymous.png';
+
+
 
 export default function LandingPage() {
   const navigate = useNavigate();
@@ -23,10 +32,10 @@ export default function LandingPage() {
   const [currentImage, setCurrentImage] = useState(0);
 
   const imageList = [
-    '/images/costChart.png',
-    '/images/demographics.png',
-    '/images/earningsChart.png',
-    '/images/repaymentGauge.png',
+costChart,
+    demographics,
+    earningsChart,
+    repaymentGauge,
   ];
 
   useEffect(() => {
@@ -175,7 +184,7 @@ export default function LandingPage() {
                 </Typography>
                 <Box
                   component='img'
-                  src='/images/anonymous.png'
+                  src={anonymousImg}
                   alt='Test Image'
                   sx={{
                     height: 'auto',
@@ -210,7 +219,7 @@ export default function LandingPage() {
                 </Typography>
                 <Box
                   component='img'
-                  src='/images/careerPaths.png'
+                  src={careerPathsImg}
                   alt='Test Image'
                   sx={{
                     height: 'auto',
@@ -244,7 +253,7 @@ export default function LandingPage() {
                 </Typography>
                 <Box
                   component='img'
-                  src='/images/agreeDisagree.png'
+                  src={agreeDisagreeImg}
                   alt='Test Image'
                   sx={{
                     height: 'auto',
