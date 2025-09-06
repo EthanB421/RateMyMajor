@@ -139,8 +139,6 @@ export default function SpecificCollegePage() {
         }
 
         const data = await response.json();
-        console.log('Fetched college data:', data);
-        console.log('Review data: ', data.reviews);
 
         setCollege(data);
       } catch (err) {

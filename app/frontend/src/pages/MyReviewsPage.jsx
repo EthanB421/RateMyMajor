@@ -52,7 +52,6 @@ export default function MyReviewsPage() {
         }
 
         const data = await response.json();
-        console.log('Fetched reviews data:', data);
 
         // Ensure data is an array, fallback to empty array
         setReviews(Array.isArray(data) ? data : []);

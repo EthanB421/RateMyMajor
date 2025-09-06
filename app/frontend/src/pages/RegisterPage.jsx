@@ -79,7 +79,6 @@ export default function RegisterPage() {
         const data = await response.json();
 
         if (!response.ok) {
-          console.log('Backend response', data);
           throw new Error(data.message || 'Account Creation Failed');
         }
 
